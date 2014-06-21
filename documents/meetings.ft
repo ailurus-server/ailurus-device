@@ -1,0 +1,71 @@
+# June 19 Meeting Minutes
+shipping features
+* package management
+* network config
+* user creating
+
+static website vs. single page website
+- single page
+
+web framework
+- GWT?
+- own JS + scripting
+
+projects supported
+* WordPress
+* Mail
+* Calendar
+* OwnCloud
+* Git / expose a cgit
+* Jenkins
+
+types of configuration supported (what do we do in addition to calling apt-get)
+* auto configuration/ port forwarding / nginx entry etc.
+
+what's the UI going to be like
+* export mockups
+
+how will the work be split
+* UI
+	* mockups
+	* impl
+* backend
+	* package
+	* admin
+
+where will we run the code
+* emulators
+* h/w
+
+Schedule:
+* Server arch by June 21
+* Mockups by June 22
+* Market research by June 22
+* Server client by June 23
+* First boot by June 24
+* Login by June 25
+* Dashboard by 27
+* PowerPoint by June 30
+
+UI Features:
+* Welcome screen
+* Setup
+	* First boot
+		* Name your device
+		* User/password
+		* App selection
+* Main 
+	* Login screen
+	* Dashboard
+		* Show apps
+		* Install/uninstall
+		* App conf
+		* Stats
+
+Backend Features:
+* server-client messages
+
+# Backlog
+* IPC api, public db?
+* Search
+* Notifications
