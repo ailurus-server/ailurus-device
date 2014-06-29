@@ -1,0 +1,9 @@
+body {
+  padding: 10px;
+}
+
+/* stock list header row */
+.crazyButton {
+  color: red;
+  font-weight: bold;
+}

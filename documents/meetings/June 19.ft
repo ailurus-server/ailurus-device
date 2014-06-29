@@ -13,11 +13,11 @@ web framework
 
 projects supported
 * WordPress
+* Git / expose a cgit
+* OwnCloud
+* Jenkins
 * Mail
 * Calendar
-* OwnCloud
-* Git / expose a cgit
-* Jenkins
 
 types of configuration supported (what do we do in addition to calling apt-get)
 * auto configuration/ port forwarding / nginx entry etc.

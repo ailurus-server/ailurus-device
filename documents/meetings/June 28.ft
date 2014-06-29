@@ -1,0 +1,67 @@
+Work Allocation:
+    Jane: mockups, UI
+    Andrew: package configurations
+    Richard: packaging
+    Tian Yu: server, UI
+
+Server Architecture
+- GWT
+- everything should run in root
+
+Packaging Procedure:
+    Architecture:
+        - list of installed apps are stored in the database
+        - configurations for each app is stored in the database
+        - management scripts for each app is stored in a repository
+        
+    Installation:
+        - webserver calls ./installScript --requirements to get a JSON
+          string of all the user inputs to install the application properly
+        - webserver shows user a form to the user to fill out
+        - webserver writes the data that the user filled out into a JSON file
+        - webserver calls ./installScript --install configurations.json
+        - installScript writes default setting values into the database
+        - once install script returns, the app is marked as installed
+       
+    Uninstall:
+        - webserver checks to make sure that the app is installed
+        - webserver calls ./installScript --uinstall
+        - webserver deletes all configurations associated with that app
+        
+    Configuration Change
+        - webserver pulls all the configurations associated with the app and 
+          displays it to the client
+        - once the configurations have been updated and sent back to the 
+          webserver, the webserver updates the database
+        - ./installScript reads from the database and regenerates the
+          configuration for the file
+          
+    Complications:
+        - we have to make sure all operations are atomic 
+          (either installed or uninstalled)
+        - certain apps have weird configurations that are hard to display
+        - maybe certain configurations could not be represented as strings?
+        - support multiple instances of the same app
+    
+Database:
+    - use MySQL for now
+    - should use MongoDB eventually
+    
+Projects Supported for the Demo
+* WordPress
+* Git   
+* OwnCloud
+
+Projects Supported in the Future
+* Jenkins
+* Mail
+* Calendar
+   
+Demo Plan
+Plan A: demo with device connected directly to laptop via ethernet
+Plan B: demo with device connected to internet via home router
+Plan C: demo on virtual machine
+
+Wishlist
+* Wordpress optimization
+* automatic NAT port forwarding (NATUpnp)

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    <servlet>
+        <servlet-name>machineServiceImpl</servlet-name>
+        <servlet-class>ca.ailurus.boss.server.MachineServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>applicationServiceImpl</servlet-name>
+        <servlet-class>ca.ailurus.boss.server.ApplicationServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>userServiceImpl</servlet-name>
+        <servlet-class>ca.ailurus.boss.server.UserServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>machineServiceImpl</servlet-name>
+        <url-pattern>/boss/machine</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>applicationServiceImpl</servlet-name>
+        <url-pattern>/boss/app</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>userServiceImpl</servlet-name>
+        <url-pattern>/boss/user</url-pattern>
+    </servlet-mapping>
+
+    <!-- Default page to serve -->
+    <welcome-file-list>
+        <welcome-file>Boss.html</welcome-file>
+    </welcome-file-list>
+</web-app>
