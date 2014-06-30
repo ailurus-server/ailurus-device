@@ -1,0 +1,90 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:style>
+        .outerPanel {
+            width: 700px;
+        }
+
+        .titlePanel {
+            width: 100%;
+        }
+
+        .innerPanel {
+            padding: 10px;
+            background-color: #FFECDA;
+            border-radius: 20px;
+        }
+
+        .inputRow {
+            margin: 10px 0px;
+        }
+
+        .labelIconCell {
+            width: 30px;
+        }
+
+        .labelCell {
+            width: 30px;
+        }
+
+        .inputCell {
+            width: 200px;
+        }
+    </ui:style>
+
+    <g:VerticalPanel horizontalAlignment="ALIGN_CENTER" addStyleNames="expand">
+        <g:FlowPanel addStyleNames="{style.outerPanel}">
+            <g:HorizontalPanel addStyleNames="{style.titlePanel}">
+                <g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM">
+                    <g:Image url="/images/settings.png" altText="Settings Icon"/>
+                    <g:Label>Settings</g:Label>
+                </g:HorizontalPanel>
+            </g:HorizontalPanel>
+            <g:FlowPanel addStyleNames="{style.innerPanel}">
+                <g:Label>Create a New Account</g:Label>
+                <g:FormPanel ui:field="accountsForm">
+                    <g:Grid>
+                        <g:row addStyleNames="{style.inputRow}">
+                            <g:customCell addStyleNames="{style.labelIconCell}">
+                                <g:Image url="/images/settings.png" altText="Settings Icon"/>
+                            </g:customCell>
+                            <g:customCell addStyleNames="{style.labelCell}">
+                                <g:Label>Username: </g:Label>
+                            </g:customCell>
+                            <g:customCell addStyleNames="{style.inputCell}">
+                                <g:TextBox maxLength="30" ui:field="usernameTextBox"/>
+                            </g:customCell>
+                        </g:row>
+                        <g:row addStyleNames="{style.inputRow}">
+                            <g:customCell addStyleNames="{style.labelIconCell}">
+                                <g:Image url="/images/settings.png" altText="Settings Icon"/>
+                            </g:customCell>
+                            <g:customCell addStyleNames="{style.labelCell}">
+                                <g:Label>Password: </g:Label>
+                            </g:customCell>
+                            <g:customCell addStyleNames="{style.inputCell}">
+                                <g:PasswordTextBox maxLength="30" ui:field="passwordTextBox"/>
+                            </g:customCell>
+                        </g:row>
+                        <g:row addStyleNames="{style.inputRow}">
+                            <g:customCell addStyleNames="{style.labelIconCell}">
+                                <g:Image url="/images/settings.png" altText="Settings Icon"/>
+                            </g:customCell>
+                            <g:customCell addStyleNames="{style.labelCell}">
+                                <g:Label>Confirm Password: </g:Label>
+                            </g:customCell>
+                            <g:customCell addStyleNames="{style.inputCell}">
+                                <g:PasswordTextBox maxLength="30" ui:field="confirmTextBox"/>
+                            </g:customCell>
+                        </g:row>
+                    </g:Grid>
+                </g:FormPanel>
+                <g:Label ui:field="errorLabel" visible="false"></g:Label>
+            </g:FlowPanel>
+            <g:HorizontalPanel>
+                <g:Button ui:field="nextButton" visible="false">Next</g:Button>
+            </g:HorizontalPanel>
+        </g:FlowPanel>
+    </g:VerticalPanel>
+</ui:UiBinder>

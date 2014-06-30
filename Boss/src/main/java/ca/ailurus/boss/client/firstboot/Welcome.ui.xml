@@ -1,0 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <g:FocusPanel addStyleNames="expand" ui:field="splash">
+        <g:VerticalPanel verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER" addStyleNames="expand">
+            <g:cell>
+                <g:FlowPanel>
+                    <g:Label>Welcome!</g:Label>
+                </g:FlowPanel>
+            </g:cell>
+        </g:VerticalPanel>
+    </g:FocusPanel>
+</ui:UiBinder>
