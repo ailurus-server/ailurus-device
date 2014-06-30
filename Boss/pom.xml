@@ -30,6 +30,11 @@
             <version>${gwtVersion}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.gwt.eventbinder</groupId>
+            <artifactId>eventbinder</artifactId>
+            <version>1.0.2</version>
+        </dependency>
     </dependencies>
 
     <build>

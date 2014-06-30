@@ -8,10 +8,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 
 public class Welcome extends Composite {
-    interface WelcomeUiBinder extends UiBinder<Widget, Welcome> {
-    }
-
-    private static WelcomeUiBinder uiBinder = GWT.create(WelcomeUiBinder.class);
+    interface MyUiBinder extends UiBinder<Widget, Welcome> {}
+    private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
     @UiField
     FocusPanel splash;

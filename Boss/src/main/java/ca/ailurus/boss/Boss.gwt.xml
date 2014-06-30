@@ -5,6 +5,7 @@
     <source path="shared"/>
 
     <inherits name="com.google.gwt.resources.Resources" />
+    <inherits name="com.google.web.bindery.event.EventBinder"/>
 
     <inherits name="com.google.gwt.user.theme.standard.Standard" />
 

@@ -9,7 +9,7 @@ public class FirstBoot extends Composite {
     public FirstBoot() {
         final FlowPanel panel = new FlowPanel();
         final Welcome welcomeScreen = new Welcome();
-        final Initialize initScreen = new Initialize();
+        final Initializer initScreen = new Initializer();
 
         welcomeScreen.addClickHandler(new ClickHandler() {
             @Override

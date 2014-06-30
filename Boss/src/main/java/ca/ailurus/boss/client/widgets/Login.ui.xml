@@ -1,0 +1,65 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:style>
+        .inputRow {
+            margin: 10px 0px;
+        }
+
+        .labelIconCell {
+            width: 30px;
+        }
+
+        .labelCell {
+            width: 30px;
+        }
+
+        .inputCell {
+            width: 200px;
+        }
+
+        .errorLabel {
+            color: red;
+            font-weight: bold;
+        }
+
+        .expand-width {
+            width: 100%;
+        }
+    </ui:style>
+
+    <g:FormPanel>
+        <g:VerticalPanel>
+            <g:Label ui:field="errorLabel" visible="false"></g:Label>
+
+            <g:Grid>
+                <g:row addStyleNames="{style.inputRow}">
+                    <g:customCell addStyleNames="{style.labelIconCell}">
+                        <g:Image url="images/user.png" altText="User Icon"/>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.labelCell}">
+                        <g:Label>Username: </g:Label>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.inputCell}">
+                        <g:TextBox maxLength="30" ui:field="usernameTextBox"/>
+                    </g:customCell>
+                </g:row>
+                <g:row addStyleNames="{style.inputRow}">
+                    <g:customCell addStyleNames="{style.labelIconCell}">
+                        <g:Image url="images/password.png" altText="Password Icon"/>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.labelCell}">
+                        <g:Label>Password: </g:Label>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.inputCell}">
+                        <g:PasswordTextBox maxLength="30" ui:field="passwordTextBox"/>
+                    </g:customCell>
+                </g:row>
+            </g:Grid>
+
+            <g:HorizontalPanel horizontalAlignment="ALIGN_CENTER" addStyleNames="{style.expandWidth}">
+                <g:Button ui:field="submit">Login</g:Button>
+            </g:HorizontalPanel>
+        </g:VerticalPanel>
+    </g:FormPanel>
+</ui:UiBinder>
