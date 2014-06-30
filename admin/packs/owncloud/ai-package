@@ -1,0 +1,59 @@
+#!/usr/bin/env/python3
+
+# Sample ai-package module
+
+# Environment dictionary values:
+# 'Destination' -> String of full path of installation destination
+
+from ailurus import pkgutil
+import shutil
+import os
+
+DEFAULT_ENV = {
+        'Destination': '/opt/ailurus/www/owncloud',
+        }
+
+OC_URL = 'https://download.owncloud.org/community/owncloud-6.0.4.tar.bz2'
+OC_MD5 = '0a92cf5971e9c9c58e40219b385bd8f4'
+
+CONFIG_FILE = '''
+    <?php
+    $AUTOCONFIG = array(
+        "directory"     => "{destination}/data",
+        "dbtype"        => "sqlite",
+        "dbname"        => "owncloud",
+        "dbtableprefix" => "",
+    );
+    '''
+
+def DefaultEnv(env):
+    new_env = {}
+    for key in DEFAULT_ENV:
+        new_env[key] = env[key] if env and key in env else DEFAULT_ENV[key]
+    return new_env
+
+def install(env = None):
+    env = DefaultEnv(env)
+
+    print("Getting owncloud package")
+    oc_path = pkgutil.GetPackage(OC_URL, OC_MD5)
+
+    print("Copying owncloud to %s" % env['Destination'])
+    install_dir = env['Destination']
+    pkgutil.ExtractTarball(oc_path, install_dir, 'owncloud')
+
+    print("Writing owncloud configuration")
+    with open(install_dir + '/config/autoconfig.php', 'w') as f:
+        f.write(CONFIG_FILE.format(destination = install_dir))
+
+    print("Assigning ownership")
+    os.system('chown -R www-data %s' % install_dir)
+
+def remove(env = None):
+    env = DefaultEnv(env)
+
+    print("Removing owncloud")
+    shutil.rmtree(env['Destination'])
+
+def configure(env):
+    pass

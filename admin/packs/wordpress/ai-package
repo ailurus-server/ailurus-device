@@ -1,0 +1,51 @@
+#!/usr/bin/env/python3
+
+# Sample ai-package module
+
+# Environment dictionary values:
+# 'Destination' -> String of full path of installation destination
+
+from ailurus import pkgutil
+import shutil
+import pymysql
+
+DEFAULT_ENV = {
+        'Destination': '/opt/ailurus/www/wordpress',
+        }
+
+WP_URL = "http://wordpress.org/wordpress-3.9.1.tar.gz"
+WP_MD5 = "46e303b587ba3d1f951b348d2c477c3c"
+
+def DefaultEnv(env):
+    new_env = {}
+    for key in DEFAULT_ENV:
+        new_env[key] = env[key] if env and key in env else DEFAULT_ENV[key]
+    return new_env
+
+def install(env = None):
+    env = DefaultEnv(env)
+    install_dir = env['Destination']
+
+    print("Creating wordpress database")
+    conn = pymysql.connect('localhost', user='root', passwd='teamtba')
+    conn.cursor().execute('CREATE DATABASE IF NOT EXISTS wordpress')
+
+    print("Getting wordpress package")
+    wp_path = pkgutil.GetPackage(WP_URL, WP_MD5)
+
+    print("Extracting wordpress to %s" % env['Destination'])
+    pkgutil.ExtractTarball(wp_path, install_dir, 'wordpress/')
+
+    print("Copying wordpress configuration")
+    shutil.copy('conf/wp-config.php', install_dir)
+
+def remove(env = None):
+    env = DefaultEnv(env)
+    print("Removing wordpress db")
+    conn = pymysql.connect('localhost', user='root', passwd='teamtba')
+    conn.cursor().execute('DROP DATABASE IF EXISTS wordpress')
+    print("Removing wordpress")
+    shutil.rmtree(env['Destination'])
+
+def configure(env):
+    pass

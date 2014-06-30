@@ -1,1 +1,1 @@
-import pkgutil
+import ailurus.pkgutil

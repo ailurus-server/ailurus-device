@@ -1,0 +1,8 @@
+#!/bin/sh
+for d in */ ; do
+    if [ "$d" != "dist/" ]; then
+        pkgname=${d%/*}
+        echo $pkgname
+        (cd $d && tar czvf ../dist/${pkgname}.apkg *)
+    fi
+done
