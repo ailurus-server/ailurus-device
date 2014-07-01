@@ -11,9 +11,7 @@ import com.google.gwt.user.client.ui.*;
 import com.google.web.bindery.event.shared.binder.GenericEvent;
 
 public class AppEntry extends Composite {
-    interface MyUiBinder extends UiBinder<Widget, AppEntry> {
-    }
-
+    interface MyUiBinder extends UiBinder<Widget, AppEntry> {}
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
     @UiField
@@ -31,8 +29,8 @@ public class AppEntry extends Composite {
     public AppEntry(Application app, String iconUrl, String actionDescription, GenericEvent event) {
         initWidget(uiBinder.createAndBindUi(this));
 
-        this.selectionEvent = event;
         application = app;
+        selectionEvent = event;
 
         String appName = app.getName();
         title.setText(appName);
@@ -42,7 +40,7 @@ public class AppEntry extends Composite {
     }
 
     @UiHandler("action")
-    void showDetails(ClickEvent event) {
+    void onClick(ClickEvent event) {
         AppEventBus.EVENT_BUS.fireEvent(selectionEvent);
     }
 }

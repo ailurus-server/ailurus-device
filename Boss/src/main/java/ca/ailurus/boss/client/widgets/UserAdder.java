@@ -1,18 +1,25 @@
 package ca.ailurus.boss.client.widgets;
 
+import ca.ailurus.boss.client.SyncCallback;
 import ca.ailurus.boss.client.events.AddUserEvent;
 import ca.ailurus.boss.client.events.AppEventBus;
+import ca.ailurus.boss.shared.User;
+import ca.ailurus.boss.shared.UserService;
+import ca.ailurus.boss.shared.UserServiceAsync;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 public class UserAdder extends Composite {
     interface MyUiBinder extends UiBinder<Widget, UserAdder> {}
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
+
+    private UserServiceAsync userService = GWT.create(UserService.class);
 
     @UiField
     TextBox usernameTextBox;
@@ -81,11 +88,19 @@ public class UserAdder extends Composite {
         String username = usernameTextBox.getText();
         String password = passwordTextBox.getText();
 
-        try {
-            AppEventBus.EVENT_BUS.fireEvent(new AddUserEvent(username, password));
-        } catch (Exception exception) {
-            errorLabel.setText(exception.getLocalizedMessage());
-            errorLabel.setVisible(true);
-        }
+        final User user = new User(username, password);
+
+        userService.addUser(user, SyncCallback.create(new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                errorLabel.setText(throwable.getLocalizedMessage());
+                errorLabel.setVisible(true);
+            }
+
+            @Override
+            public void onSuccess(Void aVoid) {
+                AppEventBus.EVENT_BUS.fireEvent(new AddUserEvent(user));
+            }
+        }));
     }
 }

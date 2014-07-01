@@ -1,8 +1,11 @@
 package ca.ailurus.boss.client.widgets;
 
+import ca.ailurus.boss.client.SyncCallback;
 import ca.ailurus.boss.client.events.AppEventBus;
 import ca.ailurus.boss.client.events.ShowDashboardEvent;
 import ca.ailurus.boss.shared.Application;
+import ca.ailurus.boss.shared.ApplicationService;
+import ca.ailurus.boss.shared.ApplicationServiceAsync;
 import ca.ailurus.boss.shared.Setting;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -11,12 +14,14 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 public class AppDetails extends Composite {
     interface MyUiBinder extends UiBinder<Widget, AppDetails> {}
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
+
+    private ApplicationServiceAsync appService = GWT.create(ApplicationService.class);
 
     @UiField
     Label errorLabel;
@@ -31,10 +36,15 @@ public class AppDetails extends Composite {
     @UiField
     FlexTable settingsTable;
 
-    public AppDetails(Application application, Setting[] settings) {
+    boolean isValid = true;
+    Application application;
+
+    public AppDetails(Application app, Setting[] settings) {
+        application = app;
+
         initWidget(uiBinder.createAndBindUi(this));
-        title.setText(application.getName());
-        description.setText(application.getDescription());
+        title.setText(app.getName());
+        description.setText(app.getDescription());
         updateSettings(settings);
     }
 
@@ -57,7 +67,7 @@ public class AppDetails extends Composite {
     }
 
     private void validate() {
-        //TODO implement validate
+        //TODO validate the settings
     }
 
     @UiHandler("cancelButton")
@@ -67,7 +77,25 @@ public class AppDetails extends Composite {
 
     @UiHandler("updateButton")
     void onUpdate(ClickEvent event) {
-        Window.alert("Update Settings");
+        Setting[] newSettings = new Setting[settingsTable.getRowCount()];
+        for (int i = 0; i < newSettings.length; ++i) {
+            String settingName = settingsTable.getText(i, 0);
+            TextBox settingTextBox = (TextBox) settingsTable.getWidget(i, 1);
+            String settingValue = settingTextBox.getValue();
+            newSettings[i] = new Setting(settingName, settingValue);
+        }
+
+        String appId = application.getId();
+        appService.setSettings(appId, newSettings, SyncCallback.create(new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                // TODO display the error somewhere
+            }
+
+            @Override
+            public void onSuccess(Void dummy) {
+            }
+        }));
     }
 
 }

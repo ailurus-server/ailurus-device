@@ -31,7 +31,7 @@
 
     <g:FormPanel>
         <g:VerticalPanel>
-            <g:Label ui:field="errorLabel" visible="false"></g:Label>
+            <g:Label ui:field="errorLabel" visible="false" addStyleNames="{style.errorLabel}"></g:Label>
 
             <g:Grid>
                 <g:row addStyleNames="{style.inputRow}">

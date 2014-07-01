@@ -7,7 +7,6 @@ import ca.ailurus.boss.client.events.InitializeEvent;
 import ca.ailurus.boss.client.widgets.CenteredFrame;
 import ca.ailurus.boss.client.widgets.UserAdder;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
@@ -26,7 +25,6 @@ public class Initializer extends Composite {
 
     @EventHandler
     void onAddUser(AddUserEvent event) {
-        Window.alert(event.getUsername() + " " + event.getPassword());
-        AppEventBus.EVENT_BUS.fireEvent(new InitializeEvent());
+        AppEventBus.EVENT_BUS.fireEvent(new InitializeEvent(event.getUser()));
     }
 }

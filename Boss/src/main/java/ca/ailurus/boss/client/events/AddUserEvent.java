@@ -1,21 +1,16 @@
 package ca.ailurus.boss.client.events;
 
+import ca.ailurus.boss.shared.User;
 import com.google.web.bindery.event.shared.binder.GenericEvent;
 
 public class AddUserEvent extends GenericEvent {
-    public AddUserEvent(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public AddUserEvent(User user) {
+        this.user = user;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    private final String username;
-    private final String password;
+    private final User user;
 }
