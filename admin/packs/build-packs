@@ -1,4 +1,5 @@
 #!/bin/sh
+mkdir dist
 for d in */ ; do
     if [ "$d" != "dist/" ]; then
         pkgname=${d%/*}
