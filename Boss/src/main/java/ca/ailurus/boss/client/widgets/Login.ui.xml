@@ -11,7 +11,8 @@
         }
 
         .labelCell {
-            width: 30px;
+            font-size: 16pt;
+            color: rgb(254,153,65);
         }
 
         .inputCell {
@@ -37,8 +38,8 @@
                     <g:customCell addStyleNames="{style.labelIconCell}">
                         <g:Image url="images/user.png" altText="User Icon"/>
                     </g:customCell>
-                    <g:customCell addStyleNames="{style.labelCell}">
-                        <g:Label>Username: </g:Label>
+                    <g:customCell>
+                        <g:Label addStyleNames="{style.labelCell}">Username </g:Label>
                     </g:customCell>
                     <g:customCell addStyleNames="{style.inputCell}">
                         <g:TextBox maxLength="30" ui:field="usernameTextBox"/>
@@ -48,8 +49,8 @@
                     <g:customCell addStyleNames="{style.labelIconCell}">
                         <g:Image url="images/password.png" altText="Password Icon"/>
                     </g:customCell>
-                    <g:customCell addStyleNames="{style.labelCell}">
-                        <g:Label>Password: </g:Label>
+                    <g:customCell>
+                        <g:Label addStyleNames="{style.labelCell}">Password </g:Label>
                     </g:customCell>
                     <g:customCell addStyleNames="{style.inputCell}">
                         <g:PasswordTextBox maxLength="30" ui:field="passwordTextBox"/>

@@ -52,9 +52,6 @@
                     </g:customCell>
                 </g:row>
                 <g:row addStyleNames="{style.inputRow}">
-                    <g:customCell addStyleNames="{style.labelIconCell}">
-                        <g:Image url="/images/password.png" altText="Password Icon"/>
-                    </g:customCell>
                     <g:customCell addStyleNames="{style.labelCell}">
                         <g:Label>Confirm Password: </g:Label>
                     </g:customCell>

@@ -1,8 +1,23 @@
 body {
-    background-color: #FFB352;
+    background-color: rgb(254,153,65);
+    font-family: "Helvetica Neue", Helvetica, Sans;
+    color: rgb(94, 36, 27);
 }
 
 .expand {
     height: 100%;
     width: 100%;
+}
+
+.gwt-TextBox, .gwt-PasswordTextBox {
+    border: 0px solid #fe9941;
+    color: #fe9941;
+    font-size: 16pt;
+    font-family: "Helvetica Neue", Helvetica;
+    border-bottom-width: 1px;
+    background-color: transparent;
+}
+
+.gwt-TextBox:focus, .gwt-PasswordTextBox {
+    outline: none;
 }
