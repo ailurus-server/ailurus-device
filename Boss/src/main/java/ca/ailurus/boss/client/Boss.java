@@ -4,14 +4,11 @@ import ca.ailurus.boss.client.dashboard.Dashboard;
 import ca.ailurus.boss.client.dashboard.LoginScreen;
 import ca.ailurus.boss.client.events.*;
 import ca.ailurus.boss.client.firstboot.FirstBoot;
-import ca.ailurus.boss.shared.MachineService;
-import ca.ailurus.boss.shared.MachineServiceAsync;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
@@ -26,7 +23,19 @@ public class Boss implements EntryPoint {
         eventBinder.bindEventHandlers(this, AppEventBus.EVENT_BUS);
 
         Resources.INSTANCE.css().ensureInjected();
-        RootPanel.get().add(new FirstBoot());
+
+        boolean isFirstBoot = getJavaScriptBool("isFirstBoot");
+
+        if (isFirstBoot) {
+            RootPanel.get().add(new FirstBoot());
+        } else {
+            RootPanel.get().add(new LoginScreen());
+        }
+    }
+
+    private boolean getJavaScriptBool(String name) {
+        Element window = (Element)Document.get().<Element>cast().getPropertyObject("defaultView");
+        return window.getPropertyBoolean(name);
     }
 
     @EventHandler
