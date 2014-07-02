@@ -5,6 +5,7 @@ import ca.ailurus.boss.client.widgets.CenteredFrame;
 import ca.ailurus.boss.client.widgets.Login;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 
 public class LoginScreen extends Composite {
@@ -13,9 +14,13 @@ public class LoginScreen extends Composite {
     public LoginScreen() {
         eventBinder.bindEventHandlers(this, AppEventBus.EVENT_BUS);
 
-        CenteredFrame frame = new CenteredFrame("Login", "images/login.png", "Login Icon");
+        HTMLPanel panel = new HTMLPanel("");
+        panel.add(new Login());
+        initWidget(panel);
+
+        /*CenteredFrame frame = new CenteredFrame("Login", "images/login.png", "Login Icon");
         frame.add(new Login());
-        initWidget(frame);
+        initWidget(frame);*/
     }
 
     interface MyEventBinder extends EventBinder<LoginScreen> {

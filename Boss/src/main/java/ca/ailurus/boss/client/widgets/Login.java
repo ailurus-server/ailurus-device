@@ -24,10 +24,16 @@ public class Login extends Composite {
     @UiField
     Label errorLabel;
     @UiField
-    Button submit;
+    Image submit;
+    @UiField
+    Grid credentialsGrid;
+
     private UserServiceAsync userService = GWT.create(UserService.class);
+
     public Login() {
         initWidget(uiBinder.createAndBindUi(this));
+        credentialsGrid.getColumnFormatter().setWidth(0, "48px");
+        credentialsGrid.getColumnFormatter().setWidth(1, "100px");
     }
 
     @UiHandler("submit")
