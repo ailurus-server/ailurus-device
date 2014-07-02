@@ -16,7 +16,7 @@ echo "Copying custom nginx config"
 cp nginx-default /etc/nginx/sites-available/default
 
 echo "Installing ailurus python utilities"
-python3 ../ailurus-python/setup.py install
+(cd ../ailurus-python && python3 setup.py install)
 
 echo "Building packages"
 ./../packs/build-packs
