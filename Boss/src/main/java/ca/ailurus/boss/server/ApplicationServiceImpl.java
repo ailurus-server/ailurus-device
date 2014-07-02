@@ -46,6 +46,15 @@ public class ApplicationServiceImpl extends RemoteServiceServlet implements Appl
             installed.put(appId, available.get(appId));
             available.remove(appId);
 
+            String installCommand = "ai-get install /opt/ailurus/packs/" + appId + ".apkg";
+            Process process = Runtime.getRuntime().exec(installCommand);
+            int exitStatus = process.waitFor();
+            if (exitStatus != 0) {
+                // TODO expose this to the client
+                throw new RuntimeException("Installation Failed");
+            }
+
+            storage.commit();
             return available.values().toArray(new Application[0]);
         } catch (AppNotFoundException exception) {
             storage.rollback();
@@ -69,8 +78,18 @@ public class ApplicationServiceImpl extends RemoteServiceServlet implements Appl
                 return false;
             }
 
+            String installCommand = "ai-get remove /opt/ailurus/packs/" + appId + ".apkg";
+            Process process = Runtime.getRuntime().exec(installCommand);
+            int exitStatus = process.waitFor();
+            if (exitStatus != 0) {
+                // TODO expose this to the client
+                throw new RuntimeException("Installation Failed");
+            }
+
             available.put(appId, installed.get(appId));
             installed.remove(appId);
+
+            storage.commit();
             return true;
         } catch (Exception exception) {
             storage.rollback();
