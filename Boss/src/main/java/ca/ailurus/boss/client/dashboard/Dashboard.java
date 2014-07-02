@@ -97,7 +97,11 @@ public class Dashboard extends Composite {
     @EventHandler
     void onViewApp(final ViewAppEvent event) {
         final Application app = event.getApplication();
-        String appId = app.getId();
+        String url = app.getUrl();
+        Window.open(url, "_blank", "");
+
+        // TODO change to show the window details page
+        /*
         appService.getSettings(appId, SyncCallback.create(new AsyncCallback<Setting[]>() {
             @Override
             public void onFailure(Throwable throwable) {
@@ -110,7 +114,7 @@ public class Dashboard extends Composite {
                 panel.clear();
                 panel.add(new AppDetails(app, settings));
             }
-        }));
+        }));*/
     }
 
     interface MyUiBinder extends UiBinder<Widget, Dashboard> {

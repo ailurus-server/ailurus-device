@@ -114,6 +114,7 @@
     <g:FormPanel>
         <g:VerticalPanel addStyleNames="{style.vpanel}">
             <g:Label ui:field="errorLabel" visible="false"></g:Label>
+
             <g:FlowPanel addStyleNames="{style.frame}">
                 <g:FlowPanel addStyleNames="{style.setup}">
                     <g:FlowPanel addStyleNames="{style.logoCell}">
@@ -160,7 +161,6 @@
                         </g:customCell>
                     </g:row>
                 </g:Grid>
-
             </g:FlowPanel>
 
             <g:FlowPanel addStyleNames="{style.nextBtn}">
