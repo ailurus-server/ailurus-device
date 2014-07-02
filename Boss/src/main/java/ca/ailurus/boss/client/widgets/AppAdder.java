@@ -11,6 +11,7 @@ import ca.ailurus.boss.shared.ApplicationServiceAsync;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -62,9 +63,7 @@ public class AppAdder extends Composite {
             @Override
             public void onSuccess(Application[] applications) {
                 setApplications(applications);
-                RootPanel.get().clear();
-                RootPanel.get().add(new Dashboard());
-                // AppEventBus.EVENT_BUS.fireEvent(new ShowDashboardEvent());
+                AppEventBus.EVENT_BUS.fireEvent(new ShowDashboardEvent());
             }
         }));
     }

@@ -55,8 +55,10 @@ public class ApplicationServiceImpl extends RemoteServiceServlet implements Appl
                 throw new RuntimeException("Installation Failed");
             }
 
+            Application[] apps = available.values().toArray(new Application[0]);
             storage.commit();
-            return available.values().toArray(new Application[0]);
+
+            return apps;
         } catch (AppNotFoundException exception) {
             storage.rollback();
             throw exception;
