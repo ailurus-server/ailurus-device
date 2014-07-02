@@ -70,3 +70,7 @@ if ( !defined('ABSPATH') )
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
+
+/** Sets up the slashy thing at the end of the url? **/
+define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST'] . '/wordpress');
+define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST'] . '/wordpress');
