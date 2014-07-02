@@ -36,8 +36,8 @@
         }
 
         .errorLabel {
-            color: red;
-            font-weight: bold;
+        color: red;
+        font-weight: bold;
         }
 
         .setup {
@@ -115,6 +115,7 @@
         <g:VerticalPanel addStyleNames="{style.vpanel}">
             <g:Label ui:field="errorLabel" visible="false"></g:Label>
 
+<<<<<<< HEAD
             <g:FlowPanel addStyleNames="{style.frame}">
                 <g:FlowPanel addStyleNames="{style.setup}">
                     <g:FlowPanel addStyleNames="{style.logoCell}">
@@ -163,6 +164,40 @@
                 </g:Grid>
 
             </g:FlowPanel>
+=======
+            <g:Grid>
+                <g:row addStyleNames="{style.inputRow}">
+                    <g:customCell addStyleNames="{style.labelIconCell}">
+                        <g:Image url="/images/user.png" altText="User Icon"/>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.labelCell}">
+                        <g:Label>Username:</g:Label>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.inputCell}">
+                        <g:TextBox maxLength="30" ui:field="usernameTextBox"/>
+                    </g:customCell>
+                </g:row>
+                <g:row addStyleNames="{style.inputRow}">
+                    <g:customCell addStyleNames="{style.labelIconCell}">
+                        <g:Image url="/images/password.png" altText="Password Icon"/>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.labelCell}">
+                        <g:Label>Password:</g:Label>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.inputCell}">
+                        <g:PasswordTextBox maxLength="30" ui:field="passwordTextBox"/>
+                    </g:customCell>
+                </g:row>
+                <g:row addStyleNames="{style.inputRow}">
+                    <g:customCell addStyleNames="{style.labelCell}">
+                        <g:Label>Confirm Password:</g:Label>
+                    </g:customCell>
+                    <g:customCell addStyleNames="{style.inputCell}">
+                        <g:PasswordTextBox maxLength="30" ui:field="confirmTextBox"/>
+                    </g:customCell>
+                </g:row>
+            </g:Grid>
+>>>>>>> added database to the application
 
             <g:FlowPanel addStyleNames="{style.nextBtn}">
                 <!--<g:Button ui:field="nextButton" visible="true">-->

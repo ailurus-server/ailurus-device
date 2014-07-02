@@ -7,73 +7,74 @@ import ca.ailurus.boss.shared.UserService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import javax.servlet.annotation.WebServlet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 
 @WebServlet("/boss/user")
 public class UserServiceImpl extends RemoteServiceServlet implements UserService {
-    // TODO use a proper database
-    List<User> users = new ArrayList<User>();
-
-    public UserServiceImpl() {
-        users.add(new User("", ""));
-    }
-
     @Override
     public User login(String username, String passwordHash) throws LoginFailure {
-        User user = null;
-        for (User u : users) {
-            if (u.getName().equals(username)) {
-                user = u;
+        try (Storage storage = new Storage()) {
+            Map<String, User> users = storage.users();
+
+            if (!users.containsKey(username)) {
+                throw new LoginFailure("User does not exist");
             }
+
+            User user = new User(users.get(username));
+            if (!user.getPasswordHash().equals(passwordHash)) {
+                throw new LoginFailure("Password is incorrect");
+            }
+
+            return user;
         }
-
-        if (user == null) {
-            throw new LoginFailure("User does not exist");
-        }
-
-        if (!user.getPasswordHash().equals(passwordHash)) {
-            throw new LoginFailure("Password is incorrect");
-        }
-
-        user.setPasswordHash(passwordHash);
-
-        return user;
     }
 
     @Override
     public void logout(User user) {
-        
+        // TODO invalidate user session
     }
 
     @Override
     public void addUser(User user) throws AddUserFailure {
-        int index = findUserByName(user.getName());
-        if (index >= 0) {
-            throw new AddUserFailure("Username has already been taken.");
+        Storage storage = new Storage();
+
+        try {
+            Map<String, User> users = storage.users();
+
+            if (users.containsKey(user.getName())) {
+                throw new AddUserFailure("Username has already been taken.");
+            }
+            users.put(user.getName(), user);
+            storage.commit();
+        } catch (AddUserFailure exception) {
+            storage.rollback();
+            throw exception;
+        } catch (Exception exception) {
+            storage.rollback();
+            // TODO handle generic exceptions
         }
 
-        users.add(user);
     }
 
     @Override
     public boolean removeUser(String username) {
-        int index = findUserByName(username);
-        if (index < 0) {
+        Storage storage = new Storage();
+
+        try {
+            Map<String, User> users = storage.users();
+
+            if (!users.containsKey(username)) {
+                return false;
+            }
+
+            users.remove(username);
+            storage.commit();
+            return true;
+        } catch (Exception exception) {
+            storage.rollback();
+            // TODO handle generic exceptions
             return false;
         }
-
-        users.remove(index);
-        return true;
-    }
-
-    private int findUserByName(String username) {
-        for (int i = 0; i < users.size(); ++i) {
-            if (users.get(i).getName().equals(username)) {
-                return i;
-            }
-        }
-        return -1;
     }
 }

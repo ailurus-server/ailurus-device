@@ -1,12 +1,10 @@
 package ca.ailurus.boss.client.widgets;
 
-import ca.ailurus.boss.client.SyncCallback;
 import ca.ailurus.boss.client.events.ViewAppEvent;
 import ca.ailurus.boss.shared.Application;
 import ca.ailurus.boss.shared.ApplicationService;
 import ca.ailurus.boss.shared.ApplicationServiceAsync;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 

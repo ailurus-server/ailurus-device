@@ -11,14 +11,16 @@ import java.io.IOException;
 public class WelcomeServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/index.jsp");
 
-        // TODO get this value from the database
-        boolean isFirstBoot = true;
+        boolean isInitialized = false;
+        try (Storage storage = new Storage()) {
+            isInitialized = storage.isInitialized();
+        }
 
-        request.setAttribute("isFirstBoot", isFirstBoot);
-        if (isFirstBoot) {
+        request.setAttribute("isInitialized", isInitialized);
+        if (!isInitialized) {
             dispatcher.forward(request, response);
             return;
         }
@@ -32,6 +34,5 @@ public class WelcomeServlet extends HttpServlet {
 
         request.setAttribute("userId", userId);
         dispatcher.forward(request, response);
-        return;
     }
 }

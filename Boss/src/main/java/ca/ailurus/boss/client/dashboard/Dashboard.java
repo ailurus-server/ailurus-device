@@ -18,22 +18,15 @@ import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 
 public class Dashboard extends Composite {
-    interface MyUiBinder extends UiBinder<Widget, Dashboard> {}
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-
-    interface MyEventBinder extends EventBinder<Dashboard> {}
     private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
-
-    private UserServiceAsync userService = GWT.create(UserService.class);
-    private ApplicationServiceAsync appService = GWT.create(ApplicationService.class);
-
     @UiField
     FlowPanel panel;
     @UiField
     Button logoutButton;
-
     User user;
-
+    private UserServiceAsync userService = GWT.create(UserService.class);
+    private ApplicationServiceAsync appService = GWT.create(ApplicationService.class);
     public Dashboard(User user) {
         this.user = user;
 
@@ -108,13 +101,21 @@ public class Dashboard extends Composite {
         appService.getSettings(appId, SyncCallback.create(new AsyncCallback<Setting[]>() {
             @Override
             public void onFailure(Throwable throwable) {
+                Window.alert(throwable.getLocalizedMessage());
                 // TODO log the error somewhere
             }
+
             @Override
             public void onSuccess(Setting[] settings) {
                 panel.clear();
                 panel.add(new AppDetails(app, settings));
             }
         }));
+    }
+
+    interface MyUiBinder extends UiBinder<Widget, Dashboard> {
+    }
+
+    interface MyEventBinder extends EventBinder<Dashboard> {
     }
 }

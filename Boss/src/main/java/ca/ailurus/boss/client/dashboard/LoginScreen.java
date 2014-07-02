@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 
 public class LoginScreen extends Composite {
-    interface MyEventBinder extends EventBinder<LoginScreen> {}
     private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
 
     public LoginScreen() {
@@ -17,5 +16,8 @@ public class LoginScreen extends Composite {
         CenteredFrame frame = new CenteredFrame("Login", "images/login.png", "Login Icon");
         frame.add(new Login());
         initWidget(frame);
+    }
+
+    interface MyEventBinder extends EventBinder<LoginScreen> {
     }
 }

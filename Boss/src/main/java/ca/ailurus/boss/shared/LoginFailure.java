@@ -1,9 +1,10 @@
 package ca.ailurus.boss.shared;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
 
-public class LoginFailure extends Exception implements IsSerializable {
-    public LoginFailure() {}
+public class LoginFailure extends Exception implements Serializable {
+    public LoginFailure() {
+    }
 
     public LoginFailure(String message) {
         super(message);

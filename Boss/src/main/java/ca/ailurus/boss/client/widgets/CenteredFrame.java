@@ -6,16 +6,13 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 
 public class CenteredFrame extends Composite {
-    interface MyUiBinder extends UiBinder<Widget, CenteredFrame> {}
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-
     @UiField
     FlowPanel panel;
     @UiField
     Label titleLabel;
     @UiField
     Image icon;
-
     public CenteredFrame(String title, String iconUrl) {
         this(title, iconUrl, title + " Icon");
     }
@@ -27,13 +24,15 @@ public class CenteredFrame extends Composite {
         icon.setAltText(iconAltText);
     }
 
-
     public void add(Widget widget) {
         panel.add(widget);
     }
 
     public void remove(Widget widget) {
         panel.remove(widget);
+    }
+
+    interface MyUiBinder extends UiBinder<Widget, CenteredFrame> {
     }
 
 

@@ -1,8 +1,12 @@
 package ca.ailurus.boss.shared;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
 
-public class Application implements IsSerializable {
+public class Application implements Serializable {
+    private String name;
+    private String description;
+    private String appId;
+
     public Application() {
     }
 
@@ -35,8 +39,4 @@ public class Application implements IsSerializable {
     public void setId(String appId) {
         this.appId = appId;
     }
-
-    private String name;
-    private String description;
-    private String appId;
 }

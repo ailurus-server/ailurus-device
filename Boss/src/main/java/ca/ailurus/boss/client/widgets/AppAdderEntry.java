@@ -7,17 +7,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AppAdderEntry  extends Composite {
-    interface MyUiBinder extends UiBinder<Widget, AppAdderEntry> {
-    }
-
+public class AppAdderEntry extends Composite {
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-
     @UiField
     FocusPanel panel;
 
@@ -25,10 +20,13 @@ public class AppAdderEntry  extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
     }
 
-
     @UiHandler("panel")
     void onClick(ClickEvent event) {
         AppEventBus.EVENT_BUS.fireEvent(new AddAppRequestEvent());
+    }
+
+
+    interface MyUiBinder extends UiBinder<Widget, AppAdderEntry> {
     }
 
 }

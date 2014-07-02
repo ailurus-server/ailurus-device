@@ -5,7 +5,7 @@
     <title>Ailurus Boss</title>
     <script src="boss/boss.nocache.js"></script>
     <script>
-        var isFirstBoot = <%=request.getAttribute("isFirstBoot")%>;
+        var isInitialized = <%=request.getAttribute("isInitialized")%>;
         var userId = <%=request.getAttribute("userId")%>;
     </script>
 </head>

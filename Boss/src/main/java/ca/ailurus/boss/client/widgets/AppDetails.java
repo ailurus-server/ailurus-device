@@ -14,15 +14,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 public class AppDetails extends Composite {
-    interface MyUiBinder extends UiBinder<Widget, AppDetails> {}
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-
-    private ApplicationServiceAsync appService = GWT.create(ApplicationService.class);
-
     @UiField
     Label errorLabel;
     @UiField
@@ -35,10 +32,9 @@ public class AppDetails extends Composite {
     Button updateButton;
     @UiField
     FlexTable settingsTable;
-
     boolean isValid = true;
     Application application;
-
+    private ApplicationServiceAsync appService = GWT.create(ApplicationService.class);
     public AppDetails(Application app, Setting[] settings) {
         application = app;
 
@@ -96,6 +92,9 @@ public class AppDetails extends Composite {
             public void onSuccess(Void dummy) {
             }
         }));
+    }
+
+    interface MyUiBinder extends UiBinder<Widget, AppDetails> {
     }
 
 }

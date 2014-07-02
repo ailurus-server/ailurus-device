@@ -1,19 +1,19 @@
 package ca.ailurus.boss.shared;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
 
-public class AppNotFoundException extends Exception implements IsSerializable {
+public class AppNotFoundException extends Exception implements Serializable {
+    private String appId;
+
     public AppNotFoundException() {
     }
 
     public AppNotFoundException(String appId) {
-        super("The application with id \"" + appId + "\" is available.");
+        super("The application with id \"" + appId + "\" is not available.");
         this.appId = appId;
     }
 
     public String getAppId() {
         return appId;
     }
-
-    private String appId;
 }

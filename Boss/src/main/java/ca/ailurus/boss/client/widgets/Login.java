@@ -16,11 +16,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 public class Login extends Composite {
-    interface MyUiBinder extends UiBinder<Widget, Login> {}
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-
-    private UserServiceAsync userService = GWT.create(UserService.class);
-
     @UiField
     TextBox usernameTextBox;
     @UiField
@@ -29,7 +25,7 @@ public class Login extends Composite {
     Label errorLabel;
     @UiField
     Button submit;
-
+    private UserServiceAsync userService = GWT.create(UserService.class);
     public Login() {
         initWidget(uiBinder.createAndBindUi(this));
     }
@@ -63,5 +59,8 @@ public class Login extends Composite {
     @UiHandler("passwordTextBox")
     void onPsswordChanged(ChangeEvent event) {
         errorLabel.setVisible(false);
+    }
+
+    interface MyUiBinder extends UiBinder<Widget, Login> {
     }
 }

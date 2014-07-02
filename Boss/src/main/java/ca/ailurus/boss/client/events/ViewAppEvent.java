@@ -7,6 +7,8 @@ import com.google.web.bindery.event.shared.binder.GenericEvent;
  * Created by Me on 2014-06-30.
  */
 public class ViewAppEvent extends GenericEvent {
+    Application application;
+
     public ViewAppEvent(Application app) {
         application = app;
     }
@@ -14,6 +16,4 @@ public class ViewAppEvent extends GenericEvent {
     public Application getApplication() {
         return application;
     }
-
-    Application application;
 }

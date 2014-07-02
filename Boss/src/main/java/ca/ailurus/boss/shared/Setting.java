@@ -1,8 +1,11 @@
 package ca.ailurus.boss.shared;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
 
-public class Setting implements IsSerializable {
+public class Setting implements Serializable {
+    private String name;
+    private String value;
+
     public Setting() {
     }
 
@@ -26,7 +29,4 @@ public class Setting implements IsSerializable {
     public void setValue(String value) {
         this.value = value;
     }
-
-    private String name;
-    private String value;
 }

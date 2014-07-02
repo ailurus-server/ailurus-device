@@ -3,29 +3,29 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
         .inputRow {
-            margin: 10px 0px;
+        margin: 10px 0px;
         }
 
         .labelIconCell {
-            width: 30px;
+        width: 30px;
         }
 
         .labelCell {
-            font-size: 16pt;
-            color: rgb(254,153,65);
+        font-size: 16pt;
+        color: rgb(254,153,65);
         }
 
         .inputCell {
-            width: 200px;
+        width: 200px;
         }
 
         .errorLabel {
-            color: red;
-            font-weight: bold;
+        color: red;
+        font-weight: bold;
         }
 
         .expand-width {
-            width: 100%;
+        width: 100%;
         }
     </ui:style>
 
@@ -39,7 +39,7 @@
                         <g:Image url="images/user.png" altText="User Icon"/>
                     </g:customCell>
                     <g:customCell>
-                        <g:Label addStyleNames="{style.labelCell}">Username </g:Label>
+                        <g:Label addStyleNames="{style.labelCell}">Username</g:Label>
                     </g:customCell>
                     <g:customCell addStyleNames="{style.inputCell}">
                         <g:TextBox maxLength="30" ui:field="usernameTextBox"/>
@@ -50,7 +50,7 @@
                         <g:Image url="images/password.png" altText="Password Icon"/>
                     </g:customCell>
                     <g:customCell>
-                        <g:Label addStyleNames="{style.labelCell}">Password </g:Label>
+                        <g:Label addStyleNames="{style.labelCell}">Password</g:Label>
                     </g:customCell>
                     <g:customCell addStyleNames="{style.inputCell}">
                         <g:PasswordTextBox maxLength="30" ui:field="passwordTextBox"/>
