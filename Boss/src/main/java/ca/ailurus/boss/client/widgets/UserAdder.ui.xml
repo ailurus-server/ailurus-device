@@ -106,7 +106,7 @@
         }
 
         .nextBtn img {
-            position: absolute;
+            margin-top: 40px;
             bottom: 90px;
         }
     </ui:style>
@@ -161,12 +161,15 @@
                         </g:customCell>
                     </g:row>
                 </g:Grid>
-                <g:FlowPanel addStyleNames="{style.nextBtn}">
-                    <g:Image url="/images/navDown.png" altText="Nav Down" pixelSize="50, 50"/>
-                </g:FlowPanel>
+
             </g:FlowPanel>
 
-            <g:Button ui:field="nextButton" visible="false">Next</g:Button>
+            <g:FlowPanel addStyleNames="{style.nextBtn}">
+                <!--<g:Button ui:field="nextButton" visible="true">-->
+                    <!--Next-->
+                <!--</g:Button>-->
+                <g:Image ui:field="nextButton" url="/images/navDown.png" altText="Nav Down" pixelSize="50, 50"/>
+            </g:FlowPanel>
         </g:VerticalPanel>
     </g:FormPanel>
 </ui:UiBinder>

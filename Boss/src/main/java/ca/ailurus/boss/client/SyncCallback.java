@@ -10,7 +10,7 @@ public class SyncCallback {
 
     private static PopupPanel loadingScreen = new PopupPanel(false, true);
     static {
-        loadingScreen.add(new Label("processing..."));
+//        loadingScreen.add(new Label("processing..."));
         loadingScreen.setGlassEnabled(true);
     }
 

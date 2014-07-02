@@ -30,7 +30,7 @@ public class UserAdder extends Composite {
     @UiField
     Label errorLabel;
     @UiField
-    Button nextButton;
+    Image nextButton;
     @UiField
     Grid credentialsGrid;
     @UiField
@@ -87,7 +87,6 @@ public class UserAdder extends Composite {
             }
         }
 
-        nextButton.setVisible(valid);
     }
 
     @UiHandler("nextButton")

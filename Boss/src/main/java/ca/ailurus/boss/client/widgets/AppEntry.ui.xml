@@ -3,8 +3,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
         .title {
-            font-size: 1.5em;
-            font-weight: bold;
+            font-size: 15pt;
         }
         .description {
 

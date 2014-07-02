@@ -28,10 +28,6 @@ public class Dashboard extends Composite {
     private ApplicationServiceAsync appService = GWT.create(ApplicationService.class);
 
     @UiField
-    Label titleLabel;
-    @UiField
-    Image icon;
-    @UiField
     FlowPanel panel;
     @UiField
     Button logoutButton;
@@ -43,10 +39,6 @@ public class Dashboard extends Composite {
 
         eventBinder.bindEventHandlers(this, AppEventBus.EVENT_BUS);
         initWidget(uiBinder.createAndBindUi(this));
-
-        titleLabel.setText("Dashboard");
-        icon.setUrl("images/settings.png");
-        icon.setAltText("Dashboard Icon");
 
         appService.getInstalledApps(SyncCallback.create(new AsyncCallback<Application[]>() {
             @Override

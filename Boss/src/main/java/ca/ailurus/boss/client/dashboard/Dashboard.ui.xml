@@ -5,12 +5,18 @@
     <ui:style>
         .outerPanel {
         width: 750px;
+        margin: 20px;
+        }
+
+        .topLabel {
+        color: white;
+        font-size: 20pt;
+        margin-left: 18px;
+        margin-bottom: 5px;
         }
 
         .innerPanel {
         padding: 10px;
-        background-color: #FFECDA;
-        border-radius: 20px;
         }
     </ui:style>
 
@@ -19,8 +25,8 @@
             <g:HorizontalPanel width="100%">
                 <g:cell horizontalAlignment="ALIGN_LEFT">
                     <g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM">
-                        <g:Image ui:field="icon"/>
-                        <g:Label ui:field="titleLabel"/>
+                        <g:Image url="images/placeholder.png"/>
+                        <g:Label addStyleNames="{style.topLabel}" text="Dashboard"/>
                     </g:HorizontalPanel>
                 </g:cell>
                 <g:cell horizontalAlignment="ALIGN_RIGHT">
