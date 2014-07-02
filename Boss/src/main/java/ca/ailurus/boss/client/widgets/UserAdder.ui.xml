@@ -2,64 +2,169 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
+        * {
+            color: rgb(254, 153, 65);
+        }
+
+        .vpanel {
+            width: 60%;
+            margin: auto;
+        }
+
+        table {
+            table-layout: fixed;
+        }
+
+        .frame {
+            background-color: white;
+            opacity: 0.79;
+            height: 536px;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+        }
+
         .inputRow {
-            margin: 10px 0px;
         }
 
         .labelIconCell {
-            width: 30px;
         }
 
         .labelCell {
-            width: 30px;
         }
 
         .inputCell {
-            width: 200px;
         }
 
         .errorLabel {
             color: red;
             font-weight: bold;
         }
+
+        .setup {
+            height: 100px;
+            margin-left: 35px;
+        }
+
+        .titleLabel {
+            font-size: 28px;
+            padding-top: 22px;
+            color: rgb(254, 153, 65);
+        }
+
+        .logoCell {
+            margin-top: 35px;
+            width: 50px;
+            height: 50px;
+            display: inline;
+            float: left;
+            margin-right: 23px;
+        }
+
+        .titleCell {
+            margin-left: 35px;
+            margin-top: 35px;
+            display: inline;
+        }
+
+        .subtitleCell {
+            font-size: 32px;
+            margin-left: 35px;
+            color: rgb(254, 153, 65);
+        }
+
+        .subtitleLabel {
+
+        }
+
+        .credentials {
+            margin: auto;
+            margin-top: 100px;
+        }
+
+        .confirmPwd {
+            margin: auto;
+            margin-top: 8px;
+        }
+
+        .credentials tr {
+            height: 60px;
+        }
+
+        input {
+            width: 160px;
+            margin-bottom: 4px;
+        }
+
+        .frame .gwt-TextBox, .frame .gwt-PasswordTextBox, .frame input {
+            font-size: 13pt;
+        }
+
+        .nextBtn {
+            width: 50px;
+            height: 50px;
+            margin: auto;
+        }
+
+        .nextBtn img {
+            position: absolute;
+            bottom: 90px;
+        }
     </ui:style>
 
     <g:FormPanel>
-        <g:VerticalPanel>
+        <g:VerticalPanel addStyleNames="{style.vpanel}">
             <g:Label ui:field="errorLabel" visible="false"></g:Label>
 
-            <g:Grid>
-                <g:row addStyleNames="{style.inputRow}">
-                    <g:customCell addStyleNames="{style.labelIconCell}">
-                        <g:Image url="/images/user.png" altText="User Icon"/>
-                    </g:customCell>
-                    <g:customCell addStyleNames="{style.labelCell}">
-                        <g:Label>Username: </g:Label>
-                    </g:customCell>
-                    <g:customCell addStyleNames="{style.inputCell}">
-                        <g:TextBox maxLength="30" ui:field="usernameTextBox"/>
-                    </g:customCell>
-                </g:row>
-                <g:row addStyleNames="{style.inputRow}">
-                    <g:customCell addStyleNames="{style.labelIconCell}">
-                        <g:Image url="/images/password.png" altText="Password Icon"/>
-                    </g:customCell>
-                    <g:customCell addStyleNames="{style.labelCell}">
-                        <g:Label>Password: </g:Label>
-                    </g:customCell>
-                    <g:customCell addStyleNames="{style.inputCell}">
-                        <g:PasswordTextBox maxLength="30" ui:field="passwordTextBox"/>
-                    </g:customCell>
-                </g:row>
-                <g:row addStyleNames="{style.inputRow}">
-                    <g:customCell addStyleNames="{style.labelCell}">
-                        <g:Label>Confirm Password: </g:Label>
-                    </g:customCell>
-                    <g:customCell addStyleNames="{style.inputCell}">
-                        <g:PasswordTextBox maxLength="30" ui:field="confirmTextBox"/>
-                    </g:customCell>
-                </g:row>
-            </g:Grid>
+            <g:FlowPanel addStyleNames="{style.frame}">
+                <g:FlowPanel addStyleNames="{style.setup}">
+                    <g:FlowPanel addStyleNames="{style.logoCell}">
+                        <g:Image url="/images/logo.png" altText="Logo" pixelSize="50, 50"/>
+                    </g:FlowPanel>
+                    <g:FlowPanel addStyleNames="{style.titleCell}">
+                        <g:Label addStyleNames="{style.titleLabel}">Setup</g:Label>
+                    </g:FlowPanel>
+                </g:FlowPanel>
+                <g:FlowPanel addStyleNames="{style.subtitleCell}">
+                    <g:Label addStyleNames="{style.subtitleLabel}">User Account</g:Label>
+                </g:FlowPanel>
+                <g:Grid ui:field="credentialsGrid" addStyleNames="{style.credentials}">
+                    <g:row addStyleNames="{style.inputRow}">
+                        <g:customCell addStyleNames="{style.labelIconCell}" width="34">
+                            <g:Image url="/images/user.png" altText="User Icon"/>
+                        </g:customCell>
+                        <g:customCell addStyleNames="{style.labelCell}">
+                            <g:Label>Username</g:Label>
+                        </g:customCell>
+                        <g:customCell addStyleNames="{style.inputCell}">
+                            <g:TextBox maxLength="30" ui:field="usernameTextBox"/>
+                        </g:customCell>
+                    </g:row>
+                    <g:row addStyleNames="{style.inputRow}">
+                        <g:customCell addStyleNames="{style.labelIconCell}">
+                            <g:Image url="/images/password.png" altText="Password Icon"/>
+                        </g:customCell>
+                        <g:customCell addStyleNames="{style.labelCell}">
+                            <g:Label>Password</g:Label>
+                        </g:customCell>
+                        <g:customCell addStyleNames="{style.inputCell}">
+                            <g:PasswordTextBox maxLength="30" ui:field="passwordTextBox"/>
+                        </g:customCell>
+                    </g:row>
+                </g:Grid>
+                <g:Grid ui:field="credentialsPwd" addStyleNames="{style.confirmPwd}">
+                    <g:row addStyleNames="{style.inputRow}">
+                        <g:customCell addStyleNames="{style.labelCell}">
+                            <g:Label>Confirm Password</g:Label>
+                        </g:customCell>
+                        <g:customCell addStyleNames="{style.inputCell}">
+                            <g:PasswordTextBox maxLength="30" ui:field="confirmTextBox"/>
+                        </g:customCell>
+                    </g:row>
+                </g:Grid>
+                <g:FlowPanel addStyleNames="{style.nextBtn}">
+                    <g:Image url="/images/navDown.png" altText="Nav Down" pixelSize="50, 50"/>
+                </g:FlowPanel>
+            </g:FlowPanel>
 
             <g:Button ui:field="nextButton" visible="false">Next</g:Button>
         </g:VerticalPanel>

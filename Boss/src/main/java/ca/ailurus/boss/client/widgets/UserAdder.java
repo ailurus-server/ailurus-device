@@ -31,9 +31,16 @@ public class UserAdder extends Composite {
     Label errorLabel;
     @UiField
     Button nextButton;
+    @UiField
+    Grid credentialsGrid;
+    @UiField
+    Grid credentialsPwd;
 
     public UserAdder() {
         initWidget(uiBinder.createAndBindUi(this));
+        credentialsGrid.getColumnFormatter().setWidth(0, "48px");
+        credentialsGrid.getColumnFormatter().setWidth(1, "100px");
+        credentialsPwd.getColumnFormatter().setWidth(0, "148px");
     }
 
     @UiHandler("usernameTextBox")

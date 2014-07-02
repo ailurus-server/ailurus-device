@@ -8,6 +8,7 @@ import ca.ailurus.boss.client.widgets.CenteredFrame;
 import ca.ailurus.boss.client.widgets.UserAdder;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 
@@ -18,9 +19,13 @@ public class Initializer extends Composite {
     public Initializer() {
         eventBinder.bindEventHandlers(this, AppEventBus.EVENT_BUS);
 
-        CenteredFrame frame = new CenteredFrame("Add Your First User", "images/userManagement.png", "Add User Icon");
+        HTMLPanel panel = new HTMLPanel("");
+        panel.add(new UserAdder());
+        initWidget(panel);
+
+        /*CenteredFrame frame = new CenteredFrame("Add Your First User", "images/userManagement.png", "Add User Icon");
         frame.add(new UserAdder());
-        initWidget(frame);
+        initWidget(frame);*/
     }
 
     @EventHandler
