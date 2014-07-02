@@ -4,6 +4,7 @@ import ca.ailurus.boss.shared.AppNotFoundException;
 import ca.ailurus.boss.shared.Application;
 import ca.ailurus.boss.shared.ApplicationService;
 import ca.ailurus.boss.shared.Setting;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +47,7 @@ public class ApplicationServiceImpl extends RemoteServiceServlet implements Appl
             installed.put(appId, available.get(appId));
             available.remove(appId);
 
-            String installCommand = "ai-get install /opt/ailurus/packs/" + appId + ".apkg";
+            String installCommand = "/usr/local/bin/ai-get install /opt/ailurus/packs/" + appId + ".apkg";
             Process process = Runtime.getRuntime().exec(installCommand);
             int exitStatus = process.waitFor();
             if (exitStatus != 0) {

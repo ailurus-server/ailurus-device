@@ -12,7 +12,7 @@
     <g:FocusPanel ui:field="panel">
         <g:HorizontalPanel width="100%" verticalAlignment="ALIGN_MIDDLE">
             <g:cell width="120px">
-                <g:Image addStyleNames="{style.icon}" url="./images/apps/add.png"/>
+                <g:Image addStyleNames="{style.icon}" url="images/apps/add.png"/>
             </g:cell>
             <g:cell>
                 <g:Label addStyleNames="{style.prompt}">Install a new application</g:Label>

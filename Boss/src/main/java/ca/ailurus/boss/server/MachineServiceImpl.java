@@ -21,25 +21,27 @@ public class MachineServiceImpl extends RemoteServiceServlet implements MachineS
             users.put(firstUser.getName(), firstUser);
 
             Map<String, Application> available = storage.availableApps();
-            available.put("wordpress",
+            available.put("owncloud", new Application(
+                    "owncloud",
+                    "OwnCloud",
+                    "A tool for you to manage your own files.",
+                    "/owncloud"));
+
+            Map<String, Application> installed = storage.installedApps();
+
+            installed.put("wordpress",
                     new Application(
                             "wordpress",
                             "Wordpress",
                             "An easy to use framework for setting up web pages.",
                             "/wordpress"));
-            available.put("gitlist",
+            installed.put("gitlist",
                     new Application(
                             "gitlist",
                             "gitlist",
                             "An easy to use git manager.",
                             "/gitlist"));
 
-            Map<String, Application> installed = storage.installedApps();
-            installed.put("owncloud", new Application(
-                    "owncloud",
-                    "OwnCloud",
-                    "A tool for you to manage your own files.",
-                    "/owncloud"));
 
             Map<String, Setting[]> settings = storage.settings();
 

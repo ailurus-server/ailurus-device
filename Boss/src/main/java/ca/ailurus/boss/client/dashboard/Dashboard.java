@@ -47,6 +47,10 @@ public class Dashboard extends Composite {
         }));
     }
 
+    public Dashboard() {
+        this(null);
+    }
+
     @UiHandler("logoutButton")
     void onLogout(ClickEvent event) {
         userService.logout(user, SyncCallback.create(new AsyncCallback<Void>() {

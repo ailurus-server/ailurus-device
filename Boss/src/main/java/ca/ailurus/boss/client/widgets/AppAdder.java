@@ -1,6 +1,7 @@
 package ca.ailurus.boss.client.widgets;
 
 import ca.ailurus.boss.client.SyncCallback;
+import ca.ailurus.boss.client.dashboard.Dashboard;
 import ca.ailurus.boss.client.events.AddAppEvent;
 import ca.ailurus.boss.client.events.AppEventBus;
 import ca.ailurus.boss.client.events.ShowDashboardEvent;
@@ -14,6 +15,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 
@@ -60,6 +62,9 @@ public class AppAdder extends Composite {
             @Override
             public void onSuccess(Application[] applications) {
                 setApplications(applications);
+                RootPanel.get().clear();
+                RootPanel.get().add(new Dashboard());
+                // AppEventBus.EVENT_BUS.fireEvent(new ShowDashboardEvent());
             }
         }));
     }

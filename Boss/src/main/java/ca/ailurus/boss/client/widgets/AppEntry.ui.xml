@@ -11,6 +11,9 @@
             margin-right: 25px;
         }
 
+        .flow {
+            margin-left: 40px;
+        }
         .description {
 
         }
@@ -18,10 +21,10 @@
     <g:FocusPanel ui:field="action" width="100%">
         <g:HorizontalPanel width="100%">
             <g:cell width="80px" horizontalAlignment="ALIGN_LEFT">
-                <g:Image width="120px" height="84px" addStyleNames="{style.icon}" ui:field="icon"/>
+                <g:Image width="76" height="84px" addStyleNames="{style.icon}" ui:field="icon"/>
             </g:cell>
             <g:cell horizontalAlignment="ALIGN_LEFT">
-                <g:FlowPanel>
+                <g:FlowPanel addStyleNames="{style.flow}">
                     <g:Label ui:field="title" addStyleNames="{style.title}"></g:Label>
                     <g:Label ui:field="description" addStyleNames="{style.description}"></g:Label>
                 </g:FlowPanel>
