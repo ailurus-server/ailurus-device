@@ -3,17 +3,16 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
         .prompt {
-        font-size: 1.5em;
-        font-weight: bold;
+            font-size: 15pt;
         }
         .icon {
-        width: 100px;
+            margin-right: 25px;
         }
     </ui:style>
     <g:FocusPanel ui:field="panel">
         <g:HorizontalPanel width="100%" verticalAlignment="ALIGN_MIDDLE">
-            <g:cell width="80px">
-                <g:Image url="images/apps/add.png"/>
+            <g:cell width="120px">
+                <g:Image addStyleNames="{style.icon}" url="./images/apps/add.png"/>
             </g:cell>
             <g:cell>
                 <g:Label addStyleNames="{style.prompt}">Install a new application</g:Label>

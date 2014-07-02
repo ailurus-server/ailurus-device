@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.Map;
 
 public class Storage implements AutoCloseable {
-    private static String DATABASE_PATH = "temp.db";
+    private static String DATABASE_PATH = "/opt/ailurus/tmp/temp.db";
 
     private DB db;
 

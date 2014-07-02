@@ -10,15 +10,27 @@ body {
     margin: 0px;
 }
 
+.gwt-Button {
+    border: 0px solid #fe9941;
+    background-color: transparent;
+    font-size: 14pt;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue", Helvetica;
+    color: white;
+}
+
 .gwt-TextBox, .gwt-PasswordTextBox {
     border: 0px solid #fe9941;
     color: #fe9941;
     font-size: 16pt;
-    font-family: "Helvetica Neue", Helvetica;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue", Helvetica;
     border-bottom-width: 1px;
     background-color: transparent;
 }
 
 .gwt-TextBox:focus, .gwt-PasswordTextBox {
+    outline: none;
+}
+
+*:focus {
     outline: none;
 }

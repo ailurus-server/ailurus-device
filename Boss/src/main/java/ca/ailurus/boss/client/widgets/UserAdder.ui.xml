@@ -2,10 +2,6 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
-        * {
-            color: rgb(254, 153, 65);
-        }
-
         .vpanel {
             width: 60%;
             margin: auto;
@@ -30,6 +26,8 @@
         }
 
         .labelCell {
+        color: rgb(254, 153, 65);
+
         }
 
         .inputCell {
@@ -118,7 +116,7 @@
             <g:FlowPanel addStyleNames="{style.frame}">
                 <g:FlowPanel addStyleNames="{style.setup}">
                     <g:FlowPanel addStyleNames="{style.logoCell}">
-                        <g:Image url="/images/logo.png" altText="Logo" pixelSize="50, 50"/>
+                        <g:Image url="images/placeholder-orange.png" altText="Logo" pixelSize="50, 50"/>
                     </g:FlowPanel>
                     <g:FlowPanel addStyleNames="{style.titleCell}">
                         <g:Label addStyleNames="{style.titleLabel}">Setup</g:Label>
@@ -130,10 +128,10 @@
                 <g:Grid ui:field="credentialsGrid" addStyleNames="{style.credentials}">
                     <g:row addStyleNames="{style.inputRow}">
                         <g:customCell addStyleNames="{style.labelIconCell}" width="34">
-                            <g:Image url="/images/user.png" altText="User Icon"/>
+                            <g:Image url="images/user.png" altText="User Icon"/>
                         </g:customCell>
-                        <g:customCell addStyleNames="{style.labelCell}">
-                            <g:Label>Username</g:Label>
+                        <g:customCell>
+                            <g:Label addStyleNames="{style.labelCell}">Username</g:Label>
                         </g:customCell>
                         <g:customCell addStyleNames="{style.inputCell}">
                             <g:TextBox maxLength="30" ui:field="usernameTextBox"/>
@@ -141,10 +139,10 @@
                     </g:row>
                     <g:row addStyleNames="{style.inputRow}">
                         <g:customCell addStyleNames="{style.labelIconCell}">
-                            <g:Image url="/images/password.png" altText="Password Icon"/>
+                            <g:Image url="images/password.png" altText="Password Icon"/>
                         </g:customCell>
-                        <g:customCell addStyleNames="{style.labelCell}">
-                            <g:Label>Password</g:Label>
+                        <g:customCell>
+                            <g:Label addStyleNames="{style.labelCell}">Password</g:Label>
                         </g:customCell>
                         <g:customCell addStyleNames="{style.inputCell}">
                             <g:PasswordTextBox maxLength="30" ui:field="passwordTextBox"/>
@@ -153,8 +151,8 @@
                 </g:Grid>
                 <g:Grid ui:field="credentialsPwd" addStyleNames="{style.confirmPwd}">
                     <g:row addStyleNames="{style.inputRow}">
-                        <g:customCell addStyleNames="{style.labelCell}">
-                            <g:Label>Confirm Password</g:Label>
+                        <g:customCell>
+                            <g:Label addStyleNames="{style.labelCell}">Confirm Password</g:Label>
                         </g:customCell>
                         <g:customCell addStyleNames="{style.inputCell}">
                             <g:PasswordTextBox maxLength="30" ui:field="confirmTextBox"/>
@@ -167,7 +165,7 @@
                 <!--<g:Button ui:field="nextButton" visible="true">-->
                     <!--Next-->
                 <!--</g:Button>-->
-                <g:Image ui:field="nextButton" url="/images/navDown.png" altText="Nav Down" pixelSize="50, 50"/>
+                <g:Image ui:field="nextButton" url="images/navDown.png" altText="Nav Down" pixelSize="50, 50"/>
             </g:FlowPanel>
         </g:VerticalPanel>
     </g:FormPanel>

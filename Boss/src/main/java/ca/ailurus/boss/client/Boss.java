@@ -7,6 +7,7 @@ import ca.ailurus.boss.client.events.InitializeEvent;
 import ca.ailurus.boss.client.events.LoginEvent;
 import ca.ailurus.boss.client.events.LogoutEvent;
 import ca.ailurus.boss.client.firstboot.FirstBoot;
+import ca.ailurus.boss.shared.User;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
