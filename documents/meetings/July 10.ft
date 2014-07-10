@@ -1,0 +1,26 @@
+Earliest presentation date: Aug 8
+
+TODOs:
+- Usability studies
+	- Mockup flow testing
+	- Get users
+- Unit tests
+- CI
+- Install / Uninstall
+- Configuration
+- Security
+- Auto forward/ NatPNP, UPNP
+- App selection
+- Bootstrap
+Won't Fix:
+* DNS
+* Target Price
+* OS
+
+Week 1:
+
+Week 2:
+
+Week 3:
+
+Week 4:
