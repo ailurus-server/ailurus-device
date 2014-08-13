@@ -1,7 +1,8 @@
 .DS_Store
 *.pyc
 target/
-.idea/
+*/.idea/workspace.xml
+*/.idea/tasks.xml
 Thumbs.db
 *.db
 *.db.*
