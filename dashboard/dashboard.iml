@@ -11,6 +11,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.7.2" level="project" />
+    <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-core:4.48" level="project" />
+    <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-jdbc:4.48" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-jetty-http:2.11" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2.external:javax.inject:2.3.0-b05" level="project" />
