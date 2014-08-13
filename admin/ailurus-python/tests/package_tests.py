@@ -1,23 +1,25 @@
-import package
 import unittest
 import mock
+from contextlib import contextmanager
+from ailurus import package
 
+def ContextFor(mock):
+    @contextmanager
+    def Passthrough(pkg):
+        yield mock
+    return Passthrough
 
 class TestPackager(unittest.TestCase):
+
     def setUp(self):
-        self.prepare_patcher = mock.patch('package._PreparePackage')
-        self.os_patcher = mock.patch('package.os.chdir')
-
-        self.mock_prepare = self.prepare_patcher.start()
-        self.mock_os = self.os_patcher.start()
         self.mock_module = mock.Mock()
-
-        self.mock_prepare.return_value = ('/tmp', self.mock_module)
+        self.patcher = mock.patch('ailurus.package.PackageContext', 
+                ContextFor(self.mock_module))
+        self.patcher.start()
         self.test_env = {'Directory': '/opt/ailurus/www/wordpress'}
 
     def tearDown(self):
-        self.prepare_patcher.stop()
-        self.os_patcher.stop()
+        self.patcher.stop()
 
     def testInstallation(self):
         package.InstallPackage('/some/path', self.test_env)
