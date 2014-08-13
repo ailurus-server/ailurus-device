@@ -6,6 +6,41 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 metadata-complete="false"
 version="3.0">
 
-<display-name>Dashboard</display-name>
+    <display-name>Dashboard</display-name>
 
+    <servlet>
+        <servlet-name>ca.ailurus.dashboard.Api</servlet-name>
+    </servlet>
+    <servlet>
+        <servlet-name>ca.ailurus.dashboard.Dashboard</servlet-name>
+        <servlet-class>ca.ailurus.dashboard.Dashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ca.ailurus.dashboard.Welcome</servlet-name>
+        <servlet-class>ca.ailurus.dashboard.Welcome</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ca.ailurus.dashboard.Login</servlet-name>
+        <servlet-class>ca.ailurus.dashboard.Login</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ca.ailurus.dashboard.Api</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ca.ailurus.dashboard.Dashboard</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ca.ailurus.dashboard.Welcome</servlet-name>
+        <url-pattern>/welcome</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ca.ailurus.dashboard.Login</servlet-name>
+        <url-pattern></url-pattern>
+    </servlet-mapping>
 </web-app>
