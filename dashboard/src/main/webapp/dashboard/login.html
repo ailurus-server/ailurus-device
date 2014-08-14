@@ -1,0 +1,22 @@
+<div class="container">
+    <form class="form-signin form-horizontal" role="form">
+        <div class="alert alert-danger" ng-if="alert.msg">
+            <button type="button" class="close" ng-click="dismiss()">&times;</button>
+            {{alert.msg}}
+        </div>
+        <h2 class="form-signin-heading">Sign in to Ailurus</h2>
+        <div class="form-group">
+            <label for="username" class="col-sm-4 control-label">Username</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="username" placeholder="Username" ng-model="cred.username" required autofocus>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-4 control-label">Password</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="password" placeholder="Password" ng-model="cred.password" required>
+            </div>
+        </div>
+        <button class="btn btn-primary col-sm-4 col-sm-offset-4" type="submit" data-ng-click="login()">Sign in</button>
+    </form>
+</div> <!-- /container -->
