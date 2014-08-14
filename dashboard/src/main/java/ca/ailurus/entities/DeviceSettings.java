@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 @DatabaseTable(tableName = "DeviceSettings")
 public class DeviceSettings {
-    @DatabaseField(id = true) Integer id = 0;
-    @DatabaseField Boolean firstBoot = true;
+    @DatabaseField(defaultValue = "0", id = true) Integer id;
+    @DatabaseField(defaultValue = "true") Boolean firstBoot;
 
     public DeviceSettings() {
     }

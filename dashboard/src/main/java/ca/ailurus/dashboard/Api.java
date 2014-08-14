@@ -1,5 +1,6 @@
 package ca.ailurus.dashboard;
 
+import ca.ailurus.dashboard.apis.Accounts;
 import ca.ailurus.dashboard.apis.Device;
 
 import javax.ws.rs.core.Application;
@@ -12,7 +13,7 @@ public class Api extends Application {
     public Set<Class<?>> getClasses() {
         HashSet<Class<?>> classes = new HashSet<>();
         classes.add(Device.class);
-
+        classes.add(Accounts.class);
         return classes;
     }
 }

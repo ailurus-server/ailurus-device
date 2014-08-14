@@ -49,6 +49,12 @@ public class Account {
         return DatabaseManager.getAccountDao().queryForId(name);
     }
 
+    public static Account createAccount(String name, String password) throws SQLException {
+        Account account = new Account(name, password);
+        DatabaseManager.getAccountDao().create(account);
+        return account;
+    }
+
     // Test stub
     public static void main(String args[]) {
         String databaseUrl = "jdbc:sqlite::memory:";

@@ -10,18 +10,20 @@ version="3.0">
 
     <servlet>
         <servlet-name>ca.ailurus.dashboard.Api</servlet-name>
+        <init-param>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </servlet>
+
     <servlet>
         <servlet-name>ca.ailurus.dashboard.Dashboard</servlet-name>
         <servlet-class>ca.ailurus.dashboard.Dashboard</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>ca.ailurus.dashboard.Welcome</servlet-name>
         <servlet-class>ca.ailurus.dashboard.Welcome</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ca.ailurus.dashboard.Login</servlet-name>
-        <servlet-class>ca.ailurus.dashboard.Login</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -40,7 +42,8 @@ version="3.0">
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>ca.ailurus.dashboard.Login</servlet-name>
+        <servlet-name>ca.ailurus.dashboard.Dashboard</servlet-name>
         <url-pattern></url-pattern>
     </servlet-mapping>
+
 </web-app>
