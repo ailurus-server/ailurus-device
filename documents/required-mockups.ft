@@ -1,0 +1,39 @@
+# Mockups Required
+1. (first boot) Welcome Screen
+* friendly introduction
+2. (first boot) Create an account
+* user name, email, password, confirm password fields
+* hints to indicate what needs to be done
+3. (first boot) Pick a Name
+* device name field
+* mention that this will be hostname of device, which is how device will be identified in local network
+4. (first boot) Optional expose online
+* ask if use wants to make device accessible from the internet
+* YES/NO
+5. (first boot) Domain name
+* ask the user to either choose an *.ailurus.ca name, the user's own domain name, or no domain name
+6. (first boot) Confirmation
+* recap the information to the user, with options to change. need to recap user name, device name, domain name
+7. (first boot) Completion
+* explain to user that the first boot has been completed, direct to dashboard
+8. **Dashboard**
+* users
+	* ability to manage users (add, remove)
+	* ability to change password
+	* ability to change name and email
+* app store
+	* ability to browse based on use case
+		* eg. blog, gaming, developer
+	* ability to search apps by name or use case
+	* ability to view detail about app
+	* ability to install apps
+* device
+	* can view hostname, public IP, CPU load, memory load, disk load, network activity, uptime
+	* can change hostname / domain name
+* apps
+	* ability to configure apps
+	* ability to remove apps
+	* ability to enter app
+9. Login screen
+* ability to log in as a user
+* ability to reset password
