@@ -10,16 +10,17 @@
 
     <title data-ng-bind="app.title">Welcome</title>
 
-    <link href="/css/welcome/welcome.css" rel="stylesheet">
+    <link href="webjars/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="webjars/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/welcome/welcome.css" rel="stylesheet">
 
-    <link href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
-    <script src="/webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="/webjars/angularjs/1.2.22/angular.min.js"></script>
-    <script src="/webjars/angularjs/1.2.22/angular-route.js"></script>
+    <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="webjars/angularjs/1.2.22/angular.min.js"></script>
+    <script src="webjars/angularjs/1.2.22/angular-route.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/js/bootstrap/ie10-viewport-bug-workaround.js"></script>
+    <script src="js/bootstrap/ie10-viewport-bug-workaround.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -27,8 +28,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="/js/welcome/app.js"></script>
-    <script src="/js/welcome/controllers.js"></script>
+    <script src="js/welcome/app.js"></script>
+    <script src="js/welcome/controllers.js"></script>
   </head>
 
   <body>

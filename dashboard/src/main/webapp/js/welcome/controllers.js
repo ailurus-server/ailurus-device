@@ -149,7 +149,7 @@ welcomeControllers.controller('ReviewCtrl', [
                online: $scope.data.online,
                url: $scope.getUrl()
             }).success(function(result, status, headers, config) {
-                $location.path('/done');
+                $location.path('done');
             }).error(function(result, status, headers, config) {
                 // TODO display the error somewhere
                 console.log(result);
@@ -158,9 +158,9 @@ welcomeControllers.controller('ReviewCtrl', [
     }
 ]);
 
-welcomeControllers.controller('DoneCtrl', ['$scope', '$location', 'Initializer',
-    function ($scope, $location, Initializer) {
-        $scope.app.title = 'Done Configurationss';
+welcomeControllers.controller('DoneCtrl', ['$scope',
+    function ($scope) {
+        $scope.app.title = 'Done Configurations';
         $scope.app.done = true;
     }
 ]);

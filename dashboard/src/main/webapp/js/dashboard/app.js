@@ -1,31 +1,45 @@
-var welcomeApp = angular.module('dashboardApp',
-    ['ngRoute', 'dashboardControllers']
-);
+var dashboardApp = angular.module('dashboardApp', [
+    'ngRoute',
+    'dashboardControllers',
+]);
 
-welcomeApp.config(['$routeProvider',
+dashboardApp.config(['$routeProvider',
     function($routeProvider) {
-        $routeProvider
-            .when('/', {
-                templateUrl: '/dashboard/dashboard.html',
-                controller: 'AppCtrl',
+        $routeProvider.
+            when('/device', {
+                templateUrl: '/dashboard/device.html',
+                controller: 'DeviceCtrl',
                 access: { requiredLogin: true }
-            })
-            .when('/login', {
-                templateUrl: '/dashboard/login.html',
-                controller: 'LoginCtrl',
-                access: { requiredLogin: false }
-            })
-            .otherwise({
-                redirectTo: '/'
+            }).
+            when('/users', {
+                templateUrl: '/dashboard/device.html',
+                controller: 'UsersCtrl',
+                access: { requiredLogin: true }
+            }).
+            when('/store', {
+                templateUrl: '/dashboard/store.html',
+                controller: 'StoreCtrl',
+                access: { requiredLogin: true }
+            }).
+            when('/support', {
+                templateUrl: '/dashboard/support.html',
+                controller: 'SupportCtrl',
+                access: { requiredLogin: true }
+            }).
+            when('/login', {
+                 templateUrl: '/dashboard/login.html',
+                 controller: 'LoginCtrl',
+                 access: { requiredLogin: false }
+            }).
+            otherwise({
+                redirectTo: '/device'
             });
     }
 ]);
 
-welcomeApp.constant('cfg', {
-    api_base: 'http://localhost:8080/api/',
-});
+dashboardApp.constant('API_BASE', 'api/');
 
-welcomeApp.factory('Session', ['$window', function ($window) {
+dashboardApp.factory('Session', ['$window', function ($window) {
     var session = {
         username: undefined,
         token: undefined,
@@ -44,11 +58,12 @@ welcomeApp.factory('Session', ['$window', function ($window) {
     return session;
 }])
 
-welcomeApp.run(function($rootScope, $location, Session) {
-    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-        Session.loadSession();
-        if (nextRoute.access.requiredLogin && !Session.token) {
-            $location.path("login");
-        }
-    });
-});
+// TODO move login to separate page
+dashboardApp.run(function($rootScope, $location, Session) {
+       $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+           Session.loadSession();
+           if (nextRoute.access.requiredLogin && !Session.token) {
+               $location.path("login");
+           }
+       });
+   });

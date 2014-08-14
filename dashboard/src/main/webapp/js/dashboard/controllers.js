@@ -1,13 +1,81 @@
+'use strict'
+
 var dashboardControllers = angular.module('dashboardControllers', []);
 
-dashboardControllers.controller('AppCtrl', ['$scope',
-    function ($scope) {
-        $scope.app = new Dashboard();
+dashboardControllers.controller('AppCtrl', [
+    '$scope', 'loginUser', 'Session',
+    function ($scope, loginUser, Session) {
+        $scope.user = {
+            name: Session.username
+        }
+        $scope.app = {
+            panel: 'device',
+            showNavBar: false,
+        };
     }
 ]);
 
-dashboardControllers.controller('LoginCtrl', ['cfg', '$scope', '$http', '$location', 'Session',
-    function (cfg, $scope, $http, $location, Session) {
+dashboardControllers.controller('DeviceCtrl', [
+    '$scope', '$location','$anchorScroll',
+    function ($scope, $location, $anchorScroll) {
+        $scope.app.panel = 'device';
+        $scope.app.showNavBar = true;
+
+        $scope.scroll = function(event) {
+            var hash = event.target.hash;
+            $location.hash(hash.substring(1));
+            $anchorScroll();
+            event.preventDefault();
+        };
+    }
+]);
+
+dashboardControllers.controller('UsersCtrl', ['$scope',
+    function ($scope) {
+        $scope.app.panel = 'users';
+        $scope.app.showNavBar = true;
+
+        $scope.scroll = function(event) {
+            var hash = event.target.hash;
+            $location.hash(hash.substring(1));
+            $anchorScroll();
+            event.preventDefault();
+        };
+    }
+]);
+
+dashboardControllers.controller('StoreCtrl', ['$scope',
+    function ($scope) {
+        $scope.app.panel = 'store';
+        $scope.app.showNavBar = true;
+
+        $scope.scroll = function(event) {
+            var hash = event.target.hash;
+            $location.hash(hash.substring(1));
+            $anchorScroll();
+            event.preventDefault();
+        };
+    }
+]);
+
+dashboardControllers.controller('SupportCtrl', ['$scope',
+    function ($scope) {
+        $scope.app.panel = 'support';
+        $scope.app.showNavBar = true;
+
+        $scope.scroll = function(event) {
+            var hash = event.target.hash;
+            $location.hash(hash.substring(1));
+            $anchorScroll();
+            event.preventDefault();
+        };
+    }
+]);
+
+dashboardControllers.controller('LoginCtrl', ['API_BASE', '$scope', '$http', '$location', 'Session',
+    function (API_BASE, $scope, $http, $location, Session) {
+        $scope.app.showNavBar = false;
+
         $scope.alert = {
             type: 'danger',
             msg: ''
@@ -18,7 +86,7 @@ dashboardControllers.controller('LoginCtrl', ['cfg', '$scope', '$http', '$locati
                 return;
             }
             $http({
-                url: cfg.api_base + 'accounts/' + $scope.cred.username + '/login',
+                url: API_BASE + 'accounts/' + $scope.cred.username + '/login',
                 data: $scope.cred,
                 method: 'POST'})
             .success(function(data) {

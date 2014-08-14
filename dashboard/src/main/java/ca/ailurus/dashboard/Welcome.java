@@ -25,7 +25,7 @@ public class Welcome extends HttpServlet {
         boolean initialized = settings.initialized;
 
         if (initialized) {
-            response.sendRedirect("/");
+            response.sendRedirect("/dashboard");
             return;
         }
 
