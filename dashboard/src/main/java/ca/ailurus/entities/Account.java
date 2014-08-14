@@ -49,10 +49,24 @@ public class Account {
         return DatabaseManager.getAccountDao().queryForId(name);
     }
 
-    public static Account createAccount(String name, String password) throws SQLException {
+    public static Account create(String name, String password) throws SQLException {
         Account account = new Account(name, password);
         DatabaseManager.getAccountDao().create(account);
         return account;
+    }
+
+    public static void delete(String name) throws SQLException {
+        DatabaseManager.getAccountDao().deleteById(name);
+    }
+
+    public static void update(String name, String newName, String newPassword) throws SQLException {
+        Account account = getAccount(name);
+        if (!name.equalsIgnoreCase(newName)){
+            DatabaseManager.getAccountDao().updateId(account, newName);
+        }
+        account.setUserName(newName);
+        account.setPassword(newPassword);
+        DatabaseManager.getAccountDao().update(account);
     }
 
     // Test stub
