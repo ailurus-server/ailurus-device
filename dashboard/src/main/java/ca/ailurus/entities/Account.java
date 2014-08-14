@@ -11,15 +11,17 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * A database entry or a user
  */
 @DatabaseTable(tableName = "Accounts")
 public class Account {
-    private static Dao<Account, String> dao = DatabaseManager.createDaoFor(Account.class);
+    private static Dao<Account, Integer> dao = DatabaseManager.createDaoFor(Account.class);
 
-    @DatabaseField(id = true) public String userName;
+    @DatabaseField(generatedId = true) public Integer id;
+    @DatabaseField(unique = true) public String userName;
     @DatabaseField public String password; // TODO: Replace with password hash
 
     public Account() {
@@ -30,8 +32,13 @@ public class Account {
         this.password = password;
     }
 
+
     public static Account get(String name) throws SQLException {
-        return dao.queryForId(name);
+        List<Account> accounts = dao.queryForEq("userName", name);
+        if (accounts.size() != 1) {
+            return null;
+        }
+        return accounts.get(0);
     }
 
     public static Account create(String name, String password) throws SQLException {
@@ -41,14 +48,11 @@ public class Account {
     }
 
     public static void delete(String name) throws SQLException {
-        dao.deleteById(name);
+        dao.delete(get(name));
     }
 
     public static void update(String name, String newName, String newPassword) throws SQLException {
         Account account = get(name);
-        if (!name.equalsIgnoreCase(newName)){
-            dao.updateId(account, newName);
-        }
         account.userName = newName;
         account.password = newPassword;
         dao.update(account);

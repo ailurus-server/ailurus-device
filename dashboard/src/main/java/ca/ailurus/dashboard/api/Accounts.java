@@ -68,8 +68,9 @@ public class Accounts {
             if (null != account) {
                 account.userName = newUserName;
                 account.password = newPassword;
+                return new Status("ok", "successfully updated");
             }
-            return new Status("ok", "successfully updated");
+            return new Status("error", "invalid account");
         } catch (SQLException e) {
             return new Status("error", e.toString());
         }
