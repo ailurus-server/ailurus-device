@@ -77,6 +77,8 @@ server {
     #location ~ /\.ht {
     #   deny all;
     #}
+
+    include /opt/ailurus/nginx-confs/*.conf;
 }
 
 

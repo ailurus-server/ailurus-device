@@ -1,7 +1,9 @@
 #!/bin/sh
 
 echo "Creating directories"
-mkdir -p /opt/ailurus/www/
+mkdir -p /opt/ailurus/www
+mkdir -p /opt/ailurus/admin
+mkdir -p /opt/ailurus/nginx-confs
 mkdir -p /opt/ailurus/tmp/cache
 
 echo "<html>The requested page could not be found.</html>" > /opt/ailurus/www/404.html
