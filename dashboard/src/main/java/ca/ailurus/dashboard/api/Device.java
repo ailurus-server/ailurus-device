@@ -1,4 +1,4 @@
-package ca.ailurus.dashboard;
+package ca.ailurus.dashboard.api;
 
 import ca.ailurus.entities.DeviceSettings;
 

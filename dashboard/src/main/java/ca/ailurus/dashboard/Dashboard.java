@@ -2,6 +2,7 @@ package ca.ailurus.dashboard;
 
 import ca.ailurus.entities.DeviceSettings;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ public class Dashboard extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        /*
         DeviceSettings settings;
 
         try {
@@ -25,9 +28,10 @@ public class Dashboard extends HttpServlet {
             response.sendRedirect("/welcome");
             return;
         }
+        */
 
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().print("This is the Dashboard");
+        String jspFile = "/WEB-INF/dashboard.jsp";
+        RequestDispatcher jspDispatch = getServletContext().getRequestDispatcher(jspFile);
+        jspDispatch.forward(request, response);
     }
 }

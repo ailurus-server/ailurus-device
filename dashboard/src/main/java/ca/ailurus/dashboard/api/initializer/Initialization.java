@@ -1,4 +1,4 @@
-package ca.ailurus.dashboard.initializer;
+package ca.ailurus.dashboard.api.initializer;
 
 public class Initialization {
     public String username;

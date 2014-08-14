@@ -8,8 +8,6 @@ welcomeApp.config(['$routeProvider',
         $routeProvider.
             when('/', {
             }).
-            when('/account', {
-            }).
             otherwise({
                 redirectTo: '/'
             });

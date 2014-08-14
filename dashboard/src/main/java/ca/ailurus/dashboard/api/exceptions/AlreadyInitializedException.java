@@ -1,4 +1,4 @@
-package ca.ailurus.dashboard.exceptions;
+package ca.ailurus.dashboard.api.exceptions;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;

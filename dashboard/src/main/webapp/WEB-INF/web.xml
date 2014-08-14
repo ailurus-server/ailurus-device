@@ -43,11 +43,6 @@ version="3.0">
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>ca.ailurus.dashboard.Dashboard</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
         <servlet-name>ca.ailurus.dashboard.Welcome</servlet-name>
         <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
@@ -56,5 +51,4 @@ version="3.0">
         <servlet-name>ca.ailurus.dashboard.Dashboard</servlet-name>
         <url-pattern></url-pattern>
     </servlet-mapping>
-
 </web-app>

@@ -1,7 +1,7 @@
-package ca.ailurus.dashboard;
+package ca.ailurus.dashboard.api;
 
-import ca.ailurus.dashboard.exceptions.AlreadyInitializedException;
-import ca.ailurus.dashboard.initializer.Initialization;
+import ca.ailurus.dashboard.api.exceptions.AlreadyInitializedException;
+import ca.ailurus.dashboard.api.initializer.Initialization;
 import ca.ailurus.entities.DeviceSettings;
 
 import javax.ws.rs.*;

@@ -1,5 +1,9 @@
 package ca.ailurus.dashboard;
 
+import ca.ailurus.dashboard.api.Accounts;
+import ca.ailurus.dashboard.api.Device;
+import ca.ailurus.dashboard.api.Initializer;
+
 import javax.ws.rs.core.Application;
 
 import java.util.HashSet;

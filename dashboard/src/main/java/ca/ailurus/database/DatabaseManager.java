@@ -11,7 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 
 public class DatabaseManager {
-    final private static String DATABASE_URL = "jdbc:sqlite:/opt/ailurus/admin/admin.db";
+    final private static String DATABASE_URL = "jdbc:sqlite::memory:";
     private static ConnectionSource connectionSource = null;
 
     private static void initializeDatabase() {
