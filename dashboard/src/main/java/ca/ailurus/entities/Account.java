@@ -17,11 +17,12 @@ import java.sql.SQLException;
  */
 @DatabaseTable(tableName = "Accounts")
 public class Account {
-    @DatabaseField(id = true) String userName;
-    @DatabaseField String password; // TODO: Replace with password hash
+    private static Dao<Account, String> dao = DatabaseManager.createDaoFor(Account.class);
+
+    @DatabaseField(id = true) public String userName;
+    @DatabaseField public String password; // TODO: Replace with password hash
 
     public Account() {
-
     }
 
     public Account(String name, String password) {
@@ -29,62 +30,27 @@ public class Account {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public static Account getAccount(String name) throws SQLException {
-        return DatabaseManager.getAccountDao().queryForId(name);
+    public static Account get(String name) throws SQLException {
+        return dao.queryForId(name);
     }
 
     public static Account create(String name, String password) throws SQLException {
         Account account = new Account(name, password);
-        DatabaseManager.getAccountDao().create(account);
+        dao.create(account);
         return account;
     }
 
     public static void delete(String name) throws SQLException {
-        DatabaseManager.getAccountDao().deleteById(name);
+        dao.deleteById(name);
     }
 
     public static void update(String name, String newName, String newPassword) throws SQLException {
-        Account account = getAccount(name);
+        Account account = get(name);
         if (!name.equalsIgnoreCase(newName)){
-            DatabaseManager.getAccountDao().updateId(account, newName);
+            dao.updateId(account, newName);
         }
-        account.setUserName(newName);
-        account.setPassword(newPassword);
-        DatabaseManager.getAccountDao().update(account);
-    }
-
-    // Test stub
-    public static void main(String args[]) {
-        String databaseUrl = "jdbc:sqlite::memory:";
-        try {
-            ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
-            Dao<Account, String> accountDao = DaoManager.createDao(connectionSource, Account.class);
-            TableUtils.createTableIfNotExists(connectionSource, Account.class);
-
-            Account richard = new Account("Richard", "pass");
-            accountDao.createIfNotExists(richard);
-
-            Account queried = accountDao.queryForId("Richard");
-            System.out.println(queried.getUserName());
-            connectionSource.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        account.userName = newName;
+        account.password = newPassword;
+        dao.update(account);
     }
 }

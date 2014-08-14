@@ -1,4 +1,4 @@
-package ca.ailurus.dashboard.apis;
+package ca.ailurus.dashboard;
 
 import ca.ailurus.entities.Account;
 
@@ -25,8 +25,8 @@ public class Accounts {
     public Status login(@PathParam("username") String userName,
                          @FormParam("password") String password) {
         try {
-            Account account = Account.getAccount(userName);
-            if (null == account || !account.getPassword().equals(password)) {
+            Account account = Account.get(userName);
+            if (null == account || !account.password.equals(password)) {
                 return new Status("error", "invalid credentials");
             }
             return new Status("ok", "login succeeded");
@@ -64,10 +64,10 @@ public class Accounts {
                          @FormParam("username") String newUserName,
                          @FormParam("password") String newPassword) {
         try {
-            Account account = Account.getAccount(userName);
+            Account account = Account.get(userName);
             if (null != account) {
-                account.setUserName(newUserName);
-                account.setPassword(newPassword);
+                account.userName = newUserName;
+                account.password = newPassword;
             }
             return new Status("ok", "successfully updated");
         } catch (SQLException e) {

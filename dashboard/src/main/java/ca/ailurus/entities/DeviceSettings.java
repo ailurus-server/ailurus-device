@@ -9,39 +9,26 @@ import java.sql.SQLException;
 
 @DatabaseTable(tableName = "DeviceSettings")
 public class DeviceSettings {
-    @DatabaseField(defaultValue = "0", id = true) Integer id;
-    @DatabaseField(defaultValue = "true") Boolean firstBoot;
+    private static Dao<DeviceSettings, Integer> dao =
+            DatabaseManager.createDaoFor(DeviceSettings.class);
 
-    public DeviceSettings() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Boolean getFirstBoot() {
-        return firstBoot;
-    }
-
-    public void setFirstBoot(Boolean firstBoot) {
-        this.firstBoot = firstBoot;
-    }
+    @DatabaseField(id = true) public int id = 0;
+    @DatabaseField() public boolean initialized = false;
 
     private static DeviceSettings defaultSettings() {
         return new DeviceSettings();
     }
 
     public static DeviceSettings getSettings() throws SQLException {
-        Dao<DeviceSettings, Integer> deviceDao = DatabaseManager.getDeviceDao();
-        DeviceSettings settings = deviceDao.queryForId(0);
+        DeviceSettings settings = dao.queryForId(0);
         if (null == settings) {
             settings = defaultSettings();
-            deviceDao.createIfNotExists(settings);
+            dao.createIfNotExists(settings);
         }
         return settings;
+    }
+
+    public static void update(DeviceSettings settings) throws SQLException {
+        dao.update(settings);
     }
 }

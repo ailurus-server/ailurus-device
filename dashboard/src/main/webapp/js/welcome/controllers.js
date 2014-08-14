@@ -1,7 +1,5 @@
 'use strict'
 
-var AILURUS_SUFFIX = '.ailurus.ca';
-
 var welcomeControllers = angular.module('welcomeControllers', []);
 
 welcomeControllers.controller('AppCtrl', ['$scope',
@@ -124,14 +122,15 @@ welcomeControllers.controller('UrlCtrl', ['$scope',
     }
 ]);
 
-welcomeControllers.controller('ReviewCtrl', ['$scope', '$location', 'Initializer',
-    function ($scope, $location, Initializer) {
+welcomeControllers.controller('ReviewCtrl', [
+    '$scope', '$location', '$http', 'AILURUS_DOMAIN', 'DEVICE_INIT_URL',
+    function ($scope, $location, $http, AILURUS_DOMAIN, DEVICE_INIT_URL) {
         $scope.app.title = 'Review Your Changes';
         $scope.app.setStep(5);
         $scope.getUrl = function() {
             switch ($scope.data.urlType) {
                 case 'ailurus':
-                    return $scope.data.subdomain + AILURUS_SUFFIX;
+                    return $scope.data.subdomain + AILURUS_DOMAIN;
                 case 'own':
                     return $scope.data.url ;
                 case 'none':
@@ -142,16 +141,19 @@ welcomeControllers.controller('ReviewCtrl', ['$scope', '$location', 'Initializer
             }
         };
         $scope.submit = function() {
-            /*Initializer.submit({
+            $http.post(DEVICE_INIT_URL, {
                username: $scope.data.username,
                email: $scope.data.email,
                password: $scope.data.password,
                hostname: $scope.data.hostname,
                online: $scope.data.online,
                url: $scope.getUrl()
-            });*/
-
-            $location.path('/done');
+            }).success(function(result, status, headers, config) {
+                $location.path('/done');
+            }).error(function(result, status, headers, config) {
+                // TODO display the error somewhere
+                console.log(result);
+            });
         }
     }
 ]);

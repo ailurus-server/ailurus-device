@@ -2,9 +2,11 @@
 
 var welcomeApp = angular.module('welcomeApp', [
     'ngRoute',
-    'welcomeControllers',
-    'welcomeServices'
+    'welcomeControllers'
 ]);
+
+welcomeApp.value('AILURUS_DOMAIN', 'ailurus.ca');
+welcomeApp.value('DEVICE_INIT_URL', '/api/init');
 
 welcomeApp.config(['$routeProvider',
     function($routeProvider) {

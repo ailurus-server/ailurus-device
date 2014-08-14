@@ -14,17 +14,9 @@ public class DatabaseManager {
     final private static String DATABASE_URL = "jdbc:sqlite:/opt/ailurus/admin/admin.db";
     private static ConnectionSource connectionSource = null;
 
-    private static Dao<Account, String> accountDao;
-    private static Dao<DeviceSettings, Integer> deviceDao;
-
     private static void initializeDatabase() {
         try {
             connectionSource = new JdbcConnectionSource(DATABASE_URL);
-            TableUtils.createTableIfNotExists(connectionSource, Account.class);
-            TableUtils.createTableIfNotExists(connectionSource, DeviceSettings.class);
-
-            accountDao = DaoManager.createDao(connectionSource, Account.class);
-            deviceDao = DaoManager.createDao(connectionSource, DeviceSettings.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -34,15 +26,13 @@ public class DatabaseManager {
         initializeDatabase();
     }
 
-    public static ConnectionSource getConnectionSource() {
-        return connectionSource;
-    }
-
-    public static Dao<Account, String> getAccountDao() {
-        return accountDao;
-    }
-
-    public static Dao<DeviceSettings, Integer> getDeviceDao() {
-        return deviceDao;
+    public static <D extends Dao<T,?>,T> D createDaoFor(Class<T> tClass) {
+        try {
+            TableUtils.createTableIfNotExists(connectionSource, tClass);
+            return DaoManager.createDao(connectionSource, tClass);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
