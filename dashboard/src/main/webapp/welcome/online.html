@@ -1,0 +1,52 @@
+<div class="container">
+
+    <div class="page-header">
+        <h2>Get your device online</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead text-muted">Would you like to make your device accessible from the internet?</p>
+            <p>
+                <big>
+                    If you press <strong>Yes</strong>, anyone with your IP address or
+                    URL can access your device.
+                </big>
+            </p>
+            <p>
+                <big>
+                    If you press <strong>No</strong>, only people in your local area
+                    network can access it.
+                </big>
+            </p>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="text-center">
+                <a class="btn btn-lg"
+                   data-ng-class="(data.online === false) ? 'btn-primary' : 'btn-default'"
+                   data-ng-click="setOnline(false)"
+                   href="#/review"
+                   role="button">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    No
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="text-center">
+                <a class="btn btn-lg"
+                   data-ng-class="(data.online === true) ? 'btn-primary' : 'btn-default'"
+                   data-ng-click="setOnline(true)"
+                   href="#/url"
+                   role="button">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Yes
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

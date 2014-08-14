@@ -8,6 +8,17 @@ version="3.0">
 
     <display-name>Dashboard</display-name>
 
+    <!-- TODO remove this section on deployment -->
+    <servlet>
+        <!-- Override init parameter to avoid nasty -->
+        <!-- file locking issue on windows.         -->
+        <servlet-name>default</servlet-name>
+        <init-param>
+            <param-name>useFileMappedBuffer</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </servlet>
+
     <servlet>
         <servlet-name>ca.ailurus.dashboard.Api</servlet-name>
         <init-param>

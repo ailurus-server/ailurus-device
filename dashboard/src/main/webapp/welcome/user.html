@@ -1,0 +1,155 @@
+<div class="container">
+    <div class="page-header">
+        <h2>Create your first user</h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead text-muted">
+                Let's create your first user for this device.
+            </p>
+        </div>
+    </div>
+    <br>
+    <form class="form-horizontal" role="form" name="userForm">
+        <div class="row form-group has-feedback"
+             data-ng-class="{'has-success': userForm.username.$valid,
+                             'has-error': userForm.username.$dirty &&
+                                          userForm.username.$invalid}">
+            <label for="usernameInput"
+                   class="col-sm-3 col-md-3 control-label">Username</label>
+
+            <div class="col-sm-9 col-md-6">
+                <input type="text"
+                       name="username"
+                       id="usernameInput"
+                       class="form-control"
+                       placeholder="Username"
+                       maxlength="40"
+                       data-ng-model="data.username"
+                       data-ng-minlength="3"
+                       data-ng-maxlength="40"
+                       data-ng-required="true"
+                       data-ng-pattern="/^\w+$/">
+                    <span class="glyphicon glyphicon-ok form-control-feedback"
+                          data-ng-show="userForm.username.$valid"></span>
+                    <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"
+                          data-ng-show="userForm.username.$dirty &&
+                                        userForm.username.$invalid"></span>
+
+                <div class="help-block"
+                     data-ng-show="userForm.username.$invalid &&
+                                !userForm.username.$error.required">
+                    Username needs to be 3 to 40 letters or numbers.
+                </div>
+            </div>
+            <div class="hidden-xs hidden-sm col-md-3"></div>
+        </div>
+        <div class="row form-group has-feedback"
+             data-ng-class="{'has-success': userForm.email.$valid,
+                                 'has-error': userForm.email.$dirty &&
+                                              userForm.email.$invalid}">
+            <label for="emailInput"
+                   class="col-sm-3 col-md-3 control-label">Email</label>
+
+            <div class="col-sm-9 col-md-6">
+                <input type="email"
+                       name="email"
+                       id="emailInput"
+                       class="form-control"
+                       placeholder="Email"
+                       maxlength="40"
+                       data-ng-model="data.email"
+                       data-ng-required="true">
+                    <span class="glyphicon glyphicon-ok form-control-feedback"
+                          data-ng-show="userForm.email.$valid"></span>
+                    <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"
+                          data-ng-show="userForm.email.$dirty &&
+                                        userForm.email.$invalid"></span>
+
+                <div class="help-block"
+                     data-ng-show="userForm.email.$invalid &&
+                                !userForm.email.$error.required">
+                    Email address needs to contain the '@' sign.
+                </div>
+            </div>
+            <div class="hidden-xs hidden-sm col-md-3"></div>
+        </div>
+        <div class="row form-group has-feedback"
+             data-ng-class="{'has-success': userForm.password.$valid,
+                                 'has-error': userForm.password.$dirty &&
+                                              userForm.password.$invalid}">
+            <label for="passwordInput"
+                   class="col-sm-3 col-md-3 control-label">Password</label>
+
+            <div class="col-sm-9 col-md-6">
+                <input type="password"
+                       name="password"
+                       id="passwordInput"
+                       class="form-control"
+                       placeholder="Password"
+                       maxlength="40"
+                       data-ng-model="data.password"
+                       data-ng-minlength="7"
+                       data-ng-maxlength="40"
+                       data-ng-required="true">
+                    <span class="glyphicon glyphicon-ok form-control-feedback"
+                          data-ng-show="userForm.password.$valid"></span>
+                    <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"
+                          data-ng-show="userForm.password.$dirty &&
+                                        userForm.password.$invalid"></span>
+
+                <div class="help-block"
+                     data-ng-show="userForm.password.$invalid &&
+                                !userForm.password.$error.required">
+                    Password needs to between 7 to 40 characters long.
+                </div>
+            </div>
+            <div class="hidden-xs hidden-sm col-md-3"></div>
+        </div>
+        <div class="row form-group has-feedback"
+             data-ng-class="{'has-success': userForm.confirm.$valid,
+                                 'has-error': userForm.confirm.$dirty &&
+                                              userForm.confirm.$invalid}">
+            <label for="confirmInput"
+                   class="col-sm-3 col-md-3 control-label">Confirm Password</label>
+
+            <div class="col-sm-9 col-md-6">
+                <input type="password"
+                       name="confirm"
+                       id="confirmInput"
+                       class="form-control"
+                       placeholder="Confirm Password"
+                       maxlength="40"
+                       data-ng-model="data.confirmation"
+                       data-ng-minlength="7"
+                       data-ng-maxlength="40"
+                       data-ng-required="true"
+                       data-ng-change="userForm.confirm.$setValidity('matches',
+                                           data.confirmation === data.password)">
+                    <span class="glyphicon glyphicon-ok form-control-feedback"
+                          data-ng-show="userForm.confirm.$valid"></span>
+                    <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"
+                          data-ng-show="userForm.confirm.$dirty &&
+                                        userForm.confirm.$invalid"></span>
+
+                <div class="help-block"
+                     data-ng-show="userForm.confirm.$invalid &&
+                                !userForm.confirm.$error.required">
+                    Password confirmation does not match password.
+                </div>
+            </div>
+            <div class="hidden-xs hidden-sm col-md-3"></div>
+        </div>
+    </form>
+    <br>
+    <div class="row">
+        <p class="text-center">
+            <a class="btn btn-lg btn-primary"
+               data-ng-class="{disabled: !userForm.$valid}"
+               href="#/name"
+               role="button">
+                Next <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,145 @@
+<div class="container">
+    <div class="page-header">
+        <h2>Give your device a URL</h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead text-muted">
+                With a URL, your device will be easier for other people to remember.
+                <br>
+                Otherwise, they will have to memorize your device's IP address.
+            </p>
+            <p>
+                <big>
+                    You can choose to use an Ailurus URL,
+                    a URL that you already own or no URL for your device.
+                </big>
+            </p>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-block"
+                    data-ng-class="data.urlType == 'ailurus' ? 'btn-primary' : 'btn-default'"
+                    data-ng-click="selectUrlType('ailurus')">
+                Ailurus URL
+            </button>
+            <button type="button" class="btn btn-block"
+                    data-ng-class="data.urlType == 'own' ? 'btn-primary' : 'btn-default'"
+                    data-ng-click="selectUrlType('own')">
+                Your Own URL
+            </button>
+            <button type="button" class="btn btn-block"
+                    data-ng-class="data.urlType == 'none' ? 'btn-primary' : 'btn-default'"
+                    data-ng-click="selectUrlType('none')">
+                No URL
+            </button>
+        </div>
+        <div class="col-sm-9">
+            <form class="form" role="form" name="ailurusForm" data-ng-show="data.urlType == 'ailurus'">
+                <div class="form-group has-feedback"
+                     data-ng-class="{'has-success': ailurusForm.subdomain.$valid,
+                             'has-error': ailurusForm.subdomain.$dirty &&
+                                          ailurusForm.subdomain.$invalid}">
+                    <div class="row">
+                        <div class="col-xs-9 no-right-padding">
+                            <label for="subdomainInput" class="control-label">
+                                Please enter your desired subdomain
+                            </label>
+                            <input type="text"
+                                   name="subdomain"
+                                   id="subdomainInput"
+                                   class="form-control"
+                                   placeholder="Subdomain"
+                                   maxlength="40"
+                                   data-ng-model="data.subdomain"
+                                   data-ng-maxlength="40"
+                                   data-ng-required="true"
+                                   data-ng-pattern="/^(\w|-)+$/">
+                            <span class="glyphicon glyphicon-ok form-control-feedback"
+                                  data-ng-show="ailurusForm.subdomain.$valid"></span>
+                            <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"
+                                  data-ng-show="ailurusForm.subdomain.$dirty &&
+                                                ailurusForm.subdomain.$invalid"></span>
+                            <div class="help-block"
+                                 data-ng-show="ailurusForm.subdomain.$invalid &&
+                                      !ailurusForm.subdomain.$error.required">
+                                Subdomain can only contain letters, numbers or dashes.
+                            </div>
+                        </div>
+                        <div class="col-xs-3 no-left-padding">
+                            <p class="lead help-text">
+                                <br>
+                                <small class="text-muted">.ailurus.ca</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form class="form" role="form" name="ownForm" data-ng-show="data.urlType == 'own'">
+                <div class="form-group has-feedback"
+                     data-ng-class="{'has-success': ownForm.url.$valid,
+                                 'has-error': ownForm.url.$dirty &&
+                                              ownForm.url.$invalid}">
+                    <label for="urlInput" class="control-label">
+                        Please enter the URL that you already own
+                    </label>
+                    <input type="text"
+                           name="url"
+                           id="urlInput"
+                           class="form-control"
+                           placeholder="URL"
+                           maxlength="40"
+                           data-ng-model="data.url"
+                           data-ng-maxlength="40"
+                           data-ng-required="true">
+                        <span class="glyphicon glyphicon-ok form-control-feedback"
+                              data-ng-show="ownForm.url.$valid"></span>
+                        <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"
+                              data-ng-show="ownForm.url.$dirty &&
+                                            ownForm.url.$invalid"></span>
+                </div>
+            </form>
+            <div data-ng-show="data.urlType == 'none'">
+                <p>
+                    <big>
+                        Are you sure you don't want an URL?
+                    </big>
+                </p>
+
+                <p class="text-muted">
+                    <big>
+                        Without an URL, anyone who wants to access your device will have
+                        to use the IP address of the device.
+                    </big>
+                </p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="text-center">
+                <a class="btn btn-lg btn-default"
+                   href="#/online"
+                   role="button">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    Back
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="text-center">
+                <a class="btn btn-lg btn-primary"
+                   data-ng-class="{disabled: !canContinue()}"
+                   href="#/review"
+                   role="button">
+                    Confirm
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="container">
+
+    <div class="page-header">
+        <h2>Review your configurations</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead text-muted">
+                Great, we are almost done. Let's review your configurations before
+                we apply them.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3 text-right no-right-padding">
+            <strong>Username</strong>
+        </div>
+        <div class="col-xs-6 text-left">
+             {{data.username}}
+        </div>
+        <div class="col-xs-3">
+            <a class="btn btn-sm btn-default" href="#/user" role="button">
+                <span class="glyphicon glyphicon-wrench"></span>
+                Change
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3 text-right no-right-padding">
+            <strong>Device Name</strong>
+        </div>
+        <div class="col-xs-6 text-left">
+            {{data.hostname}}
+        </div>
+        <div class="col-xs-3">
+            <a class="btn btn-sm btn-default" href="#/name" role="button">
+                <span class="glyphicon glyphicon-wrench"></span>
+                Change
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3 text-right no-right-padding">
+            <strong>Expose Online</strong>
+        </div>
+        <div class="col-xs-6 text-left">
+            {{data.online ? 'Yes' : 'No'}}
+        </div>
+        <div class="col-xs-3">
+            <a class="btn btn-sm btn-default" href="#/online" role="button">
+                <span class="glyphicon glyphicon-wrench"></span>
+                Change
+            </a>
+        </div>
+    </div>
+    <div class="row" data-ng-show="data.online">
+        <div class="col-xs-3 text-right no-right-padding">
+            <strong>URL</strong>
+        </div>
+        <div class="col-xs-6 text-left">
+            {{getUrl() || 'None'}}
+        </div>
+        <div class="col-xs-3">
+            <a class="btn btn-sm btn-default" href="#/url" role="button">
+                <span class="glyphicon glyphicon-wrench"></span>
+                Change
+            </a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="text-center">
+                <button type="button"
+                        class="btn btn-lg btn-primary"
+                        data-ng-click="submit()">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="jumbotron">
+        <h1>Your device is now ready to use.</h1>
+
+        <br>
+
+        <p class="text-muted"
+           data-ng-show="data.online && (data.urlType == 'ailurus' || data.urlType == 'own')">
+            Since you have just set the URL for this device,
+            you may have to wait a few minutes before you can access
+            device from your URL.
+        </p>
+
+        <p>
+            Although your device is configured, it isn't very useful.
+            Why not install a few apps from the Dashboard?
+        </p>
+
+        <br>
+
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <a class="btn btn-lg btn-primary"
+                   href="/dashboard"
+                   role="button">
+                    Go to Dashboard
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
