@@ -13,7 +13,7 @@ public class DeviceSettings {
             DatabaseManager.createDaoFor(DeviceSettings.class);
 
     @DatabaseField(id = true) public int id = 0;
-    @DatabaseField() public boolean initialized = false;
+    @DatabaseField public boolean initialized = false;
 
     private static DeviceSettings defaultSettings() {
         return new DeviceSettings();
