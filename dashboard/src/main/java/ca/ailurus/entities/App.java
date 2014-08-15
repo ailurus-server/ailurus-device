@@ -24,11 +24,11 @@ public class App {
     static {
         try {
             App.addInstalled("Wordpress", "WordPress is web software you can use to create a beautiful website or blog.",
-                    "img/apps/wordpress.png", "blog", "wordpress");
+                    "img/apps/wordpress.png", "blog", "/wordpress");
             App.addInstalled("Minecraft", "Minecraft is a popular game about building blocks.",
                     "img/apps/minecraft.png", "games", "");
             App.addInstalled("GitList", "GitList is a simple git repository browser.",
-                    "img/apps/git.png", "blog", "gitlist");
+                    "img/apps/git.png", "blog", "/gitlist");
         } catch (SQLException e) {
             e.printStackTrace();
         }
