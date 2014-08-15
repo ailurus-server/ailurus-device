@@ -61,6 +61,30 @@ dashboardControllers.controller('StoreCtrl', ['$scope',
     }
 ]);
 
+dashboardControllers.controller('AppsCtrl', ['$scope', '$http', 'API_BASE',
+    function ($scope, $http, API_BASE) {
+        $scope.app.panel = 'app';
+        $scope.app.showNavBar = true;
+
+        $scope.scroll = function(event) {
+            var hash = event.target.hash;
+            $location.hash(hash.substring(1));
+            $anchorScroll();
+            event.preventDefault();
+        };
+
+        $scope.apps = [];
+
+        $scope.init = function() {
+            $http({url: API_BASE + 'apps/installed', method: 'GET'})
+            .success(function(data) {
+                $scope.apps = data;
+            });
+        }
+        $scope.init();
+    }
+]);
+
 dashboardControllers.controller('SupportCtrl', ['$scope',
     function ($scope) {
         $scope.app.panel = 'support';

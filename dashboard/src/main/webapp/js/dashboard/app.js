@@ -18,6 +18,11 @@ dashboardApp.config(['$routeProvider',
                 controller: 'UsersCtrl',
                 access: { requiredLogin: true }
             }).
+            when('/apps', {
+                templateUrl: 'dashboard/apps.html',
+                controller: 'AppsCtrl',
+                access: { requiredLogin: true }
+            }).
             when('/store', {
                 templateUrl: 'dashboard/store.html',
                 controller: 'StoreCtrl',

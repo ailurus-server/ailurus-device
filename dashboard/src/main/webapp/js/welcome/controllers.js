@@ -130,7 +130,7 @@ welcomeControllers.controller('ReviewCtrl', [
         $scope.getUrl = function() {
             switch ($scope.data.urlType) {
                 case 'ailurus':
-                    return $scope.data.subdomain + AILURUS_DOMAIN;
+                    return $scope.data.subdomain + "." + AILURUS_DOMAIN;
                 case 'own':
                     return $scope.data.url ;
                 case 'none':

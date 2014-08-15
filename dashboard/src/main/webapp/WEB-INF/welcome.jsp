@@ -11,7 +11,6 @@
     <title data-ng-bind="app.title">Welcome</title>
 
     <link href="webjars/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="webjars/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="css/welcome/welcome.css" rel="stylesheet">
 
     <script src="webjars/jquery/1.11.1/jquery.min.js"></script>

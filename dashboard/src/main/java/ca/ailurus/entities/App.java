@@ -16,8 +16,23 @@ public class App {
     @DatabaseField public String description;
     @DatabaseField public String imageUrl;
     @DatabaseField public String tags;
+    @DatabaseField(defaultValue = "false") public boolean installed;
+    @DatabaseField public String appUrl;
 
     private static Dao<App, Integer> dao = DatabaseManager.createDaoFor(App.class);
+
+    static {
+        try {
+            App.addInstalled("Wordpress", "WordPress is web software you can use to create a beautiful website or blog.",
+                    "img/apps/wordpress.png", "blog", "wordpress");
+            App.addInstalled("Minecraft", "Minecraft is a popular game about building blocks.",
+                    "img/apps/minecraft.png", "games", "");
+            App.addInstalled("GitList", "GitList is a simple git repository browser.",
+                    "img/apps/git.png", "blog", "gitlist");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public App() {
 
@@ -34,9 +49,21 @@ public class App {
         dao.create(new App(name, description, imageUrl, tags));
     }
 
+    public static void addInstalled(String name, String description, String imageUrl, String tags,
+                                    String appUrl) throws SQLException {
+        App app = new App(name, description, imageUrl, tags);
+        app.installed = true;
+        app.appUrl = appUrl;
+        dao.create(app);
+    }
+
     public static List<App> search(String searchString) throws SQLException {
         String dbSearchString = "%" + searchString.toLowerCase() + "%";
         return dao.queryBuilder().where().like("tags", dbSearchString)
                 .or().like("name", dbSearchString).query();
+    }
+
+    public static List<App> installed() throws SQLException {
+        return dao.queryForEq("installed", true);
     }
 }

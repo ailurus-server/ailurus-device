@@ -61,6 +61,7 @@
         <div class="navbar-collapse collapse navbar-center-parent">
           <ul class="nav navbar-nav navbar-center">
             <li data-ng-class="{active: app.panel == 'device'}"><a href="#/device">Device</a></li>
+            <li data-ng-class="{active: app.panel == 'apps'}"><a href="#/apps">Apps</a></li>
             <li data-ng-class="{active: app.panel == 'users'}"><a href="#/users">Users</a></li>
             <li data-ng-class="{active: app.panel == 'store'}"><a href="#/store">Store</a></li>
             <li data-ng-class="{active: app.panel == 'support'}"><a href="#/support">Support</a></li>

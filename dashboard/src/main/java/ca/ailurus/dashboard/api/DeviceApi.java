@@ -5,17 +5,19 @@ import ca.ailurus.dashboard.api.objects.device.Cpu;
 import ca.ailurus.dashboard.api.objects.device.Disk;
 import ca.ailurus.dashboard.api.objects.device.Memory;
 import ca.ailurus.dashboard.api.objects.device.Network;
+import ca.ailurus.entities.App;
 import ca.ailurus.entities.DeviceSettings;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.List;
 
 @Path("/device")
+@Produces(MediaType.APPLICATION_JSON)
 public class DeviceApi {
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Device getDevice() {
         Device device = new Device();
         device.cpu = getCpu();
@@ -27,7 +29,6 @@ public class DeviceApi {
     }
 
     @GET @Path("/cpu")
-    @Produces(MediaType.APPLICATION_JSON)
     public Cpu getCpu() {
         Cpu cpu = new Cpu();
 
@@ -40,7 +41,6 @@ public class DeviceApi {
     }
 
     @GET @Path("/memory")
-    @Produces(MediaType.APPLICATION_JSON)
     public Memory getMemory() {
         Memory memory = new Memory();
 
@@ -53,7 +53,6 @@ public class DeviceApi {
     }
 
     @GET @Path("/disk")
-    @Produces(MediaType.APPLICATION_JSON)
     public Disk getDisk() {
         Disk disk = new Disk();
 
@@ -69,7 +68,6 @@ public class DeviceApi {
     }
 
     @GET @Path("/network")
-    @Produces(MediaType.APPLICATION_JSON)
     public Network getNetwork() {
         Network network = new Network();
 

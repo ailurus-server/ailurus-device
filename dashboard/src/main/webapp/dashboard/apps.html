@@ -1,0 +1,18 @@
+<article class="container">
+    <div class="row">
+        <section>
+            <a name="overview"></a>
+
+            <h2 class="page-header">Installed Apps</h2>
+
+
+            <div class="container app-container col-xs-4 col-xs-height" ng-repeat="app in apps">
+                <a ng-href="{{app.appUrl}}">
+                    <img ng-src="{{app.imageUrl}}" class="app-image img-responsive">
+                </a>
+                <h3 class="text-center">{{app.name}}</h3>
+                <!--<div class="row">{{app.name}}</div>-->
+            </div>
+        </section>
+    </div>
+</article>
