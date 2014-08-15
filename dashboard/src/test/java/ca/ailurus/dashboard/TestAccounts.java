@@ -15,13 +15,13 @@ public class TestAccounts {
     public void testCreate() throws Exception {
         String databaseUrl = "jdbc:sqlite::memory:";
         ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
-        Dao<Account, String> accountDao = DaoManager.createDao(connectionSource, Account.class);
+        Dao<Account, Integer> accountDao = DaoManager.createDao(connectionSource, Account.class);
         TableUtils.createTableIfNotExists(connectionSource, Account.class);
 
         Account richard = new Account("Richard", "pass");
         accountDao.createIfNotExists(richard);
 
-        Account queried = accountDao.queryForId("Richard");
+        Account queried = accountDao.queryForId(richard.id);
         assertEquals(queried.userName, "Richard");
         assertEquals(queried.password, "pass");
 
