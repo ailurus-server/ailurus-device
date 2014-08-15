@@ -33,7 +33,7 @@ dashboardApp.config(['$routeProvider',
                 controller: 'SearchCtrl',
                 access: { requiredLogin: true }
             }).
-            when('/store/search/:search', {
+            when('/store/search/:keyword', {
                 templateUrl: 'dashboard/search.html',
                 controller: 'SearchCtrl',
                 access: { requiredLogin: true }

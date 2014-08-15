@@ -1,3 +1,6 @@
+/*
+FIXME this constant should ideally be encoded as a class
+*/
 @media (min-width: 768px) {
     .navbar .navbar-nav.navbar-center {
         display: inline-block;
@@ -15,8 +18,17 @@
     margin-bottom: 5px;
 }
 
-.app-container  .img-responsive {
+.app-container .img-responsive {
     max-height: 130px;
     padding-top: 20px;
     margin: 0 auto;
+}
+
+.search-result-icon {
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.search-results-header {
+    margin-top: 10px;
 }

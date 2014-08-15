@@ -21,7 +21,7 @@ dashboardControllers.controller('DeviceCtrl', [
         $scope.app.panel = 'device';
         $scope.app.showNavBar = true;
 
-        $scope.device = Api.query('device');
+        $scope.device = Api.queryOne('device');
 
         // TODO use .affix and .scrollSpy on the right hand side nav bar
         $scope.scroll = function(event) {
@@ -53,7 +53,7 @@ dashboardControllers.controller('StoreCtrl', [
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
-        $scope.categorizedUseCases = Api.query('apps/usecases')
+        $scope.categorizedUseCases = Api.queryOne('apps/usecases')
 
         $scope.scroll = function(event) {
             var hash = event.target.hash;
@@ -67,8 +67,26 @@ dashboardControllers.controller('StoreCtrl', [
 dashboardControllers.controller('UseCaseCtrl', [
     '$scope', '$routeParams', 'Api',
     function ($scope, $routeParams, Api) {
+        var usecase = $routeParams.usecase;
+
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
+
+        $scope.showSearch = false;
+
+        $scope.getTitleLead = function() {
+            return 'Apps for';
+        };
+
+        $scope.getTitleKeyword = function() {
+            return $scope.data.displayName;
+        };
+
+        $scope.getResults = function() {
+            return $scope.data.apps;
+        };
+
+        $scope.data = Api.queryOne('apps/usecase/:u', {u: usecase});
 
         $scope.scroll = function(event) {
             var hash = event.target.hash;
@@ -82,8 +100,25 @@ dashboardControllers.controller('UseCaseCtrl', [
 dashboardControllers.controller('SearchCtrl', [
     '$scope', '$routeParams', 'Api',
     function ($scope, $routeParams, Api) {
+        var keyword = $routeParams.keyword;
+
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
+
+        $scope.showSearch = true;
+        $scope.getTitleLead = function() {
+            return 'Results for ';
+        };
+
+        $scope.getTitleKeyword = function() {
+            return keyword;
+        };
+
+        $scope.getResults = function() {
+            return $scope.apps;
+        };
+
+        $scope.apps = Api.queryMany('apps/search/:k', {k: keyword});
 
         $scope.scroll = function(event) {
             var hash = event.target.hash;
@@ -94,8 +129,8 @@ dashboardControllers.controller('SearchCtrl', [
     }
 ]);
 
-dashboardControllers.controller('AppsCtrl', ['$scope', '$http', 'API_BASE',
-    function ($scope, $http, API_BASE) {
+dashboardControllers.controller('AppsCtrl', ['$scope', 'Api',
+    function ($scope, Api) {
         $scope.app.panel = 'app';
         $scope.app.showNavBar = true;
 
@@ -106,15 +141,7 @@ dashboardControllers.controller('AppsCtrl', ['$scope', '$http', 'API_BASE',
             event.preventDefault();
         };
 
-        $scope.apps = [];
-
-        $scope.init = function() {
-            $http({url: API_BASE + 'apps/installed', method: 'GET'})
-            .success(function(data) {
-                $scope.apps = data;
-            });
-        }
-        $scope.init();
+        $scope.apps = Api.queryMany('apps/installed');
     }
 ]);
 

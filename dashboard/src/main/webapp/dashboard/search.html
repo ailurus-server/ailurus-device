@@ -1,71 +1,64 @@
 <article class="container">
-    <section class="row">
-        <div class="col-xs-12">
-            <h2 class="page-header">App Store
-            <small>
-                Search or browse by category to find new apps to install
-            </small>
-            </h2>
-        </div>
-    </section>
-    <br>
-    <br>
-    <section class="row">
-        <div class="col-sm-2 hidden-xs"></div>
-        <div class="col-sm-8 col-xs-12">
+    <section class="row" data-ng-show="showSearch">
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-sm-10 col-md-8 col-lg-6">
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="sr-only" for="searchInput">
                         Search for an app
                     </label>
                     <div>
-                        <div class="input-group input-group-lg">
-                            <input class="form-control" type="text" id="searchInput"
+                        <div class="input-group">
+                            <input class="form-control"
+                                   type="text"
+                                   id="searchInput"
+                                   data-ng-model="keyword"
                                    placeholder="Search by name or category">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-search"></span>
-                            Search
-                        </button>
-                    </span>
+                            <span class="input-group-btn">
+                                <a href="#/store/search/{{keyword|urlencode}}"
+                                   role="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                    Search
+                                </a>
+                            </span>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-sm-2 hidden-xs"></div>
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
     </section>
-    <br>
     <section class="row">
-        <div class="col-sm-1 hidden-xs"></div>
-        <div class="col-sm-10 col-xs-12">
-            <h3 class="page-header">
-                Or Browse for Apps
+        <div class="col-xs-12">
+            <h2 class="page-header search-results-header">
                 <small>
-                    by use case
+                    {{getTitleLead()}}
                 </small>
-            </h3>
-            <div class="row">
-                <div class="col-md-6"
-                     data-ng-repeat="(category, useCases) in categorizedUseCases">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                {{category}} Uses
-                            </h3>
-                        </div>
-                        <div class="list-group">
-                            <a class="list-group-item"
-                               href="/store/usecase/{{useCase.name}}"
-                               data-ng-repeat="useCase in useCases">
-                                <strong>{{useCase.displayName}}</strong>
-                                {{useCase.description}}
-                            </a>
+                {{getTitleKeyword()}}
+            </h2>
+        </div>
+    </section>
+    <section class="row">
+        <div class="col-xs-12">
+            <div class="list-group">
+                <div class="list-group-item" data-ng-repeat="result in getResults()">
+                    <div class="media">
+                        <span class="pull-left">
+                            <img class="media-object search-result-icon"
+                                 data-ng-src="{{result.imageUrl}}"
+                                 alt="{{result.name}}">
+                        </span>
+                        <div class="media-body">
+                            <button type="button" class="btn btn-primary pull-right">
+                                <span class="glyphicon glyphicon-save"></span>
+                                Install
+                            </button>
+                            <h4 class="list-group-item-heading">{{result.name}}</h4>
+                            <p class="list-group-item-text">{{result.description}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-1 hidden-xs"></div>
     </section>
 </article>

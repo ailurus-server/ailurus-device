@@ -29,9 +29,9 @@ public class App {
             App.addInstalled("Wordpress", "WordPress is web software you can use to create a beautiful website or blog.",
                     "img/apps/wordpress.png", "blog", "/wordpress");
             App.addInstalled("Minecraft", "Minecraft is a popular game about building blocks.",
-                    "img/apps/minecraft.png", "games", "");
+                    "img/apps/minecraft.png", "game-server", "");
             App.addInstalled("GitList", "GitList is a simple git repository browser.",
-                    "img/apps/git.png", "blog", "/gitlist");
+                    "img/apps/git.png", "blog source-control", "/gitlist");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,6 +63,11 @@ public class App {
         String dbSearchString = "%" + searchString.toLowerCase() + "%";
         return dao.queryBuilder().where().like("tags", dbSearchString)
                 .or().like("name", dbSearchString).query();
+    }
+
+    public static List<App> searchByTag(String tagName) throws SQLException {
+        String dbSearchString = "%" + tagName.toLowerCase() + "%";
+        return dao.queryBuilder().where().like("tags", dbSearchString).query();
     }
 
     public static List<App> installed() throws SQLException {
