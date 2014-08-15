@@ -123,14 +123,14 @@ welcomeControllers.controller('UrlCtrl', ['$scope',
 ]);
 
 welcomeControllers.controller('ReviewCtrl', [
-    '$scope', '$location', '$http', 'AILURUS_DOMAIN', 'DEVICE_INIT_URL',
-    function ($scope, $location, $http, AILURUS_DOMAIN, DEVICE_INIT_URL) {
+    '$scope', '$location', '$http', 'AILURUS_DOMAIN', 'API_BASE',
+    function ($scope, $location, $http, AILURUS_DOMAIN, API_BASE) {
         $scope.app.title = 'Review Your Changes';
         $scope.app.setStep(5);
         $scope.getUrl = function() {
             switch ($scope.data.urlType) {
                 case 'ailurus':
-                    return $scope.data.subdomain + "." + AILURUS_DOMAIN;
+                    return $scope.data.subdomain + '.' + AILURUS_DOMAIN;
                 case 'own':
                     return $scope.data.url ;
                 case 'none':
@@ -141,13 +141,12 @@ welcomeControllers.controller('ReviewCtrl', [
             }
         };
         $scope.submit = function() {
-            $http.post(DEVICE_INIT_URL, {
+            $http.post(API_BASE + 'device/init', {
                username: $scope.data.username,
                email: $scope.data.email,
                password: $scope.data.password,
                hostname: $scope.data.hostname,
-               online: $scope.data.online,
-               url: $scope.getUrl()
+               url: $scope.data.online ? $scope.getUrl() : null
             }).success(function(result, status, headers, config) {
                 $location.path('done');
             }).error(function(result, status, headers, config) {

@@ -1,6 +1,7 @@
 package ca.ailurus.entities;
 
 import ca.ailurus.database.DatabaseManager;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -11,7 +12,9 @@ import java.util.List;
 
 @DatabaseTable(tableName = "Apps")
 public class App {
+    @JsonIgnore
     @DatabaseField(generatedId = true) public Integer id;
+
     @DatabaseField public String name;
     @DatabaseField public String description;
     @DatabaseField public String imageUrl;
@@ -35,7 +38,6 @@ public class App {
     }
 
     public App() {
-
     }
 
     public App(String name, String description, String imageUrl, String tags) {

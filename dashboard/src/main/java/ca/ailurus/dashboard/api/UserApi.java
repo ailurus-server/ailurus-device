@@ -1,17 +1,16 @@
 package ca.ailurus.dashboard.api;
 
 import ca.ailurus.dashboard.api.exceptions.UserAuthenticationError;
-import ca.ailurus.dashboard.api.objects.User;
-import ca.ailurus.entities.Account;
+import ca.ailurus.entities.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
 
-@Path("/accounts/{username}")
+@Path("/accounts/{name}")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class Accounts {
+public class UserApi {
 
     private class Status {
         public String status;
@@ -33,11 +32,11 @@ public class Accounts {
     @POST
     public Status login(User user) {
         try {
-            Account account = Account.get(user.username);
+            User account = User.get(user.name);
             if (null == account || !account.password.equals(user.password)) {
                 throw new UserAuthenticationError();
             }
-            return new Status("ok", "login succeeded", user.username + ":" + user.password);
+            return new Status("ok", "login succeeded", user.name + ":" + user.password);
         } catch (SQLException e) {
             throw new InternalServerErrorException(e);
         }
@@ -46,7 +45,7 @@ public class Accounts {
     @PUT
     public Status create(User user) {
         try {
-            Account.create(user.username, user.password);
+            User.create(user);
             return new Status("ok", "successfully created");
         } catch (SQLException e) {
             throw new InternalServerErrorException(e);
@@ -54,9 +53,9 @@ public class Accounts {
     }
 
     @DELETE
-    public Status delete(@PathParam("username") String userName) {
+    public Status delete(@PathParam("name") String userName) {
         try {
-            Account.delete(userName);
+            User.delete(userName);
             return new Status("ok", "successfully deleted");
         } catch (SQLException e) {
             throw new InternalServerErrorException(e);
@@ -64,12 +63,12 @@ public class Accounts {
     }
 
     @POST
-    public Status update(@PathParam("username") String userName,
+    public Status update(@PathParam("name") String userName,
                          User user) {
         try {
-            Account account = Account.get(userName);
+            User account = User.get(userName);
             if (null != account) {
-                account.userName = user.username;
+                account.name = user.name;
                 account.password = user.password;
                 return new Status("ok", "successfully updated");
             }

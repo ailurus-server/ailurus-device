@@ -16,12 +16,12 @@ dashboardControllers.controller('AppCtrl', [
 ]);
 
 dashboardControllers.controller('DeviceCtrl', [
-    '$scope', '$location','$anchorScroll', 'Device',
-    function ($scope, $location, $anchorScroll, Device) {
+    '$scope', '$location','$anchorScroll', 'Api',
+    function ($scope, $location, $anchorScroll, Api) {
         $scope.app.panel = 'device';
         $scope.app.showNavBar = true;
 
-        $scope.device = Device.query();
+        $scope.device = Api.query('device');
 
         // TODO use .affix and .scrollSpy on the right hand side nav bar
         $scope.scroll = function(event) {
@@ -47,8 +47,41 @@ dashboardControllers.controller('UsersCtrl', ['$scope',
     }
 ]);
 
-dashboardControllers.controller('StoreCtrl', ['$scope',
-    function ($scope) {
+dashboardControllers.controller('StoreCtrl', [
+    '$scope', 'Api',
+    function ($scope, Api) {
+        $scope.app.panel = 'store';
+        $scope.app.showNavBar = true;
+
+        $scope.categorizedUseCases = Api.query('apps/usecases')
+
+        $scope.scroll = function(event) {
+            var hash = event.target.hash;
+            $location.hash(hash.substring(1));
+            $anchorScroll();
+            event.preventDefault();
+        };
+    }
+]);
+
+dashboardControllers.controller('UseCaseCtrl', [
+    '$scope', '$routeParams', 'Api',
+    function ($scope, $routeParams, Api) {
+        $scope.app.panel = 'store';
+        $scope.app.showNavBar = true;
+
+        $scope.scroll = function(event) {
+            var hash = event.target.hash;
+            $location.hash(hash.substring(1));
+            $anchorScroll();
+            event.preventDefault();
+        };
+    }
+]);
+
+dashboardControllers.controller('SearchCtrl', [
+    '$scope', '$routeParams', 'Api',
+    function ($scope, $routeParams, Api) {
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
@@ -99,7 +132,8 @@ dashboardControllers.controller('SupportCtrl', ['$scope',
     }
 ]);
 
-dashboardControllers.controller('LoginCtrl', ['API_BASE', '$scope', '$http', '$location', 'Session',
+dashboardControllers.controller('LoginCtrl', [
+    'API_BASE', '$scope', '$http', '$location', 'Session',
     function (API_BASE, $scope, $http, $location, Session) {
         $scope.app.showNavBar = false;
 

@@ -2,11 +2,11 @@
 
 var dashboardServices = angular.module('dashboardServices', ['ngResource']);
 
-dashboardServices.factory('Device', ['$resource', 'API_BASE',
+dashboardServices.factory('Api', ['$resource', 'API_BASE',
     function($resource, API_BASE) {
         return {
-            query: function() {
-                return $resource(API_BASE + 'device', {}, {
+            query: function(url) {
+                return $resource(API_BASE + url, {}, {
                     query: {method: 'GET'}
                 }).query();
             }

@@ -1,22 +1,46 @@
 package ca.ailurus.dashboard.api;
 
+import ca.ailurus.dashboard.api.exceptions.AlreadyInitializedException;
 import ca.ailurus.dashboard.api.objects.Device;
+import ca.ailurus.dashboard.api.objects.Initialization;
 import ca.ailurus.dashboard.api.objects.device.Cpu;
 import ca.ailurus.dashboard.api.objects.device.Disk;
 import ca.ailurus.dashboard.api.objects.device.Memory;
 import ca.ailurus.dashboard.api.objects.device.Network;
-import ca.ailurus.entities.App;
+import ca.ailurus.entities.User;
 import ca.ailurus.entities.DeviceSettings;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.List;
 
 @Path("/device")
 @Produces(MediaType.APPLICATION_JSON)
 public class DeviceApi {
+    @POST @Path("/init")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void init(Initialization init) throws SQLException {
+        DeviceSettings settings = DeviceSettings.getSettings();
+
+        if (settings.initialized) {
+            throw new AlreadyInitializedException();
+        }
+
+        User user = new User();
+        user.name = init.username;
+        user.password = init.password;
+        user.email = init.email;
+        User.create(user);
+
+        settings.initialized = true;
+        settings.url = init.url;
+        DeviceSettings.update(settings);
+    }
+
     @GET
     public Device getDevice() {
         Device device = new Device();
@@ -78,11 +102,21 @@ public class DeviceApi {
             throw new InternalServerErrorException(e);
         }
 
-        network.hostname = "apple";
-        network.ipAddress = "99.235.253.170";
+        InetAddress address = getAddress();
+
+        network.hostname = address.getHostName();
+        network.ipAddress = address.getHostAddress();
         network.url = settings.url;
         network.capacity = "10/100 ethernet";
 
         return network;
+    }
+
+    private InetAddress getAddress() {
+        try {
+            return InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            throw new InternalServerErrorException(e);
+        }
     }
 }

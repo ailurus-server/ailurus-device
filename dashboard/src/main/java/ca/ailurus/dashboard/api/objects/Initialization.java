@@ -5,6 +5,5 @@ public class Initialization {
     public String email;
     public String password;
     public String hostname;
-    public boolean online;
     public String url;
 }

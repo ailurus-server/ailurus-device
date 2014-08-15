@@ -28,6 +28,21 @@ dashboardApp.config(['$routeProvider',
                 controller: 'StoreCtrl',
                 access: { requiredLogin: true }
             }).
+            when('/store/search', {
+                templateUrl: 'dashboard/search.html',
+                controller: 'SearchCtrl',
+                access: { requiredLogin: true }
+            }).
+            when('/store/search/:search', {
+                templateUrl: 'dashboard/search.html',
+                controller: 'SearchCtrl',
+                access: { requiredLogin: true }
+            }).
+            when('/store/usecase/:usecase', {
+                templateUrl: 'dashboard/search.html',
+                controller: 'UseCaseCtrl',
+                access: { requiredLogin: true }
+            }).
             when('/support', {
                 templateUrl: 'dashboard/support.html',
                 controller: 'SupportCtrl',

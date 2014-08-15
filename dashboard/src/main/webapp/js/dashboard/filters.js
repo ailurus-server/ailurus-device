@@ -19,7 +19,7 @@ dashboardFilters.filter('bytes',
                 }
             }
 
-            var digits = +(Math.round(num * 1000 / scale + "e+2")  + "e-2");
+            var digits = +(Math.round(amount * 1000 / scale + "e+2")  + "e-2");
             return digits + ' ' + units[units.length - 1];
         };
     }
@@ -42,7 +42,7 @@ dashboardFilters.filter('hz',
                 }
             }
 
-            var digits = +(Math.round(num * 1000 / scale + "e+2")  + "e-2");
+            var digits = +(Math.round(amount * 1000 / scale + "e+2")  + "e-2");
             return digits + ' ' + units[units.length - 1];
         };
     }
@@ -55,5 +55,15 @@ dashboardApp.filter('percentUsed', function() {
         }
 
         return Math.round(100 * resource.used / resource.total);
+    };
+});
+
+dashboardApp.filter('urlencode', function() {
+    return function(keyword) {
+        if (keyword === undefined || keyword === null) {
+            return keyword;
+        }
+
+        return encodeURIComponent(keyword);
     };
 });
