@@ -1,0 +1,60 @@
+#!/usr/bin/env/python3
+
+# Sample ai-package module
+
+# Environment dictionary values:
+# 'ConfDestination' -> String of full path of installation destination
+
+from ailurus import pkgutil
+
+import os
+import shutil
+
+DEFAULT_ENV = {
+        'Destination': '/opt/ailurus/apps/minecraft/',
+        'InitScriptDestination': '/etc/init.d/'
+        }
+
+MC_URL = "http://ci.md-5.net/job/Spigot/lastStableBuild/artifact/Spigot-Server/target/spigot.jar"
+MC_MD5 = "4c8c163ea533eb796d019e234827a5e8"
+
+def DefaultEnv(env):
+    new_env = {}
+    for key in DEFAULT_ENV:
+        new_env[key] = env[key] if env and key in env else DEFAULT_ENV[key]
+    return new_env
+
+def install(env = None):
+    env = DefaultEnv(env)
+    install_dir = env['Destination']
+    init_script_dir = env['InitScriptDestination']
+
+    print("Getting minecraft package")
+    mc_path = pkgutil.GetPackage(MC_URL, MC_MD5)
+
+    print("Copying minecraft to %s" % install_dir)
+    os.mkdir(install_dir)
+    shutil.copy(mc_path, install_dir + 'spigot.jar')
+
+    print("Copying minecraft configuration")
+    shutil.copy('conf/eula.txt', install_dir)
+    shutil.copy('conf/server.properties', install_dir)
+
+    print("Copying minecraft init script to %s" % init_script_dir)
+    shutil.copy('conf/minecraft', init_script_dir)
+    os.system("update-rc.d minecraft defaults")
+
+    print("Starting minecraft server")
+    os.system("service minecraft start")
+
+
+def remove(env = None):
+    env = DefaultEnv(env)
+
+    print("Removing minecraft")
+    os.remove(env['InitScriptDestination'] + "minecraft")
+    os.system("update-rc.d -f minecraft remove")
+
+
+def configure(env):
+    pass
