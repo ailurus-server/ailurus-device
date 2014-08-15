@@ -9,27 +9,27 @@ dashboardApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/device', {
-                templateUrl: '/dashboard/device.html',
+                templateUrl: 'dashboard/device.html',
                 controller: 'DeviceCtrl',
                 access: { requiredLogin: true }
             }).
             when('/users', {
-                templateUrl: '/dashboard/users.html',
+                templateUrl: 'dashboard/users.html',
                 controller: 'UsersCtrl',
                 access: { requiredLogin: true }
             }).
             when('/store', {
-                templateUrl: '/dashboard/store.html',
+                templateUrl: 'dashboard/store.html',
                 controller: 'StoreCtrl',
                 access: { requiredLogin: true }
             }).
             when('/support', {
-                templateUrl: '/dashboard/support.html',
+                templateUrl: 'dashboard/support.html',
                 controller: 'SupportCtrl',
                 access: { requiredLogin: true }
             }).
             when('/login', {
-                 templateUrl: '/dashboard/login.html',
+                 templateUrl: 'dashboard/login.html',
                  controller: 'LoginCtrl',
                  access: { requiredLogin: false }
             }).

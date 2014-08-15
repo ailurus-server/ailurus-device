@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/img/favicon.ico">
+    <link rel="icon" href="img/favicon.ico">
 
     <title data-ng-bind="app.title">Welcome</title>
 
