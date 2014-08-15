@@ -9,14 +9,15 @@ from ailurus import pkgutil
 
 import os
 import shutil
+from urllib.request import urlopen
 
 DEFAULT_ENV = {
-        'Destination': '/opt/ailurus/apps/minecraft/',
+        'Destination': '/opt/ailurus/apps/minecraft',
         'InitScriptDestination': '/etc/init.d/'
         }
 
-MC_URL = "http://ci.md-5.net/job/Spigot/lastStableBuild/artifact/Spigot-Server/target/spigot.jar"
-MC_MD5 = "4c8c163ea533eb796d019e234827a5e8"
+MC_URL = "http://ci.bearbin.net/job/MCServer%20Linux-RasPi%20HardFloat/lastSuccessfulBuild/artifact/MCServer.tar"
+MC_MD5_URL = "http://ci.bearbin.net/job/MCServer%20Linux-RasPi%20HardFloat/lastSuccessfulBuild/artifact/MCServer.tar.md5"
 
 def DefaultEnv(env):
     new_env = {}
@@ -29,16 +30,16 @@ def install(env = None):
     install_dir = env['Destination']
     init_script_dir = env['InitScriptDestination']
 
+    print("Getting minecraft md5sum")
+    mc_md5 = urlopen(MC_MD5_URL).read().decode('utf-8').split(' ')[0]
+    print("md5 is " + mc_md5)
+
     print("Getting minecraft package")
-    mc_path = pkgutil.GetPackage(MC_URL, MC_MD5)
+    mc_path = pkgutil.GetPackage(MC_URL, mc_md5)
 
     print("Copying minecraft to %s" % install_dir)
     os.mkdir(install_dir)
-    shutil.copy(mc_path, install_dir + 'spigot.jar')
-
-    print("Copying minecraft configuration")
-    shutil.copy('conf/eula.txt', install_dir)
-    shutil.copy('conf/server.properties', install_dir)
+    pkgutil.ExtractTarball(mc_path, install_dir)
 
     print("Copying minecraft init script to %s" % init_script_dir)
     shutil.copy('conf/minecraft', init_script_dir)
@@ -52,6 +53,7 @@ def remove(env = None):
     env = DefaultEnv(env)
 
     print("Removing minecraft")
+    shutil.rmtree(env['Destination'])
     os.remove(env['InitScriptDestination'] + "minecraft")
     os.system("update-rc.d -f minecraft remove")
 

@@ -12,7 +12,7 @@ echo "<html>The requested page could not be found.</html>" > /opt/ailurus/www/40
 echo "Make sure you run 'raspi-config'"
 
 echo "Installing dependencies"
-apt-get -y install python3-setuptools mysql-server nginx php5-fpm php5-gd php5-mysql python3-pip screen
+apt-get -y install python3-setuptools mysql-server nginx php5-fpm php5-gd php5-mysql python3-pip screen daemon
 pip-3.2 install pymysql
 
 echo "Copying custom nginx config"

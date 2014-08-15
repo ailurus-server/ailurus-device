@@ -15,17 +15,12 @@
 ### END INIT INFO
 
 #Settings
-SERVICE='spigot.jar'
-OPTIONS='nogui'
+SERVICE='MCServer'
+HISTORY=1024
 USERNAME='root'
 WORLD='world'
-MCPATH='/opt/ailurus/apps/minecraft'
-BACKUPPATH='/media/remote.share/minecraft.backup'
-MAXHEAP=496
-MINHEAP=256
-HISTORY=1024
-CPU_COUNT=1
-INVOCATION="java -Xmx${MAXHEAP}M -Xms${MINHEAP}M -jar $SERVICE $OPTIONS"
+MCPATH='/opt/ailurus/apps/minecraft/MCServer'
+INVOCATION="./MCServer"
 
 ME=`whoami`
 as_user() {
@@ -43,6 +38,7 @@ mc_start() {
   else
     echo "Starting $SERVICE..."
     cd $MCPATH
+    echo "screen -h $HISTORY -dmS minecraft $INVOCATION"
     as_user "cd $MCPATH && screen -h $HISTORY -dmS minecraft $INVOCATION"
     sleep 7
     if pgrep -u $USERNAME -f $SERVICE > /dev/null
@@ -99,58 +95,6 @@ mc_stop() {
   fi
 }
 
-mc_update() {
-  if pgrep -u $USERNAME -f $SERVICE > /dev/null
-  then
-    echo "$SERVICE is running! Will not start update."
-  else
-    as_user "cd $MCPATH && wget -q -O $MCPATH/versions http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"
-       snap=`awk -v linenum=3 'NR == linenum {print; exit}' "$MCPATH/versions"`
-       snapVersion=`echo $snap | awk -F'\"' '{print $4}'`
-       re=`awk -v linenum=4 'NR == linenum {print; exit}' "$MCPATH/versions"`
-       reVersion=`echo $re | awk -F'\"' '{print $4}'`
-       as_user "rm $MCPATH/versions"
-       if [ "$1" == "snapshot" ]; then
-       MC_SERVER_URL=http://s3.amazonaws.com/Minecraft.Download/versions/$snapVersion/minecraft_server.$snapVersion.jar
-       else
-       MC_SERVER_URL=http://s3.amazonaws.com/Minecraft.Download/versions/$reVersion/minecraft_server.$reVersion.jar
-       fi
-    as_user "cd $MCPATH && wget -q -O $MCPATH/minecraft_server.jar.update $MC_SERVER_URL"
-    if [ -f $MCPATH/minecraft_server.jar.update ]
-    then
-      if `diff $MCPATH/$SERVICE $MCPATH/minecraft_server.jar.update >/dev/null`
-      then
-        echo "You are already running the latest version of $SERVICE."
-      else
-        as_user "mv $MCPATH/minecraft_server.jar.update $MCPATH/$SERVICE"
-        echo "Minecraft successfully updated."
-      fi
-    else
-      echo "Minecraft update could not be downloaded."
-    fi
-  fi
-}
-
-mc_backup() {
-   mc_saveoff
-
-   NOW=`date "+%Y-%m-%d_%Hh%M"`
-   BACKUP_FILE="$BACKUPPATH/${WORLD}_${NOW}.tar"
-   echo "Backing up minecraft world..."
-   #as_user "cd $MCPATH && cp -r $WORLD $BACKUPPATH/${WORLD}_`date "+%Y.%m.%d_%H.%M"`"
-   as_user "tar -C \"$MCPATH\" -cf \"$BACKUP_FILE\" $WORLD"
-
-   echo "Backing up $SERVICE"
-   as_user "tar -C \"$MCPATH\" -rf \"$BACKUP_FILE\" $SERVICE"
-   #as_user "cp \"$MCPATH/$SERVICE\" \"$BACKUPPATH/minecraft_server_${NOW}.jar\""
-
-   mc_saveon
-
-   echo "Compressing backup..."
-   as_user "gzip -f \"$BACKUP_FILE\""
-   echo "Done."
-}
-
 mc_command() {
   command="$1";
   if pgrep -u $USERNAME -f $SERVICE > /dev/null
@@ -175,15 +119,6 @@ case "$1" in
   restart)
     mc_stop
     mc_start
-    ;;
-  update)
-    mc_stop
-    mc_backup
-    mc_update $2
-    mc_start
-    ;;
-  backup)
-    mc_backup
     ;;
   status)
     if pgrep -u $USERNAME -f $SERVICE > /dev/null
