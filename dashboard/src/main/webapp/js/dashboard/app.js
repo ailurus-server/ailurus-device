@@ -1,6 +1,8 @@
 var dashboardApp = angular.module('dashboardApp', [
     'ngRoute',
     'dashboardControllers',
+    'dashboardFilters',
+    'dashboardServices'
 ]);
 
 dashboardApp.config(['$routeProvider',
@@ -12,7 +14,7 @@ dashboardApp.config(['$routeProvider',
                 access: { requiredLogin: true }
             }).
             when('/users', {
-                templateUrl: '/dashboard/device.html',
+                templateUrl: '/dashboard/users.html',
                 controller: 'UsersCtrl',
                 access: { requiredLogin: true }
             }).
@@ -59,11 +61,11 @@ dashboardApp.factory('Session', ['$window', function ($window) {
 }])
 
 // TODO move login to separate page
-dashboardApp.run(function($rootScope, $location, Session) {
-       $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-           Session.loadSession();
-           if (nextRoute.access.requiredLogin && !Session.token) {
-               $location.path("login");
-           }
-       });
-   });
+//dashboardApp.run(function($rootScope, $location, Session) {
+//       $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+//           Session.loadSession();
+//           if (nextRoute.access.requiredLogin && !Session.token) {
+//               $location.path("login");
+//           }
+//       });
+//   });

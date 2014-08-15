@@ -20,6 +20,7 @@ public class Initializer {
         }
 
         device.initialized = true;
+        device.url = settings.url;
         DeviceSettings.update(device);
     }
 }

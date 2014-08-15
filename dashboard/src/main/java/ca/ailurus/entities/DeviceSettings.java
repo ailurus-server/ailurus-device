@@ -14,6 +14,7 @@ public class DeviceSettings {
 
     @DatabaseField(id = true) public int id = 0;
     @DatabaseField public boolean initialized = false;
+    @DatabaseField public String url = null;
 
     private static DeviceSettings defaultSettings() {
         return new DeviceSettings();

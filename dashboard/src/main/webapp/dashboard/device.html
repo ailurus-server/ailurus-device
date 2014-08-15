@@ -4,20 +4,54 @@
             <section>
                 <a name="overview"></a>
 
-                <h2 class="page-header">Device Overview</h2>
+                <h2 class="page-header">Overview</h2>
+
                 <div class="row">
                     <div class="col-sm-4">
-                        <dl>
+                        <dl class="properties">
                             <dt>Device Name</dt>
-                            <dd>Apple</dd>
+                            <dd>{{device.network.hostname}}</dd>
                             <dt>IP Address</dt>
-                            <dd>def</dd>
-                            <dt>URL</dt>
-                            <dd>apple.ailurus.ca</dd>
+                            <dd>{{device.network.ipAddress}}</dd>
+                            <dt data-ng-show="!!device.network.url">URL</dt>
+                            <dd data-ng-show="!!device.network.url">{{device.network.url}}</dd>
                         </dl>
                     </div>
                     <div class="col-sm-8">
-                        something
+                        <div>
+                            <p>
+                                <strong>Memory Usage</strong>
+                            </p>
+                            <div>
+                                {{device.memory.used | bytes}} used out of {{device.memory.total | bytes}} total
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="{{device.disk | percentUsed}}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{device.memory | percentUsed}}%;">
+                                    {{device.memory | percentUsed}}%
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <strong>Disk Usage</strong>
+                            </p>
+                            <div>
+                                {{device.disk.used | bytes}} used out of {{device.disk.total | bytes}} total
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="{{device.disk | percentUsed}}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{device.disk | percentUsed}}%;">
+                                    {{device.disk | percentUsed}}%
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -26,78 +60,66 @@
 
                 <h2 class="page-header">CPU</h2>
 
-                <div class="row">
-                    <dl class="col-sm-4 dl-horizontal">
-                        <dt>Device Name</dt>
-                        <dd>Apple</dd>
-                        <dt>IP Address</dt>
-                        <dd>def</dd>
-                        <dt>URL</dt>
-                        <dd>apple.ailurus.ca</dd>
-                    </dl>
-                    <div class="col-sm-8">
-                    </div>
-                </div>
+                <dl class="dl-horizontal">
+                    <dt>Type</dt>
+                    <dd>{{device.cpu.type}}</dd>
+                    <dt>Architecture</dt>
+                    <dd>{{device.cpu.architecture}}</dd>
+                    <dt>Number of Cores</dt>
+                    <dd>{{device.cpu.numCores}}</dd>
+                </dl>
             </section>
             <section>
                 <a name="memory"></a>
-
                 <h2 class="page-header">Memory</h2>
 
-                <div class="row">
-                    <dl class="col-sm-4 dl-horizontal">
-                        <dt>Device Name</dt>
-                        <dd>Apple</dd>
-                        <dt>IP Address</dt>
-                        <dd>def</dd>
-                        <dt>URL</dt>
-                        <dd>apple.ailurus.ca</dd>
-                    </dl>
-                    <div class="col-sm-8">
-                    </div>
-                </div>
+                <dl class="dl-horizontal">
+                    <dt>Used</dt>
+                    <dd>{{device.memory.used | bytes}}</dd>
+                    <dt>Free</dt>
+                    <dd>{{device.memory.free | bytes}}</dd>
+                    <dt>Total</dt>
+                    <dd>{{device.memory.total | bytes}}</dd>
+                    <dt>Speed</dt>
+                    <dd>{{device.memory.speed}}</dd>
+                </dl>
             </section>
             <section>
                 <a name="disk"></a>
-
                 <h2 class="page-header">Disk</h2>
 
-                <div class="row">
-                    <dl class="col-sm-4 dl-horizontal">
-                        <dt>Device Name</dt>
-                        <dd>Apple</dd>
-                        <dt>IP Address</dt>
-                        <dd>def</dd>
-                        <dt>URL</dt>
-                        <dd>apple.ailurus.ca</dd>
-                    </dl>
-                    <div class="col-sm-8">
-                    </div>
-                </div>
+                <dl class="dl-horizontal">
+                    <dt>Used</dt>
+                    <dd>{{device.disk.used | bytes}}</dd>
+                    <dt>Free</dt>
+                    <dd>{{device.disk.free | bytes}}</dd>
+                    <dt>Total</dt>
+                    <dd>{{device.disk.total | bytes}}</dd>
+                    <dt>Type</dt>
+                    <dd>{{device.disk.type}}</dd>
+                </dl>
             </section>
             <section>
                 <a name="network"></a>
                 <h2 class="page-header">Network</h2>
 
-                <div class="row">
-                    <dl class="col-sm-4 dl-horizontal">
-                        <dt>Device Name</dt>
-                        <dd>Apple</dd>
-                        <dt>IP Address</dt>
-                        <dd>def</dd>
-                        <dt>URL</dt>
-                        <dd>apple.ailurus.ca</dd>
-                    </dl>
-                    <div class="col-sm-8">
-                    </div>
-                </div>
+                <dl class="dl-horizontal">
+                    <dt>Hostname</dt>
+                    <dd>{{device.network.hostname}}</dd>
+                    <dt>IP Address</dt>
+                    <dd>{{device.network.ipAddress}}</dd>
+                    <dt data-ng-show="!!device.network.url">URL</dt>
+                    <dd data-ng-show="!!device.network.url">{{device.network.url}}</dd>
+                    <dt>Link Capacity</dt>
+                    <dd>{{device.network.capacity}}</dd>
+                </dl>
             </section>
         </div>
         <div class="col-sm-3 hidden-xs">
-            <ul class="list-unstyled">
+            <ul class="nav">
                 <li>
                     <a href="#device" data-ng-click="scroll($event)">
-                        Device Overview
+                        Overview
                     </a>
                 </li>
                 <li>

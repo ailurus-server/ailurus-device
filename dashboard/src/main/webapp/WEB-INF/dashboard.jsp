@@ -18,6 +18,8 @@
     <script src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="webjars/angularjs/1.2.22/angular.js"></script>
     <script src="webjars/angularjs/1.2.22/angular-route.js"></script>
+    <script src="webjars/angularjs/1.2.22/angular-resource.js"></script>
+
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/bootstrap/ie10-viewport-bug-workaround.js"></script>
@@ -36,6 +38,10 @@
     </script>
 
     <script src="js/dashboard/controllers.js"></script>
+    <script src="js/dashboard/filters.js"></script>
+    <script src="js/dashboard/services.js"></script>
+
+
   </head>
 
   <body>

@@ -16,11 +16,14 @@ dashboardControllers.controller('AppCtrl', [
 ]);
 
 dashboardControllers.controller('DeviceCtrl', [
-    '$scope', '$location','$anchorScroll',
-    function ($scope, $location, $anchorScroll) {
+    '$scope', '$location','$anchorScroll', 'Device',
+    function ($scope, $location, $anchorScroll, Device) {
         $scope.app.panel = 'device';
         $scope.app.showNavBar = true;
 
+        $scope.device = Device.query();
+
+        // TODO use .affix and .scrollSpy on the right hand side nav bar
         $scope.scroll = function(event) {
             var hash = event.target.hash;
             $location.hash(hash.substring(1));
