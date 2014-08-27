@@ -8,10 +8,18 @@ version="3.0">
 
     <display-name>Dashboard</display-name>
 
-    <!-- TODO remove this section on deployment -->
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/api</param-value>
+    </context-param>
+
+    <!--
+        TODO remove this section on deployment
+        The following parameter fixes a Jetty problem in windows
+        where the JS and HTML files gets locked while the server
+        is running.
+    -->
     <servlet>
-        <!-- Override init parameter to avoid nasty -->
-        <!-- file locking issue on windows.         -->
         <servlet-name>default</servlet-name>
         <init-param>
             <param-name>useFileMappedBuffer</param-name>
@@ -20,10 +28,13 @@ version="3.0">
     </servlet>
 
     <servlet>
-        <servlet-name>ca.ailurus.dashboard.Api</servlet-name>
+        <servlet-name>api</servlet-name>
+        <servlet-class>
+            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+        </servlet-class>
         <init-param>
-            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-            <param-value>true</param-value>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>ca.ailurus.dashboard.Api</param-value>
         </init-param>
     </servlet>
 
@@ -38,7 +49,7 @@ version="3.0">
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ca.ailurus.dashboard.Api</servlet-name>
+        <servlet-name>api</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
