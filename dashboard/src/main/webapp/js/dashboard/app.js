@@ -5,51 +5,53 @@ var dashboardApp = angular.module('dashboardApp', [
     'dashboardServices'
 ]);
 
+dashboardApp.constant('API_BASE', '');
+
 dashboardApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/device', {
-                templateUrl: 'dashboard/device.html',
+                templateUrl: 'html/dashboard/device.html',
                 controller: 'DeviceCtrl',
                 access: { requiredLogin: true }
             }).
             when('/users', {
-                templateUrl: 'dashboard/users.html',
+                templateUrl: 'html/dashboard/users.html',
                 controller: 'UsersCtrl',
                 access: { requiredLogin: true }
             }).
             when('/apps', {
-                templateUrl: 'dashboard/apps.html',
+                templateUrl: 'html/dashboard/apps.html',
                 controller: 'AppsCtrl',
                 access: { requiredLogin: true }
             }).
             when('/store', {
-                templateUrl: 'dashboard/store.html',
+                templateUrl: 'html/dashboard/store.html',
                 controller: 'StoreCtrl',
                 access: { requiredLogin: true }
             }).
             when('/store/search', {
-                templateUrl: 'dashboard/search.html',
+                templateUrl: 'html/dashboard/search.html',
                 controller: 'SearchCtrl',
                 access: { requiredLogin: true }
             }).
             when('/store/search/:keyword', {
-                templateUrl: 'dashboard/search.html',
+                templateUrl: 'html/dashboard/search.html',
                 controller: 'SearchCtrl',
                 access: { requiredLogin: true }
             }).
             when('/store/usecase/:usecase', {
-                templateUrl: 'dashboard/search.html',
+                templateUrl: 'html/dashboard/search.html',
                 controller: 'UseCaseCtrl',
                 access: { requiredLogin: true }
             }).
             when('/support', {
-                templateUrl: 'dashboard/support.html',
+                templateUrl: 'html/dashboard/support.html',
                 controller: 'SupportCtrl',
                 access: { requiredLogin: true }
             }).
             when('/login', {
-                 templateUrl: 'dashboard/login.html',
+                 templateUrl: 'html/dashboard/login.html',
                  controller: 'LoginCtrl',
                  access: { requiredLogin: false }
             }).
@@ -58,8 +60,6 @@ dashboardApp.config(['$routeProvider',
             });
     }
 ]);
-
-dashboardApp.constant('API_BASE', 'api/');
 
 dashboardApp.factory('Session', ['$window', function ($window) {
     var session = {

@@ -14,8 +14,8 @@
     <orderEntry type="library" name="Maven: org.webjars:bootstrap:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:jquery:1.11.1" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:angularjs:1.2.22" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jaxrs:3.0.7.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.resteasy:jaxrs-api:3.0.7.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jaxrs:3.0.8.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:jaxrs-api:3.0.8.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.spec.javax.annotation:jboss-annotations-api_1.1_spec:1.0.1.Final" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.2.1" level="project" />
@@ -24,16 +24,30 @@
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.1" level="project" />
     <orderEntry type="library" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-servlet-initializer:3.0.7.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.resteasy:async-http-servlet-3.0:3.0.7.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jackson2-provider:3.0.7.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-servlet-initializer:3.0.8.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:async-http-servlet-3.0:3.0.8.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jackson2-provider:3.0.8.Final" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-guice:3.0.8.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.google.inject:guice:3.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-html:3.0.8.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-webapp:9.2.2.v20140723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-xml:9.2.2.v20140723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:9.2.2.v20140723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-servlet:9.2.2.v20140723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:9.2.2.v20140723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-server:9.2.2.v20140723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:9.2.2.v20140723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:9.2.2.v20140723" level="project" />
     <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-core:4.48" level="project" />
     <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-jdbc:4.48" level="project" />
     <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.7.2" level="project" />

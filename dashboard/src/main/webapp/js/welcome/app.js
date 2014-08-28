@@ -6,37 +6,37 @@ var welcomeApp = angular.module('welcomeApp', [
 ]);
 
 welcomeApp.constant('AILURUS_DOMAIN', 'ailurus.ca');
-welcomeApp.constant('API_BASE', 'api/');
+welcomeApp.constant('API_BASE', '');
 
 welcomeApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/', {
-                templateUrl: 'welcome/welcome.html',
+                templateUrl: 'html/welcome/welcome.html',
                 controller: 'WelcomeCtrl'
             }).
             when('/user', {
-                templateUrl: 'welcome/user.html',
+                templateUrl: 'html/welcome/user.html',
                 controller: 'UserCtrl'
             }).
             when('/name', {
-                templateUrl: 'welcome/name.html',
+                templateUrl: 'html/welcome/name.html',
                 controller: 'NameCtrl'
             }).
             when('/online', {
-                templateUrl: 'welcome/online.html',
+                templateUrl: 'html/welcome/online.html',
                 controller: 'OnlineCtrl'
             }).
             when('/url', {
-                templateUrl: 'welcome/url.html',
+                templateUrl: 'html/welcome/url.html',
                 controller: 'UrlCtrl'
             }).
             when('/review', {
-                templateUrl: 'welcome/review.html',
+                templateUrl: 'html/welcome/review.html',
                 controller: 'ReviewCtrl'
             }).
             when('/done', {
-                templateUrl: 'welcome/done.html',
+                templateUrl: 'html/welcome/done.html',
                 controller: 'DoneCtrl'
             }).
             otherwise({

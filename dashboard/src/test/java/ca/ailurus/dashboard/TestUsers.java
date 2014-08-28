@@ -1,6 +1,6 @@
 package ca.ailurus.dashboard;
 
-import ca.ailurus.entities.User;
+import ca.ailurus.dashboard.entities.User;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;

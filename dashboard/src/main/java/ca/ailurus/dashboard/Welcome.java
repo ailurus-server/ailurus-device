@@ -1,36 +1,30 @@
 package ca.ailurus.dashboard;
 
-import ca.ailurus.entities.DeviceSettings;
+import ca.ailurus.dashboard.entities.DeviceSettings;
+import org.apache.http.client.RedirectException;
+import org.jboss.resteasy.plugins.providers.html.Redirect;
+import org.jboss.resteasy.plugins.providers.html.Renderable;
+import org.jboss.resteasy.plugins.providers.html.View;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
 
-public class Welcome extends HttpServlet {
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        DeviceSettings settings;
+@Path("/welcome")
+@Produces(MediaType.TEXT_HTML)
+public class Welcome {
+    @GET
+    public Renderable display() throws SQLException {
 
-        try {
-            settings = DeviceSettings.getSettings();
-        } catch (SQLException exception) {
-            throw new ServletException(exception);
-        }
+        DeviceSettings settings = DeviceSettings.getSettings();
 
         boolean initialized = settings.initialized;
-
         if (initialized) {
-            response.sendRedirect("/dashboard");
-            return;
+            return new Redirect("");
         }
 
-        String jspFile = "/WEB-INF/welcome.jsp";
-        RequestDispatcher jspDispatch = getServletContext().getRequestDispatcher(jspFile);
-        jspDispatch.forward(request, response);
+        return new View("jsp/welcome.jsp");
     }
 }
