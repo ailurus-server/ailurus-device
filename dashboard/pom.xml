@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jettyVersion>9.2.2.v20140723</jettyVersion>
         <restEasyVersion>3.0.8.Final</restEasyVersion>
+        <guiceVersion>3.0</guiceVersion>
     </properties>
 
     <dependencies>
@@ -42,12 +43,6 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
-            <version>${restEasyVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-guice</artifactId>
             <version>${restEasyVersion}</version>
         </dependency>
 
@@ -85,7 +80,13 @@
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>3.0</version>
+            <version>${guiceVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-servlet</artifactId>
+            <version>${guiceVersion}</version>
         </dependency>
 
         <dependency>
