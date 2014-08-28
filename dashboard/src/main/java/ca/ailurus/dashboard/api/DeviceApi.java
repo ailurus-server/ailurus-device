@@ -1,4 +1,4 @@
-package ca.ailurus.dashboard;
+package ca.ailurus.dashboard.api;
 
 import ca.ailurus.dashboard.exceptions.AlreadyInitializedException;
 import ca.ailurus.dashboard.objects.Device;

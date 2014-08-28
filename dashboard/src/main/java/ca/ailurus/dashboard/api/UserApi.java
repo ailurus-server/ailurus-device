@@ -1,4 +1,4 @@
-package ca.ailurus.dashboard;
+package ca.ailurus.dashboard.api;
 
 import ca.ailurus.dashboard.exceptions.UserAuthenticationError;
 import ca.ailurus.dashboard.entities.User;

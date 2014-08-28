@@ -7,8 +7,13 @@
     <display-name>Dashboard</display-name>
 
     <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/api</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>resteasy.guice.modules</param-name>
-        <param-value>ca.ailurus.dashboard.inject.DashboardModule</param-value>
+        <param-value>ca.ailurus.dashboard.inject.ApiModule</param-value>
     </context-param>
 
     <listener>
@@ -16,6 +21,18 @@
             org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener
         </listener-class>
     </listener>
+
+    <servlet>
+        <servlet-name>Api</servlet-name>
+        <servlet-class>
+            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+        </servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Api</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
 
     <!--
         TODO remove this section on deployment
@@ -30,27 +47,4 @@
             <param-value>false</param-value>
         </init-param>
     </servlet>
-
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-
-        <url-pattern>/webjars/*</url-pattern>
-        <url-pattern>/jsp/*</url-pattern>
-        <url-pattern>/html/*</url-pattern>
-        <url-pattern>/css/*</url-pattern>
-        <url-pattern>/js/*</url-pattern>
-        <url-pattern>/img/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Dashboard</servlet-name>
-        <servlet-class>
-            org.jboss.resteasy.plugins.providers.html.HtmlServletDispatcher
-        </servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Dashboard</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
 </web-app>

@@ -5,7 +5,7 @@ var dashboardApp = angular.module('dashboardApp', [
     'dashboardServices'
 ]);
 
-dashboardApp.constant('API_BASE', '');
+dashboardApp.constant('API_BASE', 'api/');
 
 dashboardApp.config(['$routeProvider',
     function($routeProvider) {

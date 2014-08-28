@@ -6,7 +6,7 @@ var welcomeApp = angular.module('welcomeApp', [
 ]);
 
 welcomeApp.constant('AILURUS_DOMAIN', 'ailurus.ca');
-welcomeApp.constant('API_BASE', '');
+welcomeApp.constant('API_BASE', 'api/');
 
 welcomeApp.config(['$routeProvider',
     function($routeProvider) {

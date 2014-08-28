@@ -1,30 +1,36 @@
 package ca.ailurus.dashboard;
 
 import ca.ailurus.dashboard.entities.DeviceSettings;
-import org.apache.http.client.RedirectException;
-import org.jboss.resteasy.plugins.providers.html.Redirect;
-import org.jboss.resteasy.plugins.providers.html.Renderable;
-import org.jboss.resteasy.plugins.providers.html.View;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLException;
 
-@Path("/welcome")
-@Produces(MediaType.TEXT_HTML)
-public class Welcome {
-    @GET
-    public Renderable display() throws SQLException {
+@WebServlet(name = "Welcome", urlPatterns = {"/welcome"})
+public class Welcome extends HttpServlet {
+    private static final String WELCOME_JSP_PATH = "/WEB-INF/jsp/welcome.jsp";
 
-        DeviceSettings settings = DeviceSettings.getSettings();
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        boolean initialized = settings.initialized;
-        if (initialized) {
-            return new Redirect("");
+        DeviceSettings settings;
+        try {
+             settings = DeviceSettings.getSettings();
+        } catch(SQLException e) {
+            throw new ServletException(e);
         }
 
-        return new View("jsp/welcome.jsp");
+        if (settings.initialized) {
+            response.sendRedirect("");
+            return;
+        }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher(WELCOME_JSP_PATH);
+        dispatcher.forward(request, response);
     }
 }
