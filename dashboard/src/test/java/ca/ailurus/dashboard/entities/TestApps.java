@@ -1,5 +1,7 @@
 package ca.ailurus.dashboard.entities;
 
+import ca.ailurus.dashboard.managers.AppManager;
+import ca.ailurus.dashboard.managers.AppManagerImpl;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -7,14 +9,16 @@ import static org.junit.Assert.*;
 public class TestApps {
     @Test
     public void testSearch() throws Exception {
-        App.add("aaa", "test", "test", "tag-1");
-        App.add("bbb", "test", "test", "tag-2 tag-1");
-        App.add("ccc", "test", "test", "tag-3");
-        App.add("ddd", "test", "test", "tag-3");
+        AppManager appManager = new AppManagerImpl();
 
-        assertEquals(App.search("tag-1").size(), 2);
-        assertEquals(App.search("tag-2").size(), 1);
-        assertEquals(App.search("bbb").size(), 1);
-        assertEquals(App.search("tag-3").size(), 2);
+        appManager.add(new App("aaa", "test", "test", "tag-1"));
+        appManager.add(new App("bbb", "test", "test", "tag-2 tag-1"));
+        appManager.add(new App("ccc", "test", "test", "tag-3"));
+        appManager.add(new App("ddd", "test", "test", "tag-3"));
+
+        assertEquals(appManager.search("tag-1").size(), 2);
+        assertEquals(appManager.search("tag-2").size(), 1);
+        assertEquals(appManager.search("bbb").size(), 1);
+        assertEquals(appManager.search("tag-3").size(), 2);
     }
 }

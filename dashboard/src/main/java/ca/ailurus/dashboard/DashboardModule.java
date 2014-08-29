@@ -1,18 +1,16 @@
-package ca.ailurus.dashboard.inject;
+package ca.ailurus.dashboard;
 
-import ca.ailurus.dashboard.Api;
-import ca.ailurus.dashboard.Dashboard;
-import ca.ailurus.dashboard.Welcome;
 import com.google.inject.servlet.ServletModule;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 
 import javax.inject.Singleton;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RouteModule extends ServletModule {
+public class DashboardModule extends ServletModule {
     @Override
     protected void configureServlets() {
         bindDashboardEndpoint();
@@ -32,12 +30,10 @@ public class RouteModule extends ServletModule {
     private void bindApiEndpoints() {
         markAsSingleton(HttpServletDispatcher.class);
 
-        getServletContext().setInitParameter("resteasy.servlet.mapping.prefix", "/api");
+        ServletContext context = getServletContext();
+        context.setInitParameter("resteasy.servlet.mapping.prefix", "/api");
 
-        Map<String, String> params = new HashMap<>();
-        params.put("javax.ws.rs.Application", "ca.ailurus.dashboard.Api");
-
-        serve("/api/*").with(HttpServletDispatcher.class, params);
+        serve("/api/*").with(HttpServletDispatcher.class);
     }
 
     private void bindStaticEndpoints() {

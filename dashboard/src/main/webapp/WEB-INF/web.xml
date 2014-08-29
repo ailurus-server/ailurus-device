@@ -16,6 +16,17 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--
+        The ResteasyGuiceConfig context listener must be placed before the GuiceServletConfig,
+        because ResteasyGuiceConfig sets the DashboardInjector.inject global variable,
+        which the GuiceServletConfig then uses to create a child injector.
+    -->
+    <listener>
+        <listener-class>
+            ca.ailurus.dashboard.inject.ResteasyGuiceConfig
+        </listener-class>
+    </listener>
+
     <listener>
         <listener-class>
             ca.ailurus.dashboard.inject.GuiceServletConfig

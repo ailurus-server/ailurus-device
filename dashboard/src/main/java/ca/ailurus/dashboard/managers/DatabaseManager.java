@@ -1,4 +1,4 @@
-package ca.ailurus.dashboard.database;
+package ca.ailurus.dashboard.managers;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;

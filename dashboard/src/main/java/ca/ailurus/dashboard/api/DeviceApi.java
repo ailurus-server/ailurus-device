@@ -1,6 +1,8 @@
 package ca.ailurus.dashboard.api;
 
 import ca.ailurus.dashboard.exceptions.AlreadyInitializedException;
+import ca.ailurus.dashboard.managers.DeviceSettingsManager;
+import ca.ailurus.dashboard.managers.UserManager;
 import ca.ailurus.dashboard.objects.Device;
 import ca.ailurus.dashboard.objects.Initialization;
 import ca.ailurus.dashboard.objects.device.Cpu;
@@ -10,6 +12,7 @@ import ca.ailurus.dashboard.objects.device.Network;
 import ca.ailurus.dashboard.entities.User;
 import ca.ailurus.dashboard.entities.DeviceSettings;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
@@ -20,10 +23,19 @@ import java.sql.SQLException;
 @Path("/device")
 @Produces(MediaType.APPLICATION_JSON)
 public class DeviceApi {
+    private DeviceSettingsManager settingsManager;
+    private UserManager userManager;
+
+    @Inject
+    public DeviceApi(DeviceSettingsManager settingsManager, UserManager userManager) {
+        this.settingsManager = settingsManager;
+        this.userManager = userManager;
+    }
+
     @POST @Path("/init")
     @Consumes(MediaType.APPLICATION_JSON)
     public void init(Initialization init) throws SQLException {
-        DeviceSettings settings = DeviceSettings.getSettings();
+        DeviceSettings settings = settingsManager.getSettings();
 
         if (settings.initialized) {
             throw new AlreadyInitializedException();
@@ -33,11 +45,11 @@ public class DeviceApi {
         user.name = init.username;
         user.password = init.password;
         user.email = init.email;
-        User.create(user);
+        userManager.create(user);
 
         settings.initialized = true;
         settings.url = init.url;
-        DeviceSettings.update(settings);
+        settingsManager.update(settings);
     }
 
     @GET
@@ -93,7 +105,7 @@ public class DeviceApi {
 
         DeviceSettings settings;
         try {
-            settings = DeviceSettings.getSettings();
+            settings = settingsManager.getSettings();
         } catch(SQLException e) {
             throw new InternalServerErrorException(e);
         }

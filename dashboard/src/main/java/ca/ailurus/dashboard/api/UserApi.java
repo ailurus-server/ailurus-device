@@ -2,7 +2,9 @@ package ca.ailurus.dashboard.api;
 
 import ca.ailurus.dashboard.exceptions.UserAuthenticationError;
 import ca.ailurus.dashboard.entities.User;
+import ca.ailurus.dashboard.managers.UserManager;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
@@ -11,6 +13,12 @@ import java.sql.SQLException;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class UserApi {
+    UserManager userManager;
+
+    @Inject
+    public UserApi(UserManager userManager) {
+        this.userManager = userManager;
+    }
 
     private class Status {
         public String status;
@@ -31,7 +39,7 @@ public class UserApi {
     @POST  @Path("/login")
     public Status login(User user) {
         try {
-            User account = User.get(user.name);
+            User account = userManager.get(user.name);
             if (null == account || !account.password.equals(user.password)) {
                 throw new UserAuthenticationError();
             }
@@ -44,7 +52,7 @@ public class UserApi {
     @PUT
     public Status create(User user) {
         try {
-            User.create(user);
+            userManager.create(user);
             return new Status("ok", "successfully created");
         } catch (SQLException e) {
             throw new InternalServerErrorException(e);
@@ -54,7 +62,7 @@ public class UserApi {
     @DELETE
     public Status delete(@PathParam("name") String userName) {
         try {
-            User.delete(userName);
+            userManager.delete(userName);
             return new Status("ok", "successfully deleted");
         } catch (SQLException e) {
             throw new InternalServerErrorException(e);
@@ -65,7 +73,7 @@ public class UserApi {
     public Status update(@PathParam("name") String userName,
                          User user) {
         try {
-            User account = User.get(userName);
+            User account = userManager.get(userName);
             if (null != account) {
                 account.name = user.name;
                 account.password = user.password;

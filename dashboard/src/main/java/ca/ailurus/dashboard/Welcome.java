@@ -1,7 +1,9 @@
 package ca.ailurus.dashboard;
 
 import ca.ailurus.dashboard.entities.DeviceSettings;
+import ca.ailurus.dashboard.managers.DeviceSettingsManager;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,13 +17,20 @@ import java.sql.SQLException;
 public class Welcome extends HttpServlet {
     private static final String WELCOME_JSP_PATH = "/WEB-INF/jsp/welcome.jsp";
 
+    private DeviceSettingsManager settingsManager;
+
+    @Inject
+    public Welcome(DeviceSettingsManager settingsManager) {
+        this.settingsManager = settingsManager;
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         DeviceSettings settings;
         try {
-             settings = DeviceSettings.getSettings();
+             settings = settingsManager.getSettings();
         } catch(SQLException e) {
             throw new ServletException(e);
         }

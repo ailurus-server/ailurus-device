@@ -10,22 +10,29 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <bootstrapVersion>3.2.0</bootstrapVersion>
+        <angularJsVersion>1.2.22</angularJsVersion>
+        <servletVersion>3.1.0</servletVersion>
         <jettyVersion>9.2.2.v20140723</jettyVersion>
         <restEasyVersion>3.0.8.Final</restEasyVersion>
         <guiceVersion>3.0</guiceVersion>
+        <ormliteVersion>4.48</ormliteVersion>
+        <sqliteVersion>3.7.2</sqliteVersion>
+        <junitVersion>4.11</junitVersion>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>3.2.0</version>
+            <version>${bootstrapVersion}</version>
         </dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angularjs</artifactId>
-            <version>1.2.22</version>
+            <version>${angularJsVersion}</version>
         </dependency>
 
         <dependency>
@@ -47,9 +54,15 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-guice</artifactId>
+            <version>${restEasyVersion}</version>
+        </dependency>
+
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <version>${servletVersion}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -62,19 +75,19 @@
         <dependency>
             <groupId>com.j256.ormlite</groupId>
             <artifactId>ormlite-core</artifactId>
-            <version>4.48</version>
+            <version>${ormliteVersion}</version>
         </dependency>
 
         <dependency>
             <groupId>com.j256.ormlite</groupId>
             <artifactId>ormlite-jdbc</artifactId>
-            <version>4.48</version>
+            <version>${ormliteVersion}</version>
         </dependency>
 
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.7.2</version>
+            <version>${sqliteVersion}</version>
         </dependency>
 
         <dependency>
@@ -92,7 +105,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junitVersion}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
