@@ -1,7 +1,6 @@
 package ca.ailurus.dashboard.inject;
 
 import ca.ailurus.dashboard.api.ApiModule;
-import ca.ailurus.dashboard.managers.ManagerModule;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener;

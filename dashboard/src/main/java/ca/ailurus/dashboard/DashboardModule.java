@@ -4,7 +4,7 @@ import com.google.inject.servlet.ServletModule;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 
-import javax.inject.Singleton;
+import com.google.inject.Singleton;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import java.util.HashMap;

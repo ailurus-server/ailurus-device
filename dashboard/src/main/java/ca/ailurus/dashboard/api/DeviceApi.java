@@ -1,8 +1,8 @@
 package ca.ailurus.dashboard.api;
 
-import ca.ailurus.dashboard.exceptions.AlreadyInitializedException;
-import ca.ailurus.dashboard.managers.DeviceSettingsManager;
-import ca.ailurus.dashboard.managers.UserManager;
+import ca.ailurus.dashboard.entities.UseCase;
+import ca.ailurus.dashboard.transaction.Transaction;
+import ca.ailurus.dashboard.transaction.TransactionMaker;
 import ca.ailurus.dashboard.objects.Device;
 import ca.ailurus.dashboard.objects.Initialization;
 import ca.ailurus.dashboard.objects.device.Cpu;
@@ -12,44 +12,60 @@ import ca.ailurus.dashboard.objects.device.Network;
 import ca.ailurus.dashboard.entities.User;
 import ca.ailurus.dashboard.entities.DeviceSettings;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 
 @Path("/device")
 @Produces(MediaType.APPLICATION_JSON)
 public class DeviceApi {
-    private DeviceSettingsManager settingsManager;
-    private UserManager userManager;
+    private TransactionMaker transactionMaker;
 
     @Inject
-    public DeviceApi(DeviceSettingsManager settingsManager, UserManager userManager) {
-        this.settingsManager = settingsManager;
-        this.userManager = userManager;
+    public DeviceApi(TransactionMaker transactionMaker) {
+        this.transactionMaker = transactionMaker;
     }
 
     @POST @Path("/init")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void init(Initialization init) throws SQLException {
-        DeviceSettings settings = settingsManager.getSettings();
+    public void init(Initialization init) {
+        try (Transaction tx = transactionMaker.make()) {
+            if (tx.hasSettings()) {
+                throw new BadRequestException("Device has already been initialized.");
+            }
 
-        if (settings.initialized) {
-            throw new AlreadyInitializedException();
+            User user = new User();
+            user.name = init.username;
+            user.password = init.password;
+            user.email = init.email;
+            tx.addUser(user);
+
+            initUseCases(tx);
+
+            DeviceSettings settings = new DeviceSettings();
+            settings.url = init.url;
+            tx.createSettings(settings);
+
+            tx.commit();
         }
+    }
 
-        User user = new User();
-        user.name = init.username;
-        user.password = init.password;
-        user.email = init.email;
-        userManager.create(user);
+    private void initUseCases(Transaction tx) {
+         UseCase[] useCases = {
+            new UseCase("blog", "Blog", " to share your thoughts", UseCase.Types.Personal),
+            new UseCase("profile", "Profile Page", " to showcase your work", UseCase.Types.Personal),
+            new UseCase("game-server", "Game Server", " to host games for your friends", UseCase.Types.Personal),
+            new UseCase("corporate-website", "Corporate Website", " to showcase your company", UseCase.Types.Business),
+            new UseCase("web-server", "Web Server", " to run your own website", UseCase.Types.Programming),
+            new UseCase("source-control", "Source Control", " to safely store your source code", UseCase.Types.Programming)
+        };
 
-        settings.initialized = true;
-        settings.url = init.url;
-        settingsManager.update(settings);
+        for (UseCase useCase: useCases) {
+            tx.addUseCase(useCase.type.toString(), useCase);
+        }
     }
 
     @GET
@@ -101,23 +117,18 @@ public class DeviceApi {
 
     @GET @Path("/network")
     public Network getNetwork() {
-        Network network = new Network();
+        try (Transaction tx = transactionMaker.make()) {
+            Network network = new Network();
+            InetAddress address = getAddress();
+            DeviceSettings settings = tx.getSettings();
 
-        DeviceSettings settings;
-        try {
-            settings = settingsManager.getSettings();
-        } catch(SQLException e) {
-            throw new InternalServerErrorException(e);
+            network.hostname = address.getHostName();
+            network.ipAddress = address.getHostAddress();
+            network.url = settings.url;
+            network.capacity = "10/100 ethernet";
+
+            return network;
         }
-
-        InetAddress address = getAddress();
-
-        network.hostname = address.getHostName();
-        network.ipAddress = address.getHostAddress();
-        network.url = settings.url;
-        network.capacity = "10/100 ethernet";
-
-        return network;
     }
 
     private InetAddress getAddress() {

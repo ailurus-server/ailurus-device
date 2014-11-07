@@ -1,5 +1,6 @@
 package ca.ailurus.dashboard.api;
 
+import ca.ailurus.dashboard.transaction.TransactionModule;
 import com.google.inject.AbstractModule;
 
 public class ApiModule extends AbstractModule {
@@ -8,5 +9,6 @@ public class ApiModule extends AbstractModule {
         bind(AppApi.class);
         bind(DeviceApi.class);
         bind(UserApi.class);
+        install(new TransactionModule());
     }
 }

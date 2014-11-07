@@ -1,23 +1,14 @@
 package ca.ailurus.dashboard.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
+import java.io.Serializable;
 
-@DatabaseTable(tableName = "Apps")
-public class App {
-    @JsonIgnore
-    @DatabaseField(generatedId = true) public Integer id;
-
-    @DatabaseField public String name;
-    @DatabaseField public String description;
-    @DatabaseField public String imageUrl;
-    @DatabaseField public String tags;
-    @DatabaseField(defaultValue = "false") public boolean installed;
-    @DatabaseField public String appUrl;
-
-    public App() {
-    }
+public class App implements Serializable {
+    public String name;
+    public String description;
+    public String imageUrl;
+    public String tags;
+    public boolean installed;
+    public String appUrl;
 
     public App(String name, String description, String imageUrl, String tags) {
         this(name, description, imageUrl, tags, false, null);

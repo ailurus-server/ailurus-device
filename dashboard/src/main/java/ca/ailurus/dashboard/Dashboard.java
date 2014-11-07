@@ -1,7 +1,9 @@
 package ca.ailurus.dashboard;
 
-
-import javax.inject.Singleton;
+import ca.ailurus.dashboard.transaction.Transaction;
+import ca.ailurus.dashboard.transaction.TransactionMaker;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,9 +15,23 @@ import java.io.IOException;
 public class Dashboard extends HttpServlet {
     private static final String DASHBOARD_JSP_PATH = "/WEB-INF/jsp/dashboard.jsp";
 
+    private TransactionMaker transactionMaker;
+
+    @Inject
+    public Dashboard(TransactionMaker transactionMaker) {
+        this.transactionMaker = transactionMaker;
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try (Transaction tx = transactionMaker.make()) {
+            if (!tx.hasSettings()) {
+                response.sendRedirect("/welcome");
+                return;
+            }
+        }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher(DASHBOARD_JSP_PATH);
         dispatcher.forward(request, response);
     }

@@ -2,7 +2,9 @@ package ca.ailurus.dashboard.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UseCase {
+import java.io.Serializable;
+
+public class UseCase implements Serializable {
     public enum Types {
         Personal,
         Business,

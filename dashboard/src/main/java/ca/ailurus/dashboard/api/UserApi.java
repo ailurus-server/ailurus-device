@@ -1,23 +1,22 @@
 package ca.ailurus.dashboard.api;
 
-import ca.ailurus.dashboard.exceptions.UserAuthenticationError;
 import ca.ailurus.dashboard.entities.User;
-import ca.ailurus.dashboard.managers.UserManager;
+import ca.ailurus.dashboard.transaction.Transaction;
+import ca.ailurus.dashboard.transaction.TransactionMaker;
+import com.google.inject.Inject;
 
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.sql.SQLException;
 
 @Path("/accounts/{name}")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class UserApi {
-    UserManager userManager;
+    TransactionMaker transactonManager;
 
     @Inject
-    public UserApi(UserManager userManager) {
-        this.userManager = userManager;
+    public UserApi(TransactionMaker transactonManager) {
+        this.transactonManager = transactonManager;
     }
 
     private class Status {
@@ -38,50 +37,46 @@ public class UserApi {
 
     @POST  @Path("/login")
     public Status login(User user) {
-        try {
-            User account = userManager.get(user.name);
+        try (Transaction tx = transactonManager.make()) {
+            User account = tx.getUser(user.name);
             if (null == account || !account.password.equals(user.password)) {
-                throw new UserAuthenticationError();
+                throw new NotAuthorizedException("Authorization Failed");
             }
             return new Status("ok", "login succeeded", user.name + ":" + user.password);
-        } catch (SQLException e) {
-            throw new InternalServerErrorException(e);
         }
     }
 
     @PUT
     public Status create(User user) {
-        try {
-            userManager.create(user);
+        try (Transaction tx = transactonManager.make()) {
+            tx.addUser(user);
+            tx.commit();
             return new Status("ok", "successfully created");
-        } catch (SQLException e) {
-            throw new InternalServerErrorException(e);
         }
     }
 
     @DELETE
     public Status delete(@PathParam("name") String userName) {
-        try {
-            userManager.delete(userName);
+        try (Transaction tx = transactonManager.make()) {
+            tx.deleteUser(userName);
+            tx.commit();
             return new Status("ok", "successfully deleted");
-        } catch (SQLException e) {
-            throw new InternalServerErrorException(e);
         }
     }
 
     @POST
-    public Status update(@PathParam("name") String userName,
-                         User user) {
-        try {
-            User account = userManager.get(userName);
-            if (null != account) {
-                account.name = user.name;
-                account.password = user.password;
-                return new Status("ok", "successfully updated");
+    public Status update(@PathParam("name") String userName, User user) {
+        try (Transaction tx = transactonManager.make()) {
+            User account = tx.getUser(userName);
+            if (account == null) {
+                throw new BadRequestException("Invalid account.");
             }
-            throw new BadRequestException("Invalid account.");
-        } catch (SQLException e) {
-            throw new InternalServerErrorException(e);
+
+            account.name = user.name;
+            account.password = user.password;
+            tx.updateUser(account);
+            tx.commit();
+            return new Status("ok", "successfully updated");
         }
     }
 
