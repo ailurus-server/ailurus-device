@@ -1,5 +1,8 @@
 package ca.ailurus.dashboard;
 
+import ca.ailurus.dashboard.entities.DeviceSettings;
+import ca.ailurus.dashboard.entities.UseCase;
+import ca.ailurus.dashboard.entities.User;
 import ca.ailurus.dashboard.transaction.Transaction;
 import ca.ailurus.dashboard.transaction.TransactionMaker;
 import com.google.inject.Inject;
@@ -9,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.BadRequestException;
 import java.io.IOException;
 
 @Singleton
@@ -27,12 +31,49 @@ public class Dashboard extends HttpServlet {
             throws ServletException, IOException {
         try (Transaction tx = transactionMaker.make()) {
             if (!tx.hasSettings()) {
-                response.sendRedirect("/welcome");
-                return;
+            // TODO use this to redirect to welcome screen
+            //    response.sendRedirect("/welcome");
+            //    return;
+                initMockDevice(tx);
+                initMockUseCases(tx);
+                tx.commit();
             }
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(DASHBOARD_JSP_PATH);
         dispatcher.forward(request, response);
+    }
+
+    // TODO delete this after testing
+    private void initMockDevice(Transaction tx) {
+        if (tx.hasSettings()) {
+            throw new BadRequestException("Device has already been initialized.");
+        }
+
+        User user = new User();
+        user.name = "name";
+        user.password = "password";
+        user.email = "me@ailurus.ca";
+        tx.addUser(user);
+
+        DeviceSettings settings = new DeviceSettings();
+        settings.url = "me.ailurus.ca";
+        tx.createSettings(settings);
+    }
+
+    // TODO delete this after testing
+    private void initMockUseCases(Transaction tx) {
+        UseCase[] useCases = {
+            new UseCase("blog", "Blog", " to share your thoughts", UseCase.Types.Personal),
+            new UseCase("profile", "Profile Page", " to showcase your work", UseCase.Types.Personal),
+            new UseCase("game-server", "Game Server", " to host games for your friends", UseCase.Types.Personal),
+            new UseCase("corporate-website", "Corporate Website", " to showcase your company", UseCase.Types.Business),
+            new UseCase("web-server", "Web Server", " to run your own website", UseCase.Types.Programming),
+            new UseCase("source-control", "Source Control", " to safely store your source code", UseCase.Types.Programming)
+        };
+
+        for (UseCase useCase: useCases) {
+            tx.addUseCase(useCase);
+        }
     }
 }

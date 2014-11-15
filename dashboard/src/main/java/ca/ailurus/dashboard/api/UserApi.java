@@ -74,7 +74,7 @@ public class UserApi {
 
             account.name = user.name;
             account.password = user.password;
-            tx.updateUser(account);
+            tx.setUser(account);
             tx.commit();
             return new Status("ok", "successfully updated");
         }

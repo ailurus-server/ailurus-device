@@ -64,7 +64,7 @@ public class DeviceApi {
         };
 
         for (UseCase useCase: useCases) {
-            tx.addUseCase(useCase.type.toString(), useCase);
+            tx.addUseCase(useCase);
         }
     }
 

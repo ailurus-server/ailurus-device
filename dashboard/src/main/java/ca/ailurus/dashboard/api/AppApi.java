@@ -2,6 +2,7 @@ package ca.ailurus.dashboard.api;
 
 import ca.ailurus.dashboard.entities.App;
 import ca.ailurus.dashboard.entities.UseCase;
+import ca.ailurus.dashboard.objects.UseCaseCategory;
 import ca.ailurus.dashboard.transaction.Transaction;
 import ca.ailurus.dashboard.transaction.TransactionMaker;
 import ca.ailurus.dashboard.objects.UseCaseWithApps;
@@ -55,9 +56,9 @@ public class AppApi {
     }
 
     @GET @Path("/usecases")
-    public Map<String, List<UseCase>> getUsecases() {
+    public List<UseCaseCategory> getUsecases() {
         try (Transaction tx = transactionMaker.make()) {
-            return tx.getAllUseCases();
+            return tx.getAllUseCasesSorted();
         }
     }
 }

@@ -53,7 +53,7 @@ dashboardControllers.controller('StoreCtrl', [
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
-        $scope.categorizedUseCases = Api.queryOne('apps/usecases')
+        $scope.categorizedUseCases = Api.queryMany('apps/usecases');
 
         $scope.scroll = function(event) {
             var hash = event.target.hash;
