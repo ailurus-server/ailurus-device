@@ -1,17 +1,18 @@
 <article class="container">
     <div class="row">
-        <section>
-            <a name="overview"></a>
-
+        <section class="col-xs-12">
             <h2 class="page-header">Installed Apps</h2>
 
-
-            <div class="container app-container col-xs-4 col-xs-height" ng-repeat="app in apps">
-                <a ng-href="{{app.appUrl}}">
-                    <img ng-src="{{app.imageUrl}}" class="app-image img-responsive">
-                </a>
-                <h3 class="text-center">{{app.name}}</h3>
-                <!--<div class="row">{{app.name}}</div>-->
+            <div class="row">
+                <div class="media col-sm-12 col-md-6 col-lg-4" ng-repeat="app in apps">
+                    <a class="media-left" ng-href="{{app.appUrl}}">
+                        <img ng-src="{{app.imageUrl}}" alt="{{app.name}}" height="64px" width="64px">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{app.name}}</h4>
+                        {{app.description}}
+                    </div>
+                </div>
             </div>
         </section>
     </div>

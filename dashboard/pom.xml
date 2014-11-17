@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <bootstrapVersion>3.2.0</bootstrapVersion>
+        <bootstrapVersion>3.3.1</bootstrapVersion>
         <angularJsVersion>1.2.22</angularJsVersion>
         <servletVersion>3.1.0</servletVersion>
         <jettyVersion>9.2.2.v20140723</jettyVersion>

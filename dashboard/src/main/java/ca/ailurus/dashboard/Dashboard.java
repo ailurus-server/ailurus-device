@@ -1,5 +1,6 @@
 package ca.ailurus.dashboard;
 
+import ca.ailurus.dashboard.entities.App;
 import ca.ailurus.dashboard.entities.DeviceSettings;
 import ca.ailurus.dashboard.entities.UseCase;
 import ca.ailurus.dashboard.entities.User;
@@ -36,6 +37,7 @@ public class Dashboard extends HttpServlet {
             //    return;
                 initMockDevice(tx);
                 initMockUseCases(tx);
+                initMockApps(tx);
                 tx.commit();
             }
         }
@@ -76,4 +78,30 @@ public class Dashboard extends HttpServlet {
             tx.addUseCase(useCase);
         }
     }
+
+    // TODO delete this after testing
+    private void initMockApps(Transaction tx) {
+        tx.addInstalledApp(
+            new App("Wordpress",
+                    "WordPress is web software you can use to create a beautiful blogs",
+                    "img/apps/wordpress.png",
+                    "blog",
+                    true,
+                    "/wordpress"));
+        tx.addInstalledApp(
+            new App("Minecraft",
+                    "Minecraft is a popular game about building blocks.",
+                    "img/apps/minecraft.png",
+                    "game-server",
+                    true,
+                    ""));
+        tx.addInstalledApp(
+                new App("GitList",
+                        "GitList is a simple git repository browser.",
+                        "img/apps/git.png",
+                        "blog source-control",
+                        true,
+                    "/gitlist"));
+    }
+
 }

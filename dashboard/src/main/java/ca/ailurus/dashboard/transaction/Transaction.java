@@ -41,6 +41,11 @@ public class Transaction implements Closeable {
         settingsMap.put(DEVICE_SETTINGS, settings);
     }
 
+    public void addInstalledApp(App app) {
+        Map<String, App> apps = db.getTreeMap(INSTALLED_APPS);
+        apps.put(app.name, app);
+    }
+
     public List<App> getInstalledApps() {
         Map<String, App> apps = db.getTreeMap(INSTALLED_APPS);
 
