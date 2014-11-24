@@ -26,3 +26,11 @@ FIXME this constant should ideally be encoded as a class
 .search-results-header {
     margin-top: 10px;
 }
+
+.support-input-field {
+    max-width: 350px;
+}
+
+.apps-app-container {
+    margin-bottom: 10px;
+}
