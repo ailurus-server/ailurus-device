@@ -1,0 +1,53 @@
+Meeting Notes Jan 7. 2015
+
+Use Cases:
+    Secure personal cloud storage
+    Secure personal mail/calendar/contacts
+    Blogging
+    
+Tasks    
+    Welcome Process [V0]
+    Device Data Display [V0]
+        Less hard coded stuff [V1]
+        
+    User Testing [V1]
+        Find Two Profs who will Evaluate Us as Customers [V1]
+        
+    Account Management [V1]
+        
+    Install and Uninstall Apps [V1]
+        Package Tracker [V2]
+        Configuration after Installation [V2]
+
+    SSO For one App [V2]       
+       
+    Login/Logout [V0]
+        HTTPS [V2]
+        Refactor Authentication [V2]
+        
+    Support Page [Maybe]
+    
+    Support Third Party Apps [V1]
+        Find Third Party Apps
+        
+    DNS Support [V1]
+    
+    Port Forwarding [V1]
+
+Skipped Use Cases:
+    Personal Photos Storage
+    Small game server
+
+Todo:
+    Port Forwarding
+    DNS
+    User Management
+    User Testing
+    
+Misc Todos:
+    Ethics/Legal/Forms [Due End of Jan]
+    Poster [Prototype Due March 2, Final Due March 22]
+  
+Won't Do:
+    Good code/Documentation
+    
