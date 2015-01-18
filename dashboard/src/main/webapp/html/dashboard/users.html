@@ -2,7 +2,99 @@
     <div class="row">
         <div class="col-xs-12">
             <section>
-                <h2 class="page-header">Users</h2>
+                <h1 class="page-header">Users</h1>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Your Account </h3>
+                    </div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>Name</dt>
+                            <dd>
+                                {{currentUser.username}}
+                                <div class="pull-right">
+                                    <a class="btn btn-xs btn-default" href="#/name" role="button">
+                                        <span class="glyphicon glyphicon-wrench"></span>
+                                        Change
+                                    </a>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>Email</dt>
+                            <dd>
+                                {{currentUser.email}}
+                                <div class="pull-right">
+                                    <a class="btn btn-xs btn-default" href="#/name" role="button">
+                                        <span class="glyphicon glyphicon-wrench"></span>
+                                        Change
+                                    </a>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>Type</dt>
+                            <dd>
+                                Administrator
+                                <div class="pull-right">
+                                    <a class="btn btn-xs btn-default" href="#/name" role="button">
+                                        <span class="glyphicon glyphicon-wrench"></span>
+                                        Change
+                                    </a>
+                                </div>
+                            </dd>
+                        </dl>
+                        <p class="text-center">
+                            <button class="btn btn-sm btn-default" role="button">
+                                Change Your Password
+                            </button>
+                        </p>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Other Accounts </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="pull-right">
+                            <button class="btn btn-sm btn-default">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Add a New User
+                            </button>
+                        </div>
+                        As an administrator, you can manage other user accounts.
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Type</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>bunny</td>
+                                <td>bunny@me.com</td>
+                                <td>
+                                    Basic
+                                    <button class="btn btn-xs btn-default">
+                                        <span class="glyphicon glyphicon-wrench"></span>
+                                        Change
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-danger">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
         </div>
     </div>
