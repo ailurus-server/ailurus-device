@@ -1,0 +1,13 @@
+TODO:
+- Update abstract / meta / referees
+  - GET A CUSTOMER
+    - contact mr dentist [rh]
+    - contact jmatlee [rp]
+
+- Social / Legal report [rp, jw, rh, tz]
+- welcome process, hook up dns [jw, rp]
+- user management [tz]
+
+- v0 apps
+  - mail calendar contacts [rh, rp]
+  - blogging [jw]
