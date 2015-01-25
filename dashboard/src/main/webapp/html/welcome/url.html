@@ -53,7 +53,8 @@
                                    class="form-control"
                                    placeholder="Subdomain"
                                    maxlength="40"
-                                   data-ng-model="data.subdomain"
+                                   data-ng-model="url"
+                                   data-ng-change="updateUrl(url)"
                                    data-ng-maxlength="40"
                                    data-ng-required="true"
                                    data-ng-pattern="/^(\w|-)+$/">
@@ -66,6 +67,11 @@
                                  data-ng-show="ailurusForm.subdomain.$invalid &&
                                       !ailurusForm.subdomain.$error.required">
                                 Subdomain can only contain letters, numbers or dashes.
+                            </div>
+                            <div class="help-block"
+                                 data-ng-show="ailurusForm.subdomain.$taken &&
+                                      !ailurusForm.subdomain.$error.required">
+                                The requested subdomain has already been taken.
                             </div>
                         </div>
                         <div class="col-xs-3 no-left-padding">
