@@ -8,7 +8,7 @@ public class ApiModule extends AbstractModule {
     protected void configure() {
         bind(AppApi.class);
         bind(DeviceApi.class);
-        bind(UserApi.class);
+        bind(UsersApi.class);
         install(new TransactionModule());
     }
 }

@@ -4,10 +4,10 @@
             <h2 class="page-header">Installed Apps</h2>
 
             <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-4 apps-app-container" ng-repeat="app in apps">
+                <div class="col-sm-12 col-md-6 col-lg-4 apps-app-container" data-ng-repeat="app in apps">
                     <div class="media">
-                        <a class="media-left" ng-href="{{app.appUrl}}">
-                            <img ng-src="{{app.imageUrl}}" alt="{{app.name}}" height="64px" width="64px">
+                        <a class="media-left" data-ng-href="{{app.appUrl}}">
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}" height="64px" width="64px">
                         </a>
                         <div class="media-body">
                             <h4 class="media-heading">{{app.name}}</h4>

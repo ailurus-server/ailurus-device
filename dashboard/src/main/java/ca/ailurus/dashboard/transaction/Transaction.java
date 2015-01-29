@@ -56,7 +56,7 @@ public class Transaction implements Closeable {
         List<UseCaseCategory> useCaseCategories = new ArrayList<>();
         Map<UseCase.Types, List<UseCase>> useCases = db.getTreeMap(USE_CASE);
 
-        for (Map.Entry<UseCase.Types, List<UseCase>> entry: useCases.entrySet()) {
+        for (Map.Entry<UseCase.Types, List<UseCase>> entry : useCases.entrySet()) {
             UseCaseCategory category = new UseCaseCategory();
             category.type = entry.getKey();
             category.useCases = entry.getValue();
@@ -75,7 +75,7 @@ public class Transaction implements Closeable {
 
     public void addUseCase(UseCase useCase) {
         Map<UseCase.Types, List<UseCase>> useCases = db.getTreeMap(USE_CASE);
-        if(!useCases.containsKey(useCase.type)) {
+        if (!useCases.containsKey(useCase.type)) {
             useCases.put(useCase.type, new ArrayList<UseCase>());
         }
         useCases.get(useCase.type).add(useCase);
@@ -83,8 +83,8 @@ public class Transaction implements Closeable {
 
     public UseCase getUseCase(String name) {
         Map<UseCase.Types, List<UseCase>> useCaseMap = db.getTreeMap(USE_CASE);
-        for (List<UseCase> useCases: useCaseMap.values()) {
-            for (UseCase useCase: useCases) {
+        for (List<UseCase> useCases : useCaseMap.values()) {
+            for (UseCase useCase : useCases) {
                 if (useCase.name.equals(name)) {
                     return useCase;
                 }
@@ -96,7 +96,7 @@ public class Transaction implements Closeable {
     public List<App> appsByUseCase(String useCaseName) {
         Map<String, App> apps = db.getTreeMap(AVAILABLE_APPS);
         List<App> matched = new ArrayList<>();
-        for (App app: apps.values()) {
+        for (App app : apps.values()) {
             if (app.tags.contains(useCaseName)) {
                 matched.add(app);
             }
@@ -107,12 +107,17 @@ public class Transaction implements Closeable {
     public List<App> searchApps(String keyword) {
         Map<String, App> apps = db.getTreeMap(AVAILABLE_APPS);
         List<App> matched = new ArrayList<>();
-        for (App app: apps.values()) {
+        for (App app : apps.values()) {
             if (app.tags.contains(keyword) && app.name.contains(keyword)) {
                 matched.add(app);
             }
         }
         return matched;
+    }
+
+    public ArrayList<User> listUsers() {
+        Map<String, User> users = db.getTreeMap(USERS);
+        return new ArrayList<>(users.values());
     }
 
     public void addUser(User user) {

@@ -31,12 +31,6 @@
     <![endif]-->
 
     <script src="js/dashboard/app.js"></script>
-    <script>
-      dashboardApp.value('loginUser', {
-        name: 'aardvark'
-      });
-    </script>
-
     <script src="js/dashboard/controllers.js"></script>
     <script src="js/dashboard/filters.js"></script>
     <script src="js/dashboard/services.js"></script>

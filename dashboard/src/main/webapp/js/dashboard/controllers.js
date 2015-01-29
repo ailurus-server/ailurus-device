@@ -3,10 +3,10 @@
 var dashboardControllers = angular.module('dashboardControllers', []);
 
 dashboardControllers.controller('AppCtrl', [
-    '$scope', 'loginUser', 'Session',
-    function ($scope, loginUser, Session) {
+    '$scope', 'Session',
+    function ($scope, Session) {
         $scope.user = {
-            name: Session.username
+            name: Session.username //TODO also load email and user type
         }
         $scope.app = {
             panel: 'device',
@@ -16,34 +16,127 @@ dashboardControllers.controller('AppCtrl', [
 ]);
 
 dashboardControllers.controller('DeviceCtrl', [
-    '$scope', '$location','$anchorScroll', 'Api',
-    function ($scope, $location, $anchorScroll, Api) {
+    '$scope', 'Api',
+    function ($scope, Api) {
         $scope.app.panel = 'device';
         $scope.app.showNavBar = true;
 
         $scope.device = Api.queryOne('device');
-
-        // TODO use .affix and .scrollSpy on the right hand side nav bar
-        $scope.scroll = function(event) {
-            var hash = event.target.hash;
-            $location.hash(hash.substring(1));
-            $anchorScroll();
-            event.preventDefault();
-        };
     }
 ]);
 
-dashboardControllers.controller('UsersCtrl', ['$scope',
-    function ($scope) {
+dashboardControllers.controller('UsersCtrl', [
+    '$scope', 'Api',
+    function ($scope, Api) {
         $scope.app.panel = 'users';
         $scope.app.showNavBar = true;
 
-        $scope.scroll = function(event) {
-            var hash = event.target.hash;
-            $location.hash(hash.substring(1));
-            $anchorScroll();
-            event.preventDefault();
+        $scope.users = Api.queryMany('users');
+
+        $scope.errorMsg = '';
+
+        $scope.newName = '';
+        $scope.changeName = function() {
+            var updatedUser = {
+                name: $scope.newName,
+            };
+
+            Api.post('users/' + $scope.user.name, updatedUser)
+               .success(function() {
+                    $scope.user.name = $scope.newName;
+                    $scope.newName = '';
+                    $scope.reloadUsers();
+               })
+               .error(function() {
+                    $scope.errorMsg = 'Failed to change name due to server error.';
+               })
+        }
+
+        $scope.newEmail = '';
+        $scope.changeEmail = function() {
+            var updatedUser = {
+                email: $scope.newEmail,
+            };
+
+            Api.post('users/' + $scope.user.name, updatedUser)
+               .success(function() {
+                    $scope.user.email = $scope.newEmail;
+                    $scope.newEmail = '';
+               })
+               .error(function() {
+                    $scope.errorMsg = 'Failed to change email due to server error.';
+               })
+        }
+
+        $scope.newPassword = '';
+        $scope.newConfirmation = '';
+        $scope.changePassword = function() {
+            var updatedUser = {
+                password: $scope.newPassword,
+            };
+
+            Api.post('users/' + $scope.user.name, updatedUser)
+               .success(function() {
+                    $scope.user.password = $scope.newPassword;
+                    $scope.newPassword = '';
+                    $scope.newConfirmation = '';
+               })
+               .error(function() {
+                    $scope.errorMsg = 'Failed to change password due to server error.';
+               })
+        }
+
+        $scope.userToAdd = {
+            name: '',
+            email: '',
+            password: '',
+            confirmation: '',
         };
+        $scope.addUser = function() {
+            var newUser = {
+                name: $scope.userToAdd.name,
+                email: $scope.userToAdd.email,
+                password: $scope.userToAdd.password,
+            };
+
+            Api.put('users', newUser)
+               .success(function() {
+                    $scope.userToAdd = {
+                        name: '',
+                        email: '',
+                        password: '',
+                        confirmation: '',
+                    };
+
+                    $scope.reloadUsers();
+               })
+               .error(function(data) {
+                    $scope.errorMsg = "Failed to add the user due to server error.";
+               });
+        }
+
+        $scope.userToDelete = null;
+        $scope.setUserToDelete = function(user) {
+            $scope.userToDelete = user;
+        }
+        $scope.deleteUser = function() {
+            Api.delete('users/' + $scope.userToDelete.name)
+               .success(function() {
+                    $scope.userToDelete = null;
+                    $scope.reloadUsers();
+               })
+               .error(function(data) {
+                    $scope.errorMsg = "Failed to delete the user due to server error.";
+               });
+        }
+
+        $scope.dismissErrorMsg = function() {
+            $scope.errorMsg = '';
+        }
+
+        $scope.reloadUsers = function() {
+            $scope.users = Api.queryMany('users');
+        }
     }
 ]);
 
@@ -54,13 +147,6 @@ dashboardControllers.controller('StoreCtrl', [
         $scope.app.showNavBar = true;
 
         $scope.categorizedUseCases = Api.queryMany('apps/usecases');
-
-        $scope.scroll = function(event) {
-            var hash = event.target.hash;
-            $location.hash(hash.substring(1));
-            $anchorScroll();
-            event.preventDefault();
-        };
     }
 ]);
 
@@ -87,13 +173,6 @@ dashboardControllers.controller('UseCaseCtrl', [
         };
 
         $scope.data = Api.queryOne('apps/usecase/:u', {u: usecase});
-
-        $scope.scroll = function(event) {
-            var hash = event.target.hash;
-            $location.hash(hash.substring(1));
-            $anchorScroll();
-            event.preventDefault();
-        };
     }
 ]);
 
@@ -119,13 +198,6 @@ dashboardControllers.controller('SearchCtrl', [
         };
 
         $scope.apps = Api.queryMany('apps/search/:k', {k: keyword});
-
-        $scope.scroll = function(event) {
-            var hash = event.target.hash;
-            $location.hash(hash.substring(1));
-            $anchorScroll();
-            event.preventDefault();
-        };
     }
 ]);
 
@@ -133,13 +205,6 @@ dashboardControllers.controller('AppsCtrl', ['$scope', 'Api',
     function ($scope, Api) {
         $scope.app.panel = 'app';
         $scope.app.showNavBar = true;
-
-        $scope.scroll = function(event) {
-            var hash = event.target.hash;
-            $location.hash(hash.substring(1));
-            $anchorScroll();
-            event.preventDefault();
-        };
 
         $scope.apps = Api.queryMany('apps/installed');
     }
@@ -149,13 +214,6 @@ dashboardControllers.controller('SupportCtrl', ['$scope',
     function ($scope) {
         $scope.app.panel = 'support';
         $scope.app.showNavBar = true;
-
-        $scope.scroll = function(event) {
-            var hash = event.target.hash;
-            $location.hash(hash.substring(1));
-            $anchorScroll();
-            event.preventDefault();
-        };
     }
 ]);
 
@@ -174,12 +232,14 @@ dashboardControllers.controller('LoginCtrl', [
                 return;
             }
             $http({
-                url: API_BASE + 'accounts/' + $scope.cred.username + '/login',
-                data: $scope.cred,
+                url: API_BASE + 'users/' + $scope.cred.username + '/login',
+                data: $scope.cred.password,
                 method: 'POST'})
-            .success(function(data) {
-                Session.username = $scope.cred.username;
-                Session.token = data.token;
+            .success(function(user) {
+                $scope.user.name = user.name;
+                $scope.user.email = user.email;
+                Session.username = user.name;
+                Session.token = user.name + ":" + user.password;
                 Session.saveSession();
                 $location.path("/");
             })

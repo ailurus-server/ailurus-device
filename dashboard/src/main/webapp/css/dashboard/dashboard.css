@@ -34,3 +34,8 @@ FIXME this constant should ideally be encoded as a class
 .apps-app-container {
     margin-bottom: 10px;
 }
+
+.shrink-column {
+    white-space: nowrap;
+    width: 1px;
+}

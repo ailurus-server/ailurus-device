@@ -38,6 +38,7 @@ public class Dashboard extends HttpServlet {
                 initMockDevice(tx);
                 initMockUseCases(tx);
                 initMockApps(tx);
+                initMockUsers(tx);
                 tx.commit();
             }
         }
@@ -102,6 +103,15 @@ public class Dashboard extends HttpServlet {
                         "blog source-control",
                         true,
                     "/gitlist"));
+    }
+
+    // TODO delete this after testing
+    private void initMockUsers(Transaction tx) {
+        User user = new User();
+        user.name = "asdf";
+        user.password = "asdfasdf";
+        user.email = "asdf@ailurus.ca";
+        tx.addUser(user);
     }
 
 }
