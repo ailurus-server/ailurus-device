@@ -24,6 +24,7 @@ public class UsersApi {
     public User login(@PathParam("name") String name, String password) {
         try (Transaction tx = transactionMaker.make()) {
             User user = tx.getUser(name);
+            // TODO: compare users password against bcrypted hash
             if (null == user || !user.password.equals(password)) {
                 throw new NotAuthorizedException("Authorization Failed");
             }
