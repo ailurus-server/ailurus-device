@@ -218,8 +218,8 @@ dashboardControllers.controller('SupportCtrl', ['$scope',
 ]);
 
 dashboardControllers.controller('LoginCtrl', [
-    'API_BASE', '$scope', '$http', '$location', 'Session',
-    function (API_BASE, $scope, $http, $location, Session) {
+    '$scope', '$http', '$location', 'Session', 'Api',
+    function ($scope, $http, $location, Session, Api) {
         $scope.app.showNavBar = false;
 
         $scope.alert = {
@@ -231,10 +231,8 @@ dashboardControllers.controller('LoginCtrl', [
             if (!($scope.cred.username && $scope.cred.password)) {
                 return;
             }
-            $http({
-                url: API_BASE + 'users/' + $scope.cred.username + '/login',
-                data: $scope.cred.password,
-                method: 'POST'})
+
+            Api.post('users/' + $scope.cred.username + '/login', $scope.cred.password)
             .success(function(user) {
                 $scope.user.name = user.name;
                 $scope.user.email = user.email;
