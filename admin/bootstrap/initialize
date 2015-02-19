@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo 'mysql-server mysql-server/root_password password teamtba' | debconf-set-selections
+echo 'mysql-server mysql-server/root_password_again password teamtba' | debconf-set-selections
+
 echo "Creating directories"
 mkdir -p /opt/ailurus/apps
 mkdir -p /opt/ailurus/www
