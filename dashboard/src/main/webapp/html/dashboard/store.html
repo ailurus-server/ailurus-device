@@ -40,31 +40,34 @@
         <div class="col-sm-2 hidden-xs"></div>
     </section>
     <br>
-    <section class="row">
+    <section class="row" data-ng-show="featuredApps.length > 0">
         <div class="col-sm-1 hidden-xs"></div>
         <div class="col-sm-10 col-xs-12">
             <h3 class="page-header">
-                Or Browse for Apps
-                <small>
-                    by use case
-                </small>
+                Featured Apps
             </h3>
             <div class="row">
-                <div class="col-md-6"
-                     data-ng-repeat="category in categorizedUseCases">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                {{category.type}} Uses
-                            </h3>
-                        </div>
-                        <div class="list-group">
-                            <a class="list-group-item"
-                               href="#/store/usecase/{{useCase.name}}"
-                               data-ng-repeat="useCase in category.useCases">
-                                <strong>{{useCase.displayName}}</strong>
-                                {{useCase.description}}
+                <div class="col-sm-12 col-md-6 col-lg-4 apps-app-container" data-ng-repeat="app in featuredApps">
+                    <div class="media" data-ng-show="app.installed">
+                        <div class="media-left">
+                            <a data-ng-href="{{app.appUrl}}" >
+                                <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}" height="64px" width="64px">
                             </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{app.name}}
+                                <small><a href="#/apps" class="label label-info">Installed</a></small>
+                            </h4>
+                            {{app.description}}
+                        </div>
+                    </div>
+                    <div class="media" data-ng-show="!app.installed">
+                        <div class="media-left">
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}" height="64px" width="64px">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{app.name}}</h4>
+                            {{app.description}}
                         </div>
                     </div>
                 </div>

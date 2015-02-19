@@ -1,6 +1,5 @@
 package ca.ailurus.dashboard.api;
 
-import ca.ailurus.dashboard.entities.UseCase;
 import ca.ailurus.dashboard.transaction.Transaction;
 import ca.ailurus.dashboard.transaction.TransactionMaker;
 import ca.ailurus.dashboard.objects.Device;
@@ -43,28 +42,11 @@ public class DeviceApi {
             user.email = init.email;
             tx.addUser(user);
 
-            initUseCases(tx);
-
             DeviceSettings settings = new DeviceSettings();
             settings.url = init.url;
             tx.createSettings(settings);
 
             tx.commit();
-        }
-    }
-
-    private void initUseCases(Transaction tx) {
-         UseCase[] useCases = {
-            new UseCase("blog", "Blog", " to share your thoughts", UseCase.Types.Personal),
-            new UseCase("profile", "Profile Page", " to showcase your work", UseCase.Types.Personal),
-            new UseCase("game-server", "Game Server", " to host games for your friends", UseCase.Types.Personal),
-            new UseCase("corporate-website", "Corporate Website", " to showcase your company", UseCase.Types.Business),
-            new UseCase("web-server", "Web Server", " to run your own website", UseCase.Types.Programming),
-            new UseCase("source-control", "Source Control", " to safely store your source code", UseCase.Types.Programming)
-        };
-
-        for (UseCase useCase: useCases) {
-            tx.addUseCase(useCase);
         }
     }
 

@@ -146,7 +146,7 @@ dashboardControllers.controller('StoreCtrl', [
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
-        $scope.categorizedUseCases = Api.queryMany('apps/usecases');
+        $scope.featuredApps = Api.queryMany('apps/featured');
     }
 ]);
 
