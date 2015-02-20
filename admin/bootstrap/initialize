@@ -1,27 +1,7 @@
 #!/bin/sh
 
-echo "Creating directories"
-mkdir -p /opt/ailurus/apps
-mkdir -p /opt/ailurus/www
-mkdir -p /opt/ailurus/admin
-mkdir -p /opt/ailurus/nginx-confs
-mkdir -p /opt/ailurus/tmp/cache
+. initializers/base.sh
+. initializers/ailurus.sh
+. initializers/configs.sh
 
-echo "<html>The requested page could not be found.</html>" > /opt/ailurus/www/404.html
-
-echo "Make sure you run 'raspi-config'"
-
-echo "Installing dependencies"
-apt-get -y install python3-setuptools mysql-server nginx php5-fpm php5-gd php5-mysql python3-pip screen daemon
-pip-3.2 install pymysql
-
-echo "Copying custom nginx config"
-cp nginx-default /etc/nginx/sites-available/default
-
-echo "Installing ailurus python utilities"
-(cd ../ailurus-python && python3 setup.py install)
-
-echo "Building packages"
-./../packs/build-packs
-
-echo "Done"
+echo "Make sure you run 'raspi-config', then log out and back in."
