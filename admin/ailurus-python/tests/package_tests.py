@@ -3,18 +3,20 @@ import mock
 from contextlib import contextmanager
 from ailurus import package
 
+
 def ContextFor(mock):
     @contextmanager
     def Passthrough(pkg):
         yield mock
     return Passthrough
 
+
 class TestPackager(unittest.TestCase):
 
     def setUp(self):
         self.mock_module = mock.Mock()
-        self.patcher = mock.patch('ailurus.package.PackageContext', 
-                ContextFor(self.mock_module))
+        self.patcher = mock.patch('ailurus.package.PackageContext',
+                                  ContextFor(self.mock_module))
         self.patcher.start()
         self.test_env = {'Directory': '/opt/ailurus/www/wordpress'}
 
