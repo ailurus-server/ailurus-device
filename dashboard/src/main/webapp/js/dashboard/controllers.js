@@ -141,50 +141,38 @@ dashboardControllers.controller('UsersCtrl', [
 ]);
 
 dashboardControllers.controller('StoreCtrl', [
-    '$scope', 'Api',
-    function ($scope, Api) {
+    '$scope', '$location', 'Api',
+    function ($scope, $location, Api) {
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
         $scope.featuredApps = Api.queryMany('apps/featured');
-    }
-]);
 
-dashboardControllers.controller('UseCaseCtrl', [
-    '$scope', '$routeParams', 'Api',
-    function ($scope, $routeParams, Api) {
-        var usecase = $routeParams.usecase;
+        $scope.searchOnEnter = function($event) {
+            if ($event.keyCode == 13) {
+                $scope.search();
+            }
+        }
 
-        $scope.app.panel = 'store';
-        $scope.app.showNavBar = true;
-
-        $scope.showSearch = false;
-
-        $scope.getTitleLead = function() {
-            return 'Apps for';
-        };
-
-        $scope.getTitleKeyword = function() {
-            return $scope.data.displayName;
-        };
-
-        $scope.getResults = function() {
-            return $scope.data.apps;
-        };
-
-        $scope.data = Api.queryOne('apps/usecase/:u', {u: usecase});
+        $scope.search = function() {
+            var keyword = $scope.keyword || "";
+            if (keyword.trim() == "") {
+                $location.url("/store")
+            } else {
+                $location.url("/store/search/" + encodeURIComponent(keyword));
+            }
+        }
     }
 ]);
 
 dashboardControllers.controller('SearchCtrl', [
-    '$scope', '$routeParams', 'Api',
-    function ($scope, $routeParams, Api) {
+    '$scope', '$location', '$routeParams', 'Api',
+    function ($scope, $location, $routeParams, Api) {
         var keyword = $routeParams.keyword;
 
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
-        $scope.showSearch = true;
         $scope.getTitleLead = function() {
             return 'Results for ';
         };
@@ -193,11 +181,20 @@ dashboardControllers.controller('SearchCtrl', [
             return keyword;
         };
 
-        $scope.getResults = function() {
-            return $scope.apps;
-        };
+        $scope.results = Api.queryMany('apps/search/:k', {k: keyword});
 
-        $scope.apps = Api.queryMany('apps/search/:k', {k: keyword});
+        $scope.searchOnEnter = function($event) {
+            if ($event.keyCode == 13) {
+                $scope.search();
+            }
+        }
+
+        $scope.search = function() {
+            var keyword = $scope.keyword || "";
+            if (keyword.trim() != "") {
+                $location.url("/store/search/" + encodeURIComponent(keyword));
+            }
+        }
     }
 ]);
 
@@ -207,6 +204,14 @@ dashboardControllers.controller('AppsCtrl', ['$scope', 'Api',
         $scope.app.showNavBar = true;
 
         $scope.apps = Api.queryMany('apps/installed');
+
+        $scope.appToUninstall = null;
+        $scope.confirmUninstall = function(app) {
+            $scope.appToUninstall = app;
+        }
+
+        $scope.uninstall = function() {
+        }
     }
 ]);
 

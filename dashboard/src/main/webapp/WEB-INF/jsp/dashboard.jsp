@@ -10,12 +10,12 @@
 
     <title>Dashboard</title>
 
-    <link href="webjars/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="webjars/bootstrap/3.3.1/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="webjars/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="webjars/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="css/dashboard/dashboard.css" rel="stylesheet">
 
     <script src="webjars/jquery/1.11.1/jquery.js"></script>
-    <script src="webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="webjars/angularjs/1.2.22/angular.js"></script>
     <script src="webjars/angularjs/1.2.22/angular-route.js"></script>
     <script src="webjars/angularjs/1.2.22/angular-resource.js"></script>

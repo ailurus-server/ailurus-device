@@ -69,7 +69,8 @@ public class Dashboard extends HttpServlet {
                     "WordPress is web software you can use to create a beautiful blogs",
                     "img/apps/wordpress.png",
                     "blog",
-                    true,
+                    false,
+                    0,
                     true,
                     "/wordpress"));
         tx.addApp(
@@ -78,16 +79,27 @@ public class Dashboard extends HttpServlet {
                     "img/apps/minecraft.png",
                     "game-server",
                     false,
-                    false,
+                    5,
+                    true,
                     ""));
         tx.addApp(
             new App("GitList",
                     "GitList is a simple git repository browser.",
                     "img/apps/git.png",
                     "blog source-control",
-                    false,
-                    false,
+                    true,
+                    0,
+                    true,
                     "/gitlist"));
+        tx.addApp(
+                new App("Owncloud",
+                        "Owncloud is a personal cloud server.",
+                        "img/apps/owncloud.png",
+                        "cloud privacy",
+                        true,
+                        48,
+                        false,
+                        "/gitlist"));
     }
 
     // TODO delete this after testing
