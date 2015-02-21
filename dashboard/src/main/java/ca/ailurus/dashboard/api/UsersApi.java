@@ -66,6 +66,11 @@ public class UsersApi {
             }
 
             if (update.name != null) {
+                User oldUser = tx.getUser(update.name);
+                if (oldUser != null) {
+                    throw new BadRequestException(userName + " is already taken.");
+                }
+
                 tx.deleteUser(user.name);
                 user.name = update.name;
             }
@@ -78,7 +83,6 @@ public class UsersApi {
                 user.password = update.password;
             }
 
-            tx.setUser(user);
             tx.commit();
             return "updated";
         }

@@ -17,8 +17,7 @@
         <jettyVersion>9.2.2.v20140723</jettyVersion>
         <restEasyVersion>3.0.8.Final</restEasyVersion>
         <guiceVersion>3.0</guiceVersion>
-        <ormliteVersion>4.48</ormliteVersion>
-        <sqliteVersion>3.7.2</sqliteVersion>
+        <mapDBVersion>1.0.6</mapDBVersion>
         <junitVersion>4.11</junitVersion>
     </properties>
 
@@ -75,7 +74,7 @@
         <dependency>
             <groupId>org.mapdb</groupId>
             <artifactId>mapdb</artifactId>
-            <version>1.0.6</version>
+            <version>${mapDBVersion}</version>
         </dependency>
 
         <dependency>

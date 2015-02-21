@@ -75,6 +75,22 @@
       </div>
     </div>
 
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="alert alert-danger" data-ng-show="errorMessages.length > 0" role="alert">
+                    <button type="button"
+                            class="close"
+                            data-ng-click="removeErrorMessage()"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{errorMessages[errorMessages.length - 1]}}
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div data-ng-view></div>
   </body>
 </html>

@@ -12,6 +12,15 @@ dashboardControllers.controller('AppCtrl', [
             panel: 'device',
             showNavBar: false,
         };
+
+        $scope.errorMessages = [];
+        $scope.addErrorMessage = function(message) {
+            $scope.errorMessages.push(message);
+        };
+
+        $scope.removeErrorMessage = function() {
+            $scope.errorMessages.pop();
+        };
     }
 ]);
 
@@ -33,8 +42,6 @@ dashboardControllers.controller('UsersCtrl', [
 
         $scope.users = Api.queryMany('users');
 
-        $scope.errorMsg = '';
-
         $scope.newName = '';
         $scope.changeName = function() {
             var updatedUser = {
@@ -48,7 +55,7 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.reloadUsers();
                })
                .error(function() {
-                    $scope.errorMsg = 'Failed to change name due to server error.';
+                    $scope.addErrorMessage('Failed to change name due to server error.');
                })
         }
 
@@ -64,7 +71,7 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.newEmail = '';
                })
                .error(function() {
-                    $scope.errorMsg = 'Failed to change email due to server error.';
+                    $scope.addErrorMessage('Failed to change email due to server error.');
                })
         }
 
@@ -82,7 +89,7 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.newConfirmation = '';
                })
                .error(function() {
-                    $scope.errorMsg = 'Failed to change password due to server error.';
+                    $scope.addErrorMessage('Failed to change password due to server error.');
                })
         }
 
@@ -111,7 +118,7 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.reloadUsers();
                })
                .error(function(data) {
-                    $scope.errorMsg = "Failed to add the user due to server error.";
+                    $scope.addErrorMessage('Failed to add the user due to server error.');
                });
         }
 
@@ -126,12 +133,8 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.reloadUsers();
                })
                .error(function(data) {
-                    $scope.errorMsg = "Failed to delete the user due to server error.";
+                    $scope.addErrorMessage('Failed to delete the user due to server error.');
                });
-        }
-
-        $scope.dismissErrorMsg = function() {
-            $scope.errorMsg = '';
         }
 
         $scope.reloadUsers = function() {
@@ -227,15 +230,12 @@ dashboardControllers.controller('LoginCtrl', [
     function ($scope, $http, $location, Session, Api) {
         $scope.app.showNavBar = false;
 
-        $scope.alert = {
-            type: 'danger',
-            msg: ''
-        };
-
         $scope.login = function() {
             if (!($scope.cred.username && $scope.cred.password)) {
                 return;
             }
+
+            $scope.removeErrorMessage();
 
             Api.post('users/' + $scope.cred.username + '/login', $scope.cred.password)
             .success(function(user) {
@@ -247,12 +247,8 @@ dashboardControllers.controller('LoginCtrl', [
                 $location.path("/");
             })
             .error(function(data) {
-                $scope.alert.msg = 'Wrong username or password';
+                $scope.addErrorMessage('Wrong username or password');
             });
-        }
-
-        $scope.dismiss = function() {
-            $scope.alert.msg = '';
         }
     }
 ]);
