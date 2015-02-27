@@ -34,3 +34,22 @@ dashboardServices.factory('Api',
         };
     }
 ]);
+
+
+dashboardServices.factory('Apps',
+    [
+    function() {
+        return {
+            hasInProgress: function(apps) {
+                var hasInProgress = false;
+                for (var i = 0; i < apps.length; ++i) {
+                    if (apps[i].progress >= 0) {
+                        hasInProgress = true;
+                        break;
+                    }
+                }
+                return hasInProgress;
+            }
+        };
+    }
+]);

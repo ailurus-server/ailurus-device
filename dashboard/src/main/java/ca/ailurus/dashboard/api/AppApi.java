@@ -39,4 +39,20 @@ public class AppApi {
             return tx.searchApps(keyword);
         }
     }
+
+    @PUT @Path("/named/{name}")
+    public void startInstall(@PathParam("name") String name) {
+        try (Transaction tx = transactionMaker.make()) {
+            tx.startInstallApp(name);
+            tx.commit();
+        }
+    }
+
+    @DELETE @Path("/named/{name}")
+    public void startUninstall(@PathParam("name") String name) {
+        try (Transaction tx = transactionMaker.make()) {
+            tx.startUninstallApp(name);
+            tx.commit();
+        }
+    }
 }

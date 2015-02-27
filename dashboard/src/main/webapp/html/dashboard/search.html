@@ -55,7 +55,7 @@
                             {{app.description}}
                         </div>
                     </div>
-                    <div class="media" data-ng-show="!app.installed && app.progress > 0">
+                    <div class="media" data-ng-show="!app.installed && app.progress >= 0">
                         <div class="media-left">
                             <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
                                  class="media-object" height="64px" width="64px">
@@ -84,7 +84,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="media" data-ng-show="!app.installed && app.progress == 0">
+                    <div class="media" data-ng-show="!app.installed && app.progress < 0">
                         <div class="media-left">
                             <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
                                  class="media-object" height="64px" width="64px">

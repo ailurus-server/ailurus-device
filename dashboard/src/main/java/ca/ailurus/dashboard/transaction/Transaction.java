@@ -6,6 +6,7 @@ import ca.ailurus.dashboard.entities.User;
 import org.mapdb.*;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import java.io.Closeable;
 import java.util.*;
 
@@ -77,6 +78,30 @@ public class Transaction implements Closeable {
             }
         }
         return matched;
+    }
+
+    public void startInstallApp(String name) {
+        Map<String, App> apps = db.getTreeMap(APPS);
+        App app = apps.get(name);
+        if (app == null) {
+            throw new NotFoundException("No app found with name '" + name + "'.");
+        }
+        if (app.installed) {
+            throw new BadRequestException("App '" + name + "' has already been installed.");
+        }
+        app.progress = 0;
+    }
+
+    public void startUninstallApp(String name) {
+        Map<String, App> apps = db.getTreeMap(APPS);
+        App app = apps.get(name);
+        if (app == null) {
+            throw new NotFoundException("No app found with name '" + name + "'.");
+        }
+        if (!app.installed) {
+            throw new BadRequestException("App '" + name + "' has not been installed.");
+        }
+        app.progress = 0;
     }
 
     // taken from http://stackoverflow.com/questions/86780/is-the-contains-method-in-java-lang-string-case-sensitive

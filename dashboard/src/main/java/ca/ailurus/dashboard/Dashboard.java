@@ -70,7 +70,7 @@ public class Dashboard extends HttpServlet {
                     "img/apps/wordpress.png",
                     "blog",
                     false,
-                    0,
+                    -1,
                     true,
                     "/wordpress"));
         tx.addApp(
@@ -88,7 +88,7 @@ public class Dashboard extends HttpServlet {
                     "img/apps/git.png",
                     "blog source-control",
                     true,
-                    0,
+                    -1,
                     true,
                     "/gitlist"));
         tx.addApp(
@@ -99,7 +99,7 @@ public class Dashboard extends HttpServlet {
                         true,
                         48,
                         false,
-                        "/gitlist"));
+                        "/owncloud"));
     }
 
     // TODO delete this after testing

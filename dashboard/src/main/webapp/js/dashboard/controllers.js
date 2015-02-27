@@ -144,12 +144,10 @@ dashboardControllers.controller('UsersCtrl', [
 ]);
 
 dashboardControllers.controller('StoreCtrl', [
-    '$scope', '$location', 'Api',
-    function ($scope, $location, Api) {
+    '$scope', '$location', 'Api', 'Apps',
+    function ($scope, $location, Api, Apps) {
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
-
-        $scope.featuredApps = Api.queryMany('apps/featured');
 
         $scope.searchOnEnter = function($event) {
             if ($event.keyCode == 13) {
@@ -165,14 +163,57 @@ dashboardControllers.controller('StoreCtrl', [
                 $location.url("/store/search/" + encodeURIComponent(keyword));
             }
         }
+
+        $scope.featuredApps = [];
+        $scope.reloadApps = function() {
+            if ($location.url() != "/store") {
+                $scope.reloading = false;
+                return;
+            }
+
+            $scope.reloading = true;
+            Api.queryMany('apps/featured')
+            .$promise.then(function(apps) {
+                if (Apps.hasInProgress(apps)) {
+                    setTimeout($scope.reloadApps, 1000);
+                } else {
+                    $scope.reloading = false;
+                }
+
+                $scope.featuredApps = apps;
+            },
+            function(reason) {
+                setTimeout($scope.reloadApps, 60000);
+            });
+        };
+
+        $scope.reloadApps();
+
+        $scope.install = function(app) {
+            Api.put('apps/named/' + encodeURIComponent(app.name))
+               .success(function(data) {
+                $scope.reloadApps();
+               })
+               .error(function(data) {
+                $scope.addErrorMessage('Failed to install app due to server error.');
+               });
+        };
+
+        $scope.cancelInstall = function(app) {
+            Api.post('apps/cancel/' + encodeURIComponent(app.name))
+               .success(function(data) {
+                $scope.reloadApps();
+               })
+               .error(function(data) {
+                $scope.addErrorMessage('Failed to install app due to server error.');
+               });
+        };
     }
 ]);
 
 dashboardControllers.controller('SearchCtrl', [
-    '$scope', '$location', '$routeParams', 'Api',
-    function ($scope, $location, $routeParams, Api) {
-        var keyword = $routeParams.keyword;
-
+    '$scope', '$location', '$routeParams', 'Api', 'Apps',
+    function ($scope, $location, $routeParams, Api, Apps) {
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
@@ -181,40 +222,124 @@ dashboardControllers.controller('SearchCtrl', [
         };
 
         $scope.getTitleKeyword = function() {
-            return keyword;
+            return $routeParams.keyword;
         };
-
-        $scope.results = Api.queryMany('apps/search/:k', {k: keyword});
 
         $scope.searchOnEnter = function($event) {
             if ($event.keyCode == 13) {
                 $scope.search();
             }
-        }
+        };
 
         $scope.search = function() {
             var keyword = $scope.keyword || "";
             if (keyword.trim() != "") {
                 $location.url("/store/search/" + encodeURIComponent(keyword));
             }
-        }
+        };
+
+        $scope.results = [];
+        $scope.reloadApps = function() {
+            if ($location.url().substring(0, 14) != "/store/search/") {
+                $scope.reloading = false;
+                return;
+            }
+
+            $scope.reloading = true;
+            Api.queryMany('apps/search/:k', {k: $routeParams.keyword})
+            .$promise.then(function(apps) {
+                if (Apps.hasInProgress(apps)) {
+                    setTimeout($scope.reloadApps, 1000);
+                } else {
+                    $scope.reloading = false;
+                }
+
+                $scope.results = apps;
+            },
+            function(reason) {
+                setTimeout($scope.reloadApps, 60000);
+            });
+        };
+
+        $scope.reloadApps();
+
+        $scope.install = function(app) {
+            Api.put('apps/named/' + encodeURIComponent(app.name))
+               .success(function(data) {
+                if (!$scope.reloading) {
+                    $scope.reloadApps();
+                }
+               })
+               .error(function(data) {
+                $scope.addErrorMessage('Failed to install app due to server error.');
+               });
+        };
+
+        $scope.cancelInstall = function(app) {
+            Api.post('apps/cancel/' + encodeURIComponent(app.name))
+               .success(function(data) {
+                if (!$scope.reloading) {
+                    $scope.reloadApps();
+                }
+               })
+               .error(function(data) {
+                $scope.addErrorMessage('Failed to install app due to server error.');
+               });
+        };
     }
 ]);
 
-dashboardControllers.controller('AppsCtrl', ['$scope', 'Api',
-    function ($scope, Api) {
+dashboardControllers.controller('AppsCtrl', [
+    '$scope', '$location', 'Api', 'Apps',
+    function ($scope, $location, Api, Apps) {
         $scope.app.panel = 'app';
         $scope.app.showNavBar = true;
 
-        $scope.apps = Api.queryMany('apps/installed');
+        $scope.apps = [];
 
         $scope.appToUninstall = null;
         $scope.confirmUninstall = function(app) {
             $scope.appToUninstall = app;
-        }
+        };
 
         $scope.uninstall = function() {
-        }
+            var app = $scope.appToUninstall;
+            Api.delete('apps/named/' + encodeURIComponent(app.name))
+            .success(function(data) {
+                $scope.appToUninstall = null;
+                if (!$scope.reloading) {
+                    $scope.reloadApps();
+                } else {
+                    $scope.reloading = false;
+                }
+            })
+            .error(function(data) {
+                $scope.addErrorMessage('Failed to uninstall app due to server error.');
+            });
+        };
+
+        $scope.apps = [];
+        $scope.reloadApps = function() {
+            if ($location.url() != "/apps") {
+                $scope.reloading = false;
+                return;
+            }
+
+            $scope.reloading = true;
+            Api.queryMany('apps/installed')
+            .$promise.then(function(apps) {
+                if (Apps.hasInProgress(apps)) {
+                    setTimeout($scope.reloadApps, 1000);
+                }
+
+                $scope.apps = apps;
+            },
+            function(reason) {
+                setTimeout($scope.reloadApps, 60000);
+            });
+        };
+
+        $scope.reloadApps();
     }
 ]);
 
