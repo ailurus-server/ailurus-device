@@ -21,14 +21,6 @@
         <junitVersion>4.11</junitVersion>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>in-project</id>
-            <name>In Project Repository</name>
-            <url>${project.basedir}/repo</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.webjars</groupId>
