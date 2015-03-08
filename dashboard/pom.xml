@@ -127,7 +127,7 @@
             <artifactId>oshi-core</artifactId>
             <version>1.1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/oshi/bin/oshi-core.jar</systemPath>
+            <systemPath>${basedir}/libs/oshi/oshi-core.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -135,7 +135,7 @@
             <artifactId>jna</artifactId>
             <version>1.1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/oshi/bin/jna.jar</systemPath>
+            <systemPath>${basedir}/libs/oshi/jna.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -143,7 +143,7 @@
             <artifactId>platform</artifactId>
             <version>1.1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/oshi/bin/platform.jar</systemPath>
+            <systemPath>${basedir}/libs/oshi/platform.jar</systemPath>
         </dependency>
     </dependencies>
     <build>
