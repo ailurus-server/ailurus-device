@@ -1,21 +1,77 @@
 <article class="container">
-    <div class="row">
-        <section class="col-xs-12">
+    <section class="row">
+        <div class="col-xs-12">
             <h2 class="page-header">Installed Apps</h2>
 
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-4 apps-app-container" data-ng-repeat="app in apps">
-                    <div class="media">
-                        <a class="media-left" data-ng-href="{{app.appUrl}}">
-                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}" height="64px" width="64px">
-                        </a>
+                    <div class="media" data-ng-show="app.progress >= 0">
+                        <div class="media-left">
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
+                                 class="media-object" height="64px" width="64px">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{app.name}}
+                                <small><span class="label label-danger">Uninstalling</span></small>
+                            </h4>
+                            {{app.description}}
+
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-danger progress-bar-striped"
+                                     role="progressbar"
+                                     aria-valuenow="{{app.progress}}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: {{app.progress}}%;">
+                                    {{app.progress}}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media" data-ng-show="app.progress < 0">
+                        <div class="media-left">
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
+                                 class="media-object" height="64px" width="64px">
+                        </div>
                         <div class="media-body">
                             <h4 class="media-heading">{{app.name}}</h4>
                             {{app.description}}
                         </div>
+                        <div class="media-right media-middle">
+                            <button class="btn btn-danger"
+                                    data-ng-click="confirmUninstall(app)"
+                                    data-toggle="modal"
+                                    data-target="#uninstallDialog">
+                                <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
+                                Uninstall
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <div id="uninstallDialog" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Confirm app uninstall</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to uninstall the app named <b>{{appToUninstall.name}}</b>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-dismiss="modal"
+                            data-ng-click="uninstall()">Yes</button>
+                </div>
+            </div>
+        </div>
     </div>
 </article>

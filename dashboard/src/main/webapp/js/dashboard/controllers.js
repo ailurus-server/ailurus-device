@@ -12,6 +12,15 @@ dashboardControllers.controller('AppCtrl', [
             panel: 'device',
             showNavBar: false,
         };
+
+        $scope.errorMessages = [];
+        $scope.addErrorMessage = function(message) {
+            $scope.errorMessages.push(message);
+        };
+
+        $scope.removeErrorMessage = function() {
+            $scope.errorMessages.pop();
+        };
     }
 ]);
 
@@ -33,8 +42,6 @@ dashboardControllers.controller('UsersCtrl', [
 
         $scope.users = Api.queryMany('users');
 
-        $scope.errorMsg = '';
-
         $scope.newName = '';
         $scope.changeName = function() {
             var updatedUser = {
@@ -48,7 +55,7 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.reloadUsers();
                })
                .error(function() {
-                    $scope.errorMsg = 'Failed to change name due to server error.';
+                    $scope.addErrorMessage('Failed to change name due to server error.');
                })
         }
 
@@ -64,7 +71,7 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.newEmail = '';
                })
                .error(function() {
-                    $scope.errorMsg = 'Failed to change email due to server error.';
+                    $scope.addErrorMessage('Failed to change email due to server error.');
                })
         }
 
@@ -82,7 +89,7 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.newConfirmation = '';
                })
                .error(function() {
-                    $scope.errorMsg = 'Failed to change password due to server error.';
+                    $scope.addErrorMessage('Failed to change password due to server error.');
                })
         }
 
@@ -111,7 +118,7 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.reloadUsers();
                })
                .error(function(data) {
-                    $scope.errorMsg = "Failed to add the user due to server error.";
+                    $scope.addErrorMessage('Failed to add the user due to server error.');
                });
         }
 
@@ -126,12 +133,8 @@ dashboardControllers.controller('UsersCtrl', [
                     $scope.reloadUsers();
                })
                .error(function(data) {
-                    $scope.errorMsg = "Failed to delete the user due to server error.";
+                    $scope.addErrorMessage('Failed to delete the user due to server error.');
                });
-        }
-
-        $scope.dismissErrorMsg = function() {
-            $scope.errorMsg = '';
         }
 
         $scope.reloadUsers = function() {
@@ -141,72 +144,202 @@ dashboardControllers.controller('UsersCtrl', [
 ]);
 
 dashboardControllers.controller('StoreCtrl', [
-    '$scope', 'Api',
-    function ($scope, Api) {
+    '$scope', '$location', 'Api', 'Apps',
+    function ($scope, $location, Api, Apps) {
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
-        $scope.categorizedUseCases = Api.queryMany('apps/usecases');
-    }
-]);
+        $scope.searchOnEnter = function($event) {
+            if ($event.keyCode == 13) {
+                $scope.search();
+            }
+        }
 
-dashboardControllers.controller('UseCaseCtrl', [
-    '$scope', '$routeParams', 'Api',
-    function ($scope, $routeParams, Api) {
-        var usecase = $routeParams.usecase;
+        $scope.search = function() {
+            var keyword = $scope.keyword || "";
+            if (keyword.trim() == "") {
+                $location.url("/store")
+            } else {
+                $location.url("/store/search/" + encodeURIComponent(keyword));
+            }
+        }
 
-        $scope.app.panel = 'store';
-        $scope.app.showNavBar = true;
+        $scope.featuredApps = [];
+        $scope.reloadApps = function() {
+            if ($location.url() != "/store") {
+                $scope.reloading = false;
+                return;
+            }
 
-        $scope.showSearch = false;
+            $scope.reloading = true;
+            Api.queryMany('apps/featured')
+            .$promise.then(function(apps) {
+                if (Apps.hasInProgress(apps)) {
+                    setTimeout($scope.reloadApps, 1000);
+                } else {
+                    $scope.reloading = false;
+                }
 
-        $scope.getTitleLead = function() {
-            return 'Apps for';
+                $scope.featuredApps = apps;
+            },
+            function(reason) {
+                setTimeout($scope.reloadApps, 60000);
+            });
         };
 
-        $scope.getTitleKeyword = function() {
-            return $scope.data.displayName;
+        $scope.reloadApps();
+
+        $scope.install = function(app) {
+            Api.put('apps/named/' + encodeURIComponent(app.name))
+               .success(function(data) {
+                $scope.reloadApps();
+               })
+               .error(function(data) {
+                $scope.addErrorMessage('Failed to install app due to server error.');
+               });
         };
 
-        $scope.getResults = function() {
-            return $scope.data.apps;
+        $scope.cancelInstall = function(app) {
+            Api.post('apps/cancel/' + encodeURIComponent(app.name))
+               .success(function(data) {
+                $scope.reloadApps();
+               })
+               .error(function(data) {
+                $scope.addErrorMessage('Failed to install app due to server error.');
+               });
         };
-
-        $scope.data = Api.queryOne('apps/usecase/:u', {u: usecase});
     }
 ]);
 
 dashboardControllers.controller('SearchCtrl', [
-    '$scope', '$routeParams', 'Api',
-    function ($scope, $routeParams, Api) {
-        var keyword = $routeParams.keyword;
-
+    '$scope', '$location', '$routeParams', 'Api', 'Apps',
+    function ($scope, $location, $routeParams, Api, Apps) {
         $scope.app.panel = 'store';
         $scope.app.showNavBar = true;
 
-        $scope.showSearch = true;
         $scope.getTitleLead = function() {
             return 'Results for ';
         };
 
         $scope.getTitleKeyword = function() {
-            return keyword;
+            return $routeParams.keyword;
         };
 
-        $scope.getResults = function() {
-            return $scope.apps;
+        $scope.searchOnEnter = function($event) {
+            if ($event.keyCode == 13) {
+                $scope.search();
+            }
         };
 
-        $scope.apps = Api.queryMany('apps/search/:k', {k: keyword});
+        $scope.search = function() {
+            var keyword = $scope.keyword || "";
+            if (keyword.trim() != "") {
+                $location.url("/store/search/" + encodeURIComponent(keyword));
+            }
+        };
+
+        $scope.results = [];
+        $scope.reloadApps = function() {
+            if ($location.url().substring(0, 14) != "/store/search/") {
+                $scope.reloading = false;
+                return;
+            }
+
+            $scope.reloading = true;
+            Api.queryMany('apps/search/:k', {k: $routeParams.keyword})
+            .$promise.then(function(apps) {
+                if (Apps.hasInProgress(apps)) {
+                    setTimeout($scope.reloadApps, 1000);
+                } else {
+                    $scope.reloading = false;
+                }
+
+                $scope.results = apps;
+            },
+            function(reason) {
+                setTimeout($scope.reloadApps, 60000);
+            });
+        };
+
+        $scope.reloadApps();
+
+        $scope.install = function(app) {
+            Api.put('apps/named/' + encodeURIComponent(app.name))
+               .success(function(data) {
+                if (!$scope.reloading) {
+                    $scope.reloadApps();
+                }
+               })
+               .error(function(data) {
+                $scope.addErrorMessage('Failed to install app due to server error.');
+               });
+        };
+
+        $scope.cancelInstall = function(app) {
+            Api.post('apps/cancel/' + encodeURIComponent(app.name))
+               .success(function(data) {
+                if (!$scope.reloading) {
+                    $scope.reloadApps();
+                }
+               })
+               .error(function(data) {
+                $scope.addErrorMessage('Failed to install app due to server error.');
+               });
+        };
     }
 ]);
 
-dashboardControllers.controller('AppsCtrl', ['$scope', 'Api',
-    function ($scope, Api) {
+dashboardControllers.controller('AppsCtrl', [
+    '$scope', '$location', 'Api', 'Apps',
+    function ($scope, $location, Api, Apps) {
         $scope.app.panel = 'app';
         $scope.app.showNavBar = true;
 
-        $scope.apps = Api.queryMany('apps/installed');
+        $scope.apps = [];
+
+        $scope.appToUninstall = null;
+        $scope.confirmUninstall = function(app) {
+            $scope.appToUninstall = app;
+        };
+
+        $scope.uninstall = function() {
+            var app = $scope.appToUninstall;
+            Api.delete('apps/named/' + encodeURIComponent(app.name))
+            .success(function(data) {
+                $scope.appToUninstall = null;
+                if (!$scope.reloading) {
+                    $scope.reloadApps();
+                } else {
+                    $scope.reloading = false;
+                }
+            })
+            .error(function(data) {
+                $scope.addErrorMessage('Failed to uninstall app due to server error.');
+            });
+        };
+
+        $scope.apps = [];
+        $scope.reloadApps = function() {
+            if ($location.url() != "/apps") {
+                $scope.reloading = false;
+                return;
+            }
+
+            $scope.reloading = true;
+            Api.queryMany('apps/installed')
+            .$promise.then(function(apps) {
+                if (Apps.hasInProgress(apps)) {
+                    setTimeout($scope.reloadApps, 1000);
+                }
+
+                $scope.apps = apps;
+            },
+            function(reason) {
+                setTimeout($scope.reloadApps, 60000);
+            });
+        };
+
+        $scope.reloadApps();
     }
 ]);
 
@@ -222,15 +355,12 @@ dashboardControllers.controller('LoginCtrl', [
     function ($scope, $http, $location, Session, Api) {
         $scope.app.showNavBar = false;
 
-        $scope.alert = {
-            type: 'danger',
-            msg: ''
-        };
-
         $scope.login = function() {
             if (!($scope.cred.username && $scope.cred.password)) {
                 return;
             }
+
+            $scope.removeErrorMessage();
 
             Api.post('users/' + $scope.cred.username + '/login', $scope.cred.password)
             .success(function(user) {
@@ -242,12 +372,8 @@ dashboardControllers.controller('LoginCtrl', [
                 $location.path("/");
             })
             .error(function(data) {
-                $scope.alert.msg = 'Wrong username or password';
+                $scope.addErrorMessage('Wrong username or password');
             });
-        }
-
-        $scope.dismiss = function() {
-            $scope.alert.msg = '';
         }
     }
 ]);

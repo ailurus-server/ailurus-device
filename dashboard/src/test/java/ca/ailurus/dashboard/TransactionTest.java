@@ -1,16 +1,11 @@
 package ca.ailurus.dashboard;
 
 import ca.ailurus.dashboard.entities.DeviceSettings;
-import ca.ailurus.dashboard.entities.UseCase;
 import ca.ailurus.dashboard.entities.User;
 import ca.ailurus.dashboard.mock.MemTransactionMaker;
-import ca.ailurus.dashboard.objects.UseCaseCategory;
 import ca.ailurus.dashboard.transaction.Transaction;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -104,29 +99,5 @@ public class TransactionTest {
             DeviceSettings settings = tx.getSettings();
             assertEquals("abc@example.com", settings.url);
         }
-    }
-
-    @Test
-    public void shouldAddUseCase() {
-        UseCase wordpress = new UseCase("wordpress", "Wordpress", "Blog Platform", UseCase.Types.Personal);
-        UseCase svbtle = new UseCase("svbtle", "Svbtle", "Simple Blog Platform", UseCase.Types.Personal);
-        try (Transaction tx = txMaker.make()) {
-            tx.addUseCase(wordpress);
-            tx.addUseCase(svbtle);
-            tx.commit();
-        }
-
-        try (Transaction tx = txMaker.make()) {
-            assertEquals(wordpress, tx.getUseCase("wordpress"));
-            assertEquals(svbtle, tx.getUseCase("svbtle"));
-        }
-
-        try (Transaction tx = txMaker.make()) {
-            List<UseCaseCategory> categories = tx.getAllUseCasesSorted();
-            assertEquals(1, categories.size());
-            assertEquals(UseCase.Types.Personal, categories.get(0).type);
-            assertEquals(2, categories.get(0).useCases.size());
-        }
-
     }
 }

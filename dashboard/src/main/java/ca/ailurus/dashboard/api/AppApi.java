@@ -1,17 +1,13 @@
 package ca.ailurus.dashboard.api;
 
 import ca.ailurus.dashboard.entities.App;
-import ca.ailurus.dashboard.entities.UseCase;
-import ca.ailurus.dashboard.objects.UseCaseCategory;
 import ca.ailurus.dashboard.transaction.Transaction;
 import ca.ailurus.dashboard.transaction.TransactionMaker;
-import ca.ailurus.dashboard.objects.UseCaseWithApps;
 import com.google.inject.Inject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
-import java.util.Map;
 
 @Path("/apps")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,21 +26,10 @@ public class AppApi {
         }
     }
 
-    @GET @Path("/usecase/{usecase}")
-    public UseCaseWithApps findByUsecase(@PathParam("usecase") String useCaseName) {
+    @GET @Path("/featured")
+    public List<App> getFeatured() {
         try (Transaction tx = transactionMaker.make()) {
-            UseCase useCase = tx.getUseCase(useCaseName);
-            if (useCase == null) {
-                throw new NotFoundException("Use case '" + useCaseName + "' not found.");
-            }
-
-            UseCaseWithApps useCaseWithApps = new UseCaseWithApps();
-            useCaseWithApps.name = useCase.name;
-            useCaseWithApps.displayName = useCase.displayName;
-            useCaseWithApps.description = useCase.description;
-            useCaseWithApps.type = useCase.type;
-            useCaseWithApps.apps = tx.appsByUseCase(useCaseName);
-            return useCaseWithApps;
+            return tx.getFeaturedApps();
         }
     }
 
@@ -55,10 +40,19 @@ public class AppApi {
         }
     }
 
-    @GET @Path("/usecases")
-    public List<UseCaseCategory> getUsecases() {
+    @PUT @Path("/named/{name}")
+    public void startInstall(@PathParam("name") String name) {
         try (Transaction tx = transactionMaker.make()) {
-            return tx.getAllUseCasesSorted();
+            tx.startInstallApp(name);
+            tx.commit();
+        }
+    }
+
+    @DELETE @Path("/named/{name}")
+    public void startUninstall(@PathParam("name") String name) {
+        try (Transaction tx = transactionMaker.make()) {
+            tx.startUninstallApp(name);
+            tx.commit();
         }
     }
 }

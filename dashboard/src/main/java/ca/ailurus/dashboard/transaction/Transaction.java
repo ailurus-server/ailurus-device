@@ -2,20 +2,17 @@ package ca.ailurus.dashboard.transaction;
 
 import ca.ailurus.dashboard.entities.App;
 import ca.ailurus.dashboard.entities.DeviceSettings;
-import ca.ailurus.dashboard.entities.UseCase;
 import ca.ailurus.dashboard.entities.User;
-import ca.ailurus.dashboard.objects.UseCaseCategory;
 import org.mapdb.*;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import java.io.Closeable;
 import java.util.*;
 
 public class Transaction implements Closeable {
     private static final String DEVICE_SETTINGS = "DEVICE_SETTINGS";
-    private static final String INSTALLED_APPS = "INSTALLED_APPS";
-    private static final String AVAILABLE_APPS = "AVAILABLE_APPS";
-    private static final String USE_CASE = "USE_CASE";
+    private static final String APPS = "INSTALLED_APPS";
     private static final String USERS = "USERS";
 
     private DB db;
@@ -41,78 +38,92 @@ public class Transaction implements Closeable {
         settingsMap.put(DEVICE_SETTINGS, settings);
     }
 
-    public void addInstalledApp(App app) {
-        Map<String, App> apps = db.getTreeMap(INSTALLED_APPS);
+    public void addApp(App app) {
+        Map<String, App> apps = db.getTreeMap(APPS);
         apps.put(app.name, app);
     }
 
     public List<App> getInstalledApps() {
-        Map<String, App> apps = db.getTreeMap(INSTALLED_APPS);
+        Map<String, App> apps = db.getTreeMap(APPS);
 
-        return new ArrayList<>(apps.values());
-    }
-
-    public List<UseCaseCategory> getAllUseCasesSorted() {
-        List<UseCaseCategory> useCaseCategories = new ArrayList<>();
-        Map<UseCase.Types, List<UseCase>> useCases = db.getTreeMap(USE_CASE);
-
-        for (Map.Entry<UseCase.Types, List<UseCase>> entry : useCases.entrySet()) {
-            UseCaseCategory category = new UseCaseCategory();
-            category.type = entry.getKey();
-            category.useCases = entry.getValue();
-            useCaseCategories.add(category);
-        }
-
-        Collections.sort(useCaseCategories, new Comparator<UseCaseCategory>() {
-            @Override
-            public int compare(UseCaseCategory a, UseCaseCategory b) {
-                return b.useCases.size() - a.useCases.size();
-            }
-        });
-
-        return useCaseCategories;
-    }
-
-    public void addUseCase(UseCase useCase) {
-        Map<UseCase.Types, List<UseCase>> useCases = db.getTreeMap(USE_CASE);
-        if (!useCases.containsKey(useCase.type)) {
-            useCases.put(useCase.type, new ArrayList<UseCase>());
-        }
-        useCases.get(useCase.type).add(useCase);
-    }
-
-    public UseCase getUseCase(String name) {
-        Map<UseCase.Types, List<UseCase>> useCaseMap = db.getTreeMap(USE_CASE);
-        for (List<UseCase> useCases : useCaseMap.values()) {
-            for (UseCase useCase : useCases) {
-                if (useCase.name.equals(name)) {
-                    return useCase;
-                }
+        ArrayList<App> installedApps = new ArrayList<>();
+        for (App app: apps.values()) {
+            if (app.installed) {
+                installedApps.add(app);
             }
         }
-        return null;
+
+        return installedApps;
     }
 
-    public List<App> appsByUseCase(String useCaseName) {
-        Map<String, App> apps = db.getTreeMap(AVAILABLE_APPS);
-        List<App> matched = new ArrayList<>();
-        for (App app : apps.values()) {
-            if (app.tags.contains(useCaseName)) {
-                matched.add(app);
+    public List<App> getFeaturedApps() {
+        Map<String, App> apps = db.getTreeMap(APPS);
+
+        ArrayList<App> featuredApps = new ArrayList<>();
+        for (App app: apps.values()) {
+            if (app.featured) {
+                featuredApps.add(app);
             }
         }
-        return matched;
+
+        return featuredApps;
     }
 
     public List<App> searchApps(String keyword) {
-        Map<String, App> apps = db.getTreeMap(AVAILABLE_APPS);
+        Map<String, App> apps = db.getTreeMap(APPS);
         List<App> matched = new ArrayList<>();
         for (App app : apps.values()) {
-            if (app.tags.contains(keyword) && app.name.contains(keyword)) {
+            if (containsIgnoreCase(app.tags ,keyword) || containsIgnoreCase(app.name ,keyword)) {
                 matched.add(app);
             }
         }
         return matched;
+    }
+
+    public void startInstallApp(String name) {
+        Map<String, App> apps = db.getTreeMap(APPS);
+        App app = apps.get(name);
+        if (app == null) {
+            throw new NotFoundException("No app found with name '" + name + "'.");
+        }
+        if (app.installed) {
+            throw new BadRequestException("App '" + name + "' has already been installed.");
+        }
+        app.progress = 0;
+    }
+
+    public void startUninstallApp(String name) {
+        Map<String, App> apps = db.getTreeMap(APPS);
+        App app = apps.get(name);
+        if (app == null) {
+            throw new NotFoundException("No app found with name '" + name + "'.");
+        }
+        if (!app.installed) {
+            throw new BadRequestException("App '" + name + "' has not been installed.");
+        }
+        app.progress = 0;
+    }
+
+    // taken from http://stackoverflow.com/questions/86780/is-the-contains-method-in-java-lang-string-case-sensitive
+    public static boolean containsIgnoreCase(String src, String what) {
+        final int length = what.length();
+        if (length == 0)
+            return true; // Empty string is contained
+
+        final char firstLo = Character.toLowerCase(what.charAt(0));
+        final char firstUp = Character.toUpperCase(what.charAt(0));
+
+        for (int i = src.length() - length; i >= 0; i--) {
+            // Quick check before calling the more expensive regionMatches() method:
+            final char ch = src.charAt(i);
+            if (ch != firstLo && ch != firstUp)
+                continue;
+
+            if (src.regionMatches(true, i, what, 0, length))
+                return true;
+        }
+
+        return false;
     }
 
     public ArrayList<User> listUsers() {

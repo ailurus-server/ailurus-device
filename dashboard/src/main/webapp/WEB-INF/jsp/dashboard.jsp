@@ -10,12 +10,12 @@
 
     <title>Dashboard</title>
 
-    <link href="webjars/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="webjars/bootstrap/3.3.1/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="webjars/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="webjars/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="css/dashboard/dashboard.css" rel="stylesheet">
 
     <script src="webjars/jquery/1.11.1/jquery.js"></script>
-    <script src="webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="webjars/angularjs/1.2.22/angular.js"></script>
     <script src="webjars/angularjs/1.2.22/angular-route.js"></script>
     <script src="webjars/angularjs/1.2.22/angular-resource.js"></script>
@@ -73,6 +73,22 @@
           </ul>
         </div>
       </div>
+    </div>
+
+    <article class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="alert alert-danger" data-ng-show="errorMessages.length > 0" role="alert">
+                    <button type="button"
+                            class="close"
+                            data-ng-click="removeErrorMessage()"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{errorMessages[errorMessages.length - 1]}}
+                </div>
+            </div>
+        </div>
     </div>
 
     <div data-ng-view></div>
