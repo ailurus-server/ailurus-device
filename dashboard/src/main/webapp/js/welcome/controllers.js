@@ -89,18 +89,43 @@ welcomeControllers.controller('OnlineCtrl', ['$scope',
     }
 ]);
 
-welcomeControllers.controller('UrlCtrl', ['$scope',
-    function ($scope) {
+welcomeControllers.controller('UrlCtrl', ['$scope', '$http', 'API_BASE',
+    function ($scope, $http, API_BASE) {
         $scope.app.title = 'Set a URL';
         $scope.app.setStep(4);
+
         $scope.selectUrlType = function(urlType) {
             $scope.data.urlType = urlType;
         };
 
+        $scope.updateUrl = function(url) {
+            if ($scope.ailurusForm.subdomain.$valid) {
+                $scope.ailurusForm.subdomain.$updating = true;
+                $http.get(API_BASE + 'network/dns/' + url)
+                .success(function(result) {
+                    if (result) {
+                        $scope.ailurusForm.subdomain.$taken = true;
+                        $scope.data.subdomain = "";
+                    } else {
+                        $scope.ailurusForm.subdomain.$taken = false;
+                        $scope.data.subdomain = url;
+                    }
+                    $scope.ailurusForm.subdomain.$updating = false;
+                })
+                .error(function(result) {
+                    // TODO display the error somewhere
+                    $scope.ailurusForm.subdomain.$updating = false;
+                    console.log(result);
+                });
+            }
+        }
+
         $scope.canContinue = function() {
             switch ($scope.data.urlType) {
                 case 'ailurus':
-                    return !!$scope.data.subdomain;
+                    return !!$scope.data.subdomain &&
+                     !$scope.ailurusForm.subdomain.$updating &&
+                     $scope.ailurusForm.subdomain.$valid;
                 case 'own':
                     return !!$scope.data.url;
                 case 'none':
