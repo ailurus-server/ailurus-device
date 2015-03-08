@@ -7,5 +7,5 @@ public class Network {
     public String hostname;
     public String ipAddress;
     public String url;
-    public String capacity;
+    public String ethernet;
 }

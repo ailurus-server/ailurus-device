@@ -1,0 +1,6 @@
+oshi
+oshi.hardware
+oshi.software.os
+oshi.software.os.windows
+oshi.software.os.windows.nt
+oshi.util
