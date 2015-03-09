@@ -30,7 +30,7 @@ public class WelcomeServlet extends HttpServlet {
 
         try (Transaction tx = transactionMaker.make()) {
             if (tx.hasSettings()) {
-                response.sendRedirect("");
+                response.sendRedirect("/dashboard");
                 return;
             }
         }

@@ -12,8 +12,6 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 public class Main {
     public static void main(String args[]) throws Exception {
-        //Injector injector = Guice.createInjector(new ApplicationServletModule());
-
         Server server = new Server(8080);
 
         ResourceHandler resourceHandler = new ResourceHandler() {
