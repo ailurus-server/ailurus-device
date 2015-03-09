@@ -61,6 +61,8 @@ def Main():
         InstallPackage(path)
     elif method == 'remove':
         RemovePackage(path)
+    else:
+        print "Usage: ai-get [install|remove] [path-to-apkg]"
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ import os
 import pymysql
 
 DEFAULT_ENV = {
-        'Destination': '/opt/ailurus/www/wordpress',
+        'Destination': '/opt/ailurus/www/site',
         }
 
 WP_URL = "http://wordpress.org/wordpress-3.9.1.tar.gz"
@@ -27,9 +27,11 @@ def install(env = None):
     env = DefaultEnv(env)
     install_dir = env['Destination']
 
-    print("Creating wordpress database")
+    print("Creating baravyandentures database")
     conn = pymysql.connect('localhost', user='root', passwd='teamtba')
-    conn.cursor().execute('CREATE DATABASE IF NOT EXISTS wordpress')
+    conn.cursor().execute('CREATE DATABASE IF NOT EXISTS baravyandentures')
+    print("Loading database")
+    os.system('mysql --password=teamtba baravyandentures < conf/wp.dump')
 
     print("Getting wordpress package")
     wp_path = pkgutil.GetPackage(WP_URL, WP_MD5)
@@ -40,16 +42,27 @@ def install(env = None):
     print("Copying wordpress configuration")
     shutil.copy('conf/wp-config.php', install_dir)
 
+    print("Copying baravyandentures styles")
+    shutil.copy('conf/style.css', install_dir + '/wp-content/themes/twentythirteen')
+
+    print("Copying images")
+    shutil.copytree('conf/uploads', install_dir + '/wp-content/uploads')
+
     print("Assigning ownership")
     os.system('chown -R www-data %s' % install_dir)
 
+
 def remove(env = None):
     env = DefaultEnv(env)
-    print("Removing wordpress db")
+    print("Removing baravyandentures db")
     conn = pymysql.connect('localhost', user='root', passwd='teamtba')
-    conn.cursor().execute('DROP DATABASE IF EXISTS wordpress')
-    print("Removing wordpress")
+    conn.cursor().execute('DROP DATABASE IF EXISTS baravyandentures')
+    print("Removing baravyandentures")
     shutil.rmtree(env['Destination'])
+    # todo delete
 
 def configure(env):
     pass
+
+# update wp_options set option_value = 'http://localhost/site' where option_name = 'home'
+# update wp_options set option_value = 'http://localhost/site' where option_name = 'siteurl'

@@ -7,3 +7,6 @@ Thumbs.db
 *.db.*
 *.iml
 *.swp
+admin/ailurus-python/ailurus.egg-info/
+admin/ailurus-python/build/
+admin/ailurus-python/dist/
