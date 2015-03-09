@@ -31,7 +31,7 @@ def Main():
 
     app = CreateApplication(options.debug)
     server = HTTPServer(app, xheaders=True)
-    server.bind(options.port)
+    server.bind(options.port, '127.0.0.1')
     server.start()
 
     InstallTasks()

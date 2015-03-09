@@ -5,3 +5,4 @@
 . initializers/configs.sh
 
 echo "Make sure you run 'raspi-config', then log out and back in."
+echo "Also, you need to install Java7, goodluck!"
