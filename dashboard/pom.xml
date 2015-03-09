@@ -121,20 +121,25 @@
             <groupId>oshi</groupId>
             <artifactId>oshi-core</artifactId>
             <version>1.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/oshi/oshi-core.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>oshi</groupId>
             <artifactId>jna</artifactId>
             <version>1.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/oshi/jna.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>oshi</groupId>
             <artifactId>platform</artifactId>
             <version>1.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/oshi/platform.jar</systemPath>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -148,58 +153,6 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>2.5.2</version>
-                <executions>
-                    <execution>
-                        <id>install-jar-oshi-oshi-core</id>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <phase>validate</phase>
-                        <configuration>
-                            <groupId>oshi</groupId>
-                            <artifactId>oshi-core</artifactId>
-                            <version>1.1</version>
-                            <packaging>jar</packaging>
-                            <file>${basedir}/libs/oshi/oshi-core.jar</file>
-                            <generatePom>true</generatePom>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>install-jar-oshi-jna</id>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <phase>validate</phase>
-                        <configuration>
-                            <groupId>oshi</groupId>
-                            <artifactId>jna</artifactId>
-                            <version>1.1</version>
-                            <packaging>jar</packaging>
-                            <file>${basedir}/libs/oshi/jna.jar</file>
-                            <generatePom>true</generatePom>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>install-jar-oshi-platform</id>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <phase>validate</phase>
-                        <configuration>
-                            <groupId>oshi</groupId>
-                            <artifactId>platform</artifactId>
-                            <version>1.1</version>
-                            <packaging>jar</packaging>
-                            <file>${basedir}/libs/oshi/platform.jar</file>
-                            <generatePom>true</generatePom>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
