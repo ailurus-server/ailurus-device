@@ -31,13 +31,12 @@ public class Dashboard extends HttpServlet {
             throws ServletException, IOException {
         try (Transaction tx = transactionMaker.make()) {
             if (!tx.hasSettings()) {
-            // TODO use this to redirect to welcome screen
-            //    response.sendRedirect("/welcome");
-            //    return;
-                initMockDevice(tx);
+                response.sendRedirect("/welcome");
                 initMockApps(tx);
-                initMockUsers(tx);
                 tx.commit();
+                return;
+                // initMockDevice(tx);
+                // initMockUsers(tx);
             }
         }
 
@@ -79,7 +78,7 @@ public class Dashboard extends HttpServlet {
                     "img/apps/minecraft.png",
                     "game-server",
                     false,
-                    5,
+                    -1,
                     true,
                     ""));
         tx.addApp(
@@ -87,7 +86,7 @@ public class Dashboard extends HttpServlet {
                     "GitList is a simple git repository browser.",
                     "img/apps/git.png",
                     "blog source-control",
-                    true,
+                    false,
                     -1,
                     true,
                     "/gitlist"));
@@ -96,8 +95,8 @@ public class Dashboard extends HttpServlet {
                         "Owncloud is a personal cloud server.",
                         "img/apps/owncloud.png",
                         "cloud privacy",
-                        true,
-                        48,
+                        false,
+                        -1,
                         false,
                         "/owncloud"));
     }

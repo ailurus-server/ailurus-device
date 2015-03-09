@@ -67,7 +67,7 @@
             </li>
             <li>
                 <button type="button" class="btn btn-default navbar-btn">
-                    <span class="glyphicon glyphicon-log-out"></span>
+                    <span class="glyphicon glyphicon-log-out" ng-click="logOut()"></span>
                 </button>
             </li>
           </ul>
