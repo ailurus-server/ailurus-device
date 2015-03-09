@@ -53,7 +53,7 @@ public class AppApi {
                 throw new BadRequestException("App is installed or installing.");
             }
 
-            HttpRequest request = Unirest.post(AILURUSD_URL + "install/" + name);
+            HttpRequest request = Unirest.post(AILURUSD_URL + "install/" + app.name);
 
             try {
                 request.asString();

@@ -1,9 +1,9 @@
 package ca.ailurus.dashboard;
 
+import ca.ailurus.dashboard.transaction.Transaction;
 import ca.ailurus.dashboard.transaction.TransactionMaker;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import ca.ailurus.dashboard.transaction.Transaction;
-
 @Singleton
-public class WelcomeServlet extends HttpServlet {
+public class Welcome extends HttpServlet {
     private static final String WELCOME_JSP_PATH = "/WEB-INF/jsp/welcome.jsp";
 
     private TransactionMaker transactionMaker;
 
     @Inject
-    public WelcomeServlet(TransactionMaker transactionMaker) {
+    public Welcome(TransactionMaker transactionMaker) {
         this.transactionMaker = transactionMaker;
     }
 
@@ -30,7 +28,7 @@ public class WelcomeServlet extends HttpServlet {
 
         try (Transaction tx = transactionMaker.make()) {
             if (tx.hasSettings()) {
-                response.sendRedirect("/dashboard");
+                response.sendRedirect("");
                 return;
             }
         }
