@@ -33,8 +33,8 @@ public class DashboardServlet extends HttpServlet {
             if (!tx.hasSettings()) {
                 response.sendRedirect("/welcome");
                 initApps(tx);
-                initMockDevice(tx);
-                initMockUsers(tx);
+                //initMockDevice(tx);
+                //initMockUsers(tx);
                 tx.commit();
                 return;
                 // initMockDevice(tx);
