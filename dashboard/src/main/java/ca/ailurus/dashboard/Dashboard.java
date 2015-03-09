@@ -16,13 +16,13 @@ import javax.ws.rs.BadRequestException;
 import java.io.IOException;
 
 @Singleton
-public class DashboardServlet extends HttpServlet {
+public class Dashboard extends HttpServlet {
     private static final String DASHBOARD_JSP_PATH = "/WEB-INF/jsp/dashboard.jsp";
 
     private TransactionMaker transactionMaker;
 
     @Inject
-    public DashboardServlet(TransactionMaker transactionMaker) {
+    public Dashboard(TransactionMaker transactionMaker) {
         this.transactionMaker = transactionMaker;
     }
 
