@@ -66,7 +66,7 @@ public class AppApi {
         }
     }
 
-    @POST @Path("/named/{name}")
+    @POST @Path("/progress/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateProgress(@PathParam("name") String name, int progress) {
         try (Transaction tx = transactionMaker.make()) {
