@@ -3,10 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ca.ailurus</groupId>
     <artifactId>dashboard</artifactId>
-    <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>dashboard</name>
-    <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,7 +12,7 @@
         <bootstrapVersion>3.3.2</bootstrapVersion>
         <angularJsVersion>1.2.22</angularJsVersion>
         <servletVersion>3.1.0</servletVersion>
-        <jettyVersion>9.2.2.v20140723</jettyVersion>
+        <jettyVersion>9.3.0.M1</jettyVersion>
         <restEasyVersion>3.0.8.Final</restEasyVersion>
         <guiceVersion>3.0</guiceVersion>
         <mapDBVersion>1.0.6</mapDBVersion>
@@ -59,10 +57,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${servletVersion}</version>
-            <scope>provided</scope>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jettyVersion}</version>
         </dependency>
 
         <dependency>
@@ -72,9 +69,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mapdb</groupId>
-            <artifactId>mapdb</artifactId>
-            <version>${mapDBVersion}</version>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-jsp</artifactId>
+            <version>${jettyVersion}</version>
         </dependency>
 
         <dependency>
@@ -87,6 +84,12 @@
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-servlet</artifactId>
             <version>${guiceVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapdb</groupId>
+            <artifactId>mapdb</artifactId>
+            <version>${mapDBVersion}</version>
         </dependency>
 
         <dependency>
@@ -118,35 +121,25 @@
             <groupId>oshi</groupId>
             <artifactId>oshi-core</artifactId>
             <version>1.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/oshi/oshi-core.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>oshi</groupId>
             <artifactId>jna</artifactId>
             <version>1.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/oshi/jna.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>oshi</groupId>
             <artifactId>platform</artifactId>
             <version>1.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/oshi/platform.jar</systemPath>
         </dependency>
+
     </dependencies>
+
     <build>
         <finalName>dashboard</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jettyVersion}</version>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -154,6 +147,78 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <id>install-jar-oshi-oshi-core</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <groupId>oshi</groupId>
+                            <artifactId>oshi-core</artifactId>
+                            <version>1.1</version>
+                            <packaging>jar</packaging>
+                            <file>${basedir}/libs/oshi/oshi-core.jar</file>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>install-jar-oshi-jna</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <groupId>oshi</groupId>
+                            <artifactId>jna</artifactId>
+                            <version>1.1</version>
+                            <packaging>jar</packaging>
+                            <file>${basedir}/libs/oshi/jna.jar</file>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>install-jar-oshi-platform</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <groupId>oshi</groupId>
+                            <artifactId>platform</artifactId>
+                            <version>1.1</version>
+                            <packaging>jar</packaging>
+                            <file>${basedir}/libs/oshi/platform.jar</file>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <classpath/>
+                        <argument>ca.ailurus.dashboard.Main</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
