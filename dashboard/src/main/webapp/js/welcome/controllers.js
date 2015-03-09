@@ -182,8 +182,8 @@ welcomeControllers.controller('ReviewCtrl', [
     }
 ]);
 
-welcomeControllers.controller('DoneCtrl', ['$scope',
-    function ($scope) {
+welcomeControllers.controller('DoneCtrl', ['$scope', '$location',
+    function ($scope, $location) {
         $scope.app.title = 'Done Configurations';
         $scope.app.done = true;
     }

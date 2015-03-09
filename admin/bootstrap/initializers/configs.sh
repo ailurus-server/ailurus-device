@@ -8,7 +8,7 @@ cp confs/nginx.conf /etc/nginx/nginx.conf
 cp confs/nginx-default /etc/nginx/sites-available/default
 
 echo "Copying ailurus daemon configs"
-cp nginx-confs/ailurusd.conf /opt/ailurus/nginx-confs-servers/
+cp nginx-confs/* /opt/ailurus/nginx-confs-servers/
 
 echo "Copying ailurus shell config"
 echo "ON_AILURUS=true" >> /etc/environment
