@@ -43,6 +43,12 @@ public class Transaction implements Closeable {
         apps.put(app.name, app);
     }
 
+
+    public App getApp(String name) {
+        Map<String, App> apps = db.getTreeMap(APPS);
+        return apps.get(name);
+    }
+
     public List<App> getInstalledApps() {
         Map<String, App> apps = db.getTreeMap(APPS);
 
@@ -90,6 +96,19 @@ public class Transaction implements Closeable {
             throw new BadRequestException("App '" + name + "' has already been installed.");
         }
         app.progress = 0;
+    }
+
+    public void updateAppProgress(String name, int value) {
+        Map<String, App> apps = db.getTreeMap(APPS);
+        App app = apps.get(name);
+        if (app == null) {
+            throw new NotFoundException("No app found with name '" + name + "'.");
+        }
+        app.progress = value;
+
+        if (value < 0) {
+            app.installed = !app.installed;
+        }
     }
 
     public void startUninstallApp(String name) {

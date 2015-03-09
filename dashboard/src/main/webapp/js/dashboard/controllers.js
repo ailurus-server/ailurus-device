@@ -207,16 +207,6 @@ dashboardControllers.controller('StoreCtrl', [
                 $scope.addErrorMessage('Failed to install app due to server error.');
                });
         };
-
-        $scope.cancelInstall = function(app) {
-            Api.post('apps/cancel/' + encodeURIComponent(app.name))
-               .success(function(data) {
-                $scope.reloadApps();
-               })
-               .error(function(data) {
-                $scope.addErrorMessage('Failed to install app due to server error.');
-               });
-        };
     }
 ]);
 
@@ -274,18 +264,6 @@ dashboardControllers.controller('SearchCtrl', [
 
         $scope.install = function(app) {
             Api.put('apps/named/' + encodeURIComponent(app.name))
-               .success(function(data) {
-                if (!$scope.reloading) {
-                    $scope.reloadApps();
-                }
-               })
-               .error(function(data) {
-                $scope.addErrorMessage('Failed to install app due to server error.');
-               });
-        };
-
-        $scope.cancelInstall = function(app) {
-            Api.post('apps/cancel/' + encodeURIComponent(app.name))
                .success(function(data) {
                 if (!$scope.reloading) {
                     $scope.reloadApps();

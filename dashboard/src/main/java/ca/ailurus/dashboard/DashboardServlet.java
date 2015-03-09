@@ -32,7 +32,9 @@ public class DashboardServlet extends HttpServlet {
         try (Transaction tx = transactionMaker.make()) {
             if (!tx.hasSettings()) {
                 response.sendRedirect("/welcome");
-                initMockApps(tx);
+                initApps(tx);
+                initMockDevice(tx);
+                initMockUsers(tx);
                 tx.commit();
                 return;
                 // initMockDevice(tx);
@@ -62,7 +64,7 @@ public class DashboardServlet extends HttpServlet {
     }
 
     // TODO delete this after testing
-    private void initMockApps(Transaction tx) {
+    private void initApps(Transaction tx) {
         tx.addApp(
             new App("Wordpress",
                     "WordPress is web software you can use to create a beautiful blogs",
