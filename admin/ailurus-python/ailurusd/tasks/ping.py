@@ -21,11 +21,12 @@ def SendPing():
 
 
 def _GetInternalIp():
-    interfaces = netifaces.interfaces()
-    if 'en0' in interfaces:
-        return netifaces.ifaddresses('en0')[netifaces.AF_INET][0]['addr']
-    elif 'eth0' in interfaces:
-        return netifaces.ifaddresses('eth0')[netifaces.AF_INET][0]['addr']
+    family = netifaces.AF_INET
+    gateway_ip, interface_name = netifaces.gateways()['default'][family]
+
+    if interface_name in netifaces.interfaces(): # this should always be true
+        return netifaces.ifaddresses(interface_name)[family][0]['addr']
+
     logger.warn('Cannot determine interface')
     return None
 
