@@ -31,13 +31,14 @@ public class Dashboard extends HttpServlet {
             throws ServletException, IOException {
         try (Transaction tx = transactionMaker.make()) {
             if (!tx.hasSettings()) {
-            // TODO use this to redirect to welcome screen
-            //    response.sendRedirect("/welcome");
-            //    return;
-                initMockDevice(tx);
-                initMockApps(tx);
-                initMockUsers(tx);
+                response.sendRedirect("/welcome");
+                initApps(tx);
+                //initMockDevice(tx);
+                //initMockUsers(tx);
                 tx.commit();
+                return;
+                // initMockDevice(tx);
+                // initMockUsers(tx);
             }
         }
 
@@ -63,9 +64,9 @@ public class Dashboard extends HttpServlet {
     }
 
     // TODO delete this after testing
-    private void initMockApps(Transaction tx) {
+    private void initApps(Transaction tx) {
         tx.addApp(
-            new App("Wordpress",
+            new App("Wordpress", "wordpress",
                     "WordPress is web software you can use to create a beautiful blogs",
                     "img/apps/wordpress.png",
                     "blog",
@@ -74,30 +75,30 @@ public class Dashboard extends HttpServlet {
                     true,
                     "/wordpress"));
         tx.addApp(
-            new App("Minecraft",
+            new App("Minecraft", "minecraft",
                     "Minecraft is a popular game about building blocks.",
                     "img/apps/minecraft.png",
                     "game-server",
                     false,
-                    5,
+                    -1,
                     true,
                     ""));
         tx.addApp(
-            new App("GitList",
+            new App("GitList", "gitlist",
                     "GitList is a simple git repository browser.",
                     "img/apps/git.png",
                     "blog source-control",
-                    true,
+                    false,
                     -1,
                     true,
                     "/gitlist"));
         tx.addApp(
-                new App("Owncloud",
+                new App("Owncloud", "owncloud",
                         "Owncloud is a personal cloud server.",
                         "img/apps/owncloud.png",
                         "cloud privacy",
-                        true,
-                        48,
+                        false,
+                        -1,
                         false,
                         "/owncloud"));
     }

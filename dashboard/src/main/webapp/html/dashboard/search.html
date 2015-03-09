@@ -45,11 +45,11 @@
                 <div class="list-group-item" data-ng-repeat="app in results">
                     <div class="media" data-ng-show="app.installed">
                         <div class="media-left">
-                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.displayName}}"
                                  class="media-object" height="64px" width="64px">
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">{{app.name}}
+                            <h4 class="media-heading">{{app.displayName}}
                                 <small><a href="#/apps" class="label label-success">Installed</a></small>
                             </h4>
                             {{app.description}}
@@ -57,11 +57,11 @@
                     </div>
                     <div class="media" data-ng-show="!app.installed && app.progress >= 0">
                         <div class="media-left">
-                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.displayName}}"
                                  class="media-object" height="64px" width="64px">
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">{{app.name}}
+                            <h4 class="media-heading">{{app.displayName}}
                                 <small><span class="label label-info">Installing</span></small>
                             </h4>
                             {{app.description}}
@@ -77,21 +77,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="media-right media-middle">
-                            <button class="btn btn-default" data-ng-click="cancelInstall(app)">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                Cancel
-                            </button>
-                        </div>
                     </div>
                     <div class="media" data-ng-show="!app.installed && app.progress < 0">
                         <div class="media-left">
-                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.displayName}}"
                                  class="media-object" height="64px" width="64px">
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">
-                                {{app.name}}
+                                {{app.displayName}}
                                 <small><span class="label label-default">Not Installed</span></small>
                             </h4>
                             {{app.description}}

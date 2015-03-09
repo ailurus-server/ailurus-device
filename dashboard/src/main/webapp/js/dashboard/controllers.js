@@ -3,11 +3,15 @@
 var dashboardControllers = angular.module('dashboardControllers', []);
 
 dashboardControllers.controller('AppCtrl', [
-    '$scope', 'Session',
-    function ($scope, Session) {
+    '$scope', '$location', 'Session',
+    function ($scope, $location, Session) {
+        Session.loadSession();
+
         $scope.user = {
-            name: Session.username //TODO also load email and user type
+            name: Session.username,
+            email: Session.email,
         }
+
         $scope.app = {
             panel: 'device',
             showNavBar: false,
@@ -17,6 +21,11 @@ dashboardControllers.controller('AppCtrl', [
         $scope.addErrorMessage = function(message) {
             $scope.errorMessages.push(message);
         };
+
+        $scope.logOut = function () {
+            Session.clearSession();
+            $location.path("/login");
+        }
 
         $scope.removeErrorMessage = function() {
             $scope.errorMessages.pop();
@@ -198,16 +207,6 @@ dashboardControllers.controller('StoreCtrl', [
                 $scope.addErrorMessage('Failed to install app due to server error.');
                });
         };
-
-        $scope.cancelInstall = function(app) {
-            Api.post('apps/cancel/' + encodeURIComponent(app.name))
-               .success(function(data) {
-                $scope.reloadApps();
-               })
-               .error(function(data) {
-                $scope.addErrorMessage('Failed to install app due to server error.');
-               });
-        };
     }
 ]);
 
@@ -265,18 +264,6 @@ dashboardControllers.controller('SearchCtrl', [
 
         $scope.install = function(app) {
             Api.put('apps/named/' + encodeURIComponent(app.name))
-               .success(function(data) {
-                if (!$scope.reloading) {
-                    $scope.reloadApps();
-                }
-               })
-               .error(function(data) {
-                $scope.addErrorMessage('Failed to install app due to server error.');
-               });
-        };
-
-        $scope.cancelInstall = function(app) {
-            Api.post('apps/cancel/' + encodeURIComponent(app.name))
                .success(function(data) {
                 if (!$scope.reloading) {
                     $scope.reloadApps();
@@ -364,10 +351,9 @@ dashboardControllers.controller('LoginCtrl', [
 
             Api.post('users/' + $scope.cred.username + '/login', $scope.cred.password)
             .success(function(user) {
-                $scope.user.name = user.name;
-                $scope.user.email = user.email;
                 Session.username = user.name;
                 Session.token = user.name + ":" + user.password;
+                Session.email = user.email;
                 Session.saveSession();
                 $location.path("/");
             })

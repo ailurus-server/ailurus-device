@@ -51,24 +51,40 @@ dashboardApp.config(['$routeProvider',
                  access: { requiredLogin: false }
             }).
             otherwise({
-                redirectTo: '/device'
+                redirectTo: '/device',
+                access: { requiredLogin: false }
             });
     }
 ]);
 
 dashboardApp.factory('Session', ['$window', function ($window) {
     var session = {
-        username: undefined,
-        token: undefined,
+        username: null,
+        token: null,
+        email: null,
+
+        isLoaded: function() {
+            return this.username != null && this.token != null && this.email != null;
+        },
+
         saveSession: function () {
             $window.sessionStorage.session = JSON.stringify(this);
         },
+
+        clearSession: function() {
+            this.username = null;
+            this.token = null;
+            this.email = null;
+            this.saveSession();
+        },
+
         loadSession: function () {
             var session_data = $window.sessionStorage.session;
             if (session_data) {
                 var data = JSON.parse(session_data);
                 this.username = data.username;
                 this.token = data.token;
+                this.email = data.email;
             }
         }
     };
@@ -76,11 +92,11 @@ dashboardApp.factory('Session', ['$window', function ($window) {
 }])
 
 // TODO move login to separate page
-//dashboardApp.run(function($rootScope, $location, Session) {
-//       $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-//           Session.loadSession();
-//           if (nextRoute.access.requiredLogin && !Session.token) {
-//               $location.path("login");
-//           }
-//       });
-//   });
+dashboardApp.run(function($rootScope, $location, Session) {
+       $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+           Session.loadSession();
+           if (nextRoute.access.requiredLogin && !Session.isLoaded()) {
+               $location.path("login");
+           }
+       });
+   });

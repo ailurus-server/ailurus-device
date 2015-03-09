@@ -4,7 +4,7 @@ from .ping import SendPing
 from ..settings import on_ailurus
 
 if on_ailurus:
-    SEND_PING_PERIOD = 60 * 1000  # ping minutely
+    SEND_PING_PERIOD = 10 * 1000  # ping every 10 seconds
 else:
     SEND_PING_PERIOD = 2 * 1000  # ping every two seconds for debugging
 

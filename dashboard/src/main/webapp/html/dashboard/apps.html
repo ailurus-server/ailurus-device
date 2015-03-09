@@ -7,11 +7,11 @@
                 <div class="col-sm-12 col-md-6 col-lg-4 apps-app-container" data-ng-repeat="app in apps">
                     <div class="media" data-ng-show="app.progress >= 0">
                         <div class="media-left">
-                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.displayName}}"
                                  class="media-object" height="64px" width="64px">
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">{{app.name}}
+                            <h4 class="media-heading">{{app.displayName}}
                                 <small><span class="label label-danger">Uninstalling</span></small>
                             </h4>
                             {{app.description}}
@@ -30,11 +30,11 @@
                     </div>
                     <div class="media" data-ng-show="app.progress < 0">
                         <div class="media-left">
-                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.name}}"
+                            <img data-ng-src="{{app.imageUrl}}" alt="{{app.displayName}}"
                                  class="media-object" height="64px" width="64px">
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">{{app.name}}</h4>
+                            <h4 class="media-heading">{{app.displayName}}</h4>
                             {{app.description}}
                         </div>
                         <div class="media-right media-middle">
@@ -62,7 +62,7 @@
                     <h4 class="modal-title">Confirm app uninstall</h4>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to uninstall the app named <b>{{appToUninstall.name}}</b>?
+                    Are you sure you want to uninstall the app named <b>{{appToUninstall.displayName}}</b>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
