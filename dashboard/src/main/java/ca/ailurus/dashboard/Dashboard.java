@@ -66,7 +66,7 @@ public class Dashboard extends HttpServlet {
     // TODO delete this after testing
     private void initApps(Transaction tx) {
         tx.addApp(
-            new App("Wordpress",
+            new App("Wordpress", "wordpress",
                     "WordPress is web software you can use to create a beautiful blogs",
                     "img/apps/wordpress.png",
                     "blog",
@@ -75,7 +75,7 @@ public class Dashboard extends HttpServlet {
                     true,
                     "/wordpress"));
         tx.addApp(
-            new App("Minecraft",
+            new App("Minecraft", "minecraft",
                     "Minecraft is a popular game about building blocks.",
                     "img/apps/minecraft.png",
                     "game-server",
@@ -84,7 +84,7 @@ public class Dashboard extends HttpServlet {
                     true,
                     ""));
         tx.addApp(
-            new App("GitList",
+            new App("GitList", "gitlist",
                     "GitList is a simple git repository browser.",
                     "img/apps/git.png",
                     "blog source-control",
@@ -93,7 +93,7 @@ public class Dashboard extends HttpServlet {
                     true,
                     "/gitlist"));
         tx.addApp(
-                new App("Owncloud",
+                new App("Owncloud", "owncloud",
                         "Owncloud is a personal cloud server.",
                         "img/apps/owncloud.png",
                         "cloud privacy",
