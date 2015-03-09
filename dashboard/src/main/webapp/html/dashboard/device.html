@@ -23,16 +23,16 @@
                                 <strong>Memory Usage</strong>
                             </p>
                             <div>
-                                {{device.memory.used | bytes}} <span class="text-muted"> used out of </span>
-                                {{device.memory.total | bytes}} <span class="text-muted"> total </span>
+                                {{device.memory.system.used | bytes}} <span class="text-muted"> used out of </span>
+                                {{device.memory.system.total | bytes}} <span class="text-muted"> total </span>
                             </div>
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar"
                                      aria-valuenow="{{device.disk | percentUsed}}"
                                      aria-valuemin="0"
                                      aria-valuemax="100"
-                                     style="width: {{device.memory | percentUsed}}%;">
-                                    {{device.memory | percentUsed}}%
+                                     style="width: {{device.memory.system | percentUsed}}%;">
+                                    {{device.memory.system | percentUsed}}%
                                 </div>
                             </div>
                         </div>
@@ -67,6 +67,8 @@
                     <dd>{{device.cpu.type}}</dd>
                     <dt>Architecture</dt>
                     <dd>{{device.cpu.architecture}}</dd>
+                    <dt>Speed</dt>
+                    <dd>{{device.cpu.speed | hz}}</dd>
                     <dt>Number of Cores</dt>
                     <dd>{{device.cpu.numCores}}</dd>
                 </dl>
@@ -75,16 +77,28 @@
                 <a name="memory"></a>
                 <h2 class="page-header">Memory</h2>
 
-                <dl class="dl-horizontal">
-                    <dt>Used</dt>
-                    <dd>{{device.memory.used | bytes}}</dd>
-                    <dt>Free</dt>
-                    <dd>{{device.memory.free | bytes}}</dd>
-                    <dt>Total</dt>
-                    <dd>{{device.memory.total | bytes}}</dd>
-                    <dt>Speed</dt>
-                    <dd>{{device.memory.speed | hz}}</dd>
-                </dl>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <dl class="dl-horizontal">
+                            <dt>System Total</dt>
+                            <dd>{{device.memory.system.total | bytes}}</dd>
+                            <dt>System Used</dt>
+                            <dd>{{device.memory.system.used | bytes}}</dd>
+                            <dt>System Free</dt>
+                            <dd>{{device.memory.system.free | bytes}}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <dl class="dl-horizontal">
+                            <dt>JVM Total</dt>
+                            <dd>{{device.memory.jvm.total | bytes}}</dd>
+                            <dt>JVM Used</dt>
+                            <dd>{{device.memory.jvm.used | bytes}}</dd>
+                            <dt>JVM Free</dt>
+                            <dd>{{device.memory.jvm.free | bytes}}</dd>
+                        </dl>
+                    </div>
+                </div>
             </section>
             <section>
                 <a name="disk"></a>
@@ -112,8 +126,8 @@
                     <dd>{{device.network.ipAddress}}</dd>
                     <dt data-ng-show="!!device.network.url">URL</dt>
                     <dd data-ng-show="!!device.network.url">{{device.network.url}}</dd>
-                    <dt>Link Capacity</dt>
-                    <dd>{{device.network.capacity}}</dd>
+                    <dt>Ethernet</dt>
+                    <dd>{{device.network.ethernet}}</dd>
                 </dl>
             </section>
         </div>

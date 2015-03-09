@@ -18,6 +18,9 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import oshi.SystemInfo;
+import oshi.hardware.HardwareAbstractionLayer;
+
 @Path("/device")
 @Produces(MediaType.APPLICATION_JSON)
 public class DeviceApi {
@@ -64,8 +67,9 @@ public class DeviceApi {
     @GET @Path("/cpu")
     public Cpu getCpu() {
         Cpu cpu = new Cpu();
-        cpu.type = "ARM Cortex-A7";
+        cpu.type = "ARM1176JZF-S";
         cpu.architecture = "32-bit";
+        cpu.speed = 700000000;
         cpu.numCores = Runtime.getRuntime().availableProcessors();
         return cpu;
     }
@@ -74,10 +78,15 @@ public class DeviceApi {
     public Memory getMemory() {
         Memory memory = new Memory();
 
-        memory.free = Runtime.getRuntime().freeMemory();
-        memory.total = Runtime.getRuntime().totalMemory();
-        memory.used = memory.total - memory.free;
-        memory.speed = 960000000;
+        HardwareAbstractionLayer hal = new SystemInfo().getHardware();
+        memory.system.free = hal.getMemory().getAvailable();
+        memory.system.total = hal.getMemory().getTotal();
+        memory.system.used = memory.system.total - memory.system.free;
+
+        Runtime runtime = Runtime.getRuntime();
+        memory.jvm.free = runtime.freeMemory();
+        memory.jvm.total = runtime.totalMemory();
+        memory.jvm.used = memory.jvm.total - memory.jvm.free;
 
         return memory;
     }
@@ -107,7 +116,7 @@ public class DeviceApi {
             network.hostname = address.getHostName();
             network.ipAddress = address.getHostAddress();
             network.url = settings.url;
-            network.capacity = "10/100 ethernet";
+            network.ethernet = "10/100 Mbit/s";
 
             return network;
         }
